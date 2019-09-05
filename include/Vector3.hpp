@@ -38,7 +38,7 @@ namespace TooGoodEngine
 		static double Dot(const Vector3 & lhs, const Vector3 & rhs);
 		static Vector3 Cross(const Vector3 & lhs, const Vector3 & rhs);
 
-		Vector3 Normalize() const;
+		Vector3 Normalized() const;
 		double Magnitude() const;
 		double SquaredMagnitude() const;
 	};
