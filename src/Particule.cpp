@@ -1,5 +1,6 @@
 #include "Particule.hpp"
 
+#include <iostream>
 #include <cmath>
 #include <limits>
 static double double_max = std::numeric_limits<double>::max();
@@ -9,10 +10,10 @@ static double g = 10;
 namespace TooGoodEngine
 {
     Particule::Particule() :
-    dumping(1), masse(1), inverseMasse(1) {}
+    masse(1), inverseMasse(1), damping(0.95) {}
 
     Particule::Particule(double d, double m) :
-    dumping(d), masse(m), inverseMasse(1/masse) {}
+    masse(m), inverseMasse(1/masse), damping(d) {}
 
     double Particule::InverseMasse() const
     {
@@ -43,14 +44,14 @@ namespace TooGoodEngine
         //update position
         position = position + velocite * temps;
         // update vélocité
-        velocite = velocite * std::pow(dumping, temps) + acceleration * temps;
+        velocite = velocite * std::pow(damping, temps) + acceleration * temps;
         // update acceleration (constant pour l'instant ?)
-        acceleration = acceleration + inverseMasse * Vector3(0, -g, 0);
+        acceleration = inverseMasse * Vector3(0, -g, 0);
     }
 }
 
 // using namespace TooGoodEngine;
-// 
+
 // // Exemples de particules
 // int main()
 // {
@@ -59,12 +60,39 @@ namespace TooGoodEngine
 //     pierre.position = Vector3(0,100,0);
 
 //     // Une balle tirée droite (faible résistance à l'air)
-//     Particule balle(0.5, 0.5);
-//     balle.velocite = Vector3(500, 0, 0);
+//     Particule balle(0.95, 0.5);
+//     balle.velocite = Vector3(100, 0, 0);
 
 //     // Une roquette avec propulseur tirée en diagonale haute (forte résistance à l'air)
-//     Particule roquette(1, 5);
-//     roquette.acceleration = Vector3(100, 100, 0);
+//     Particule roquette(0.5, 5);
+//     roquette.velocite = Vector3(20, 20, 0);
+
+//     Particule parts[] = {pierre, balle, roquette};
+//     const char * names[] = {"pierre", "balle", "roquette"};
+
+//     double tps = 0.1;
+//     bool stop = false;
+
+//     while (!stop)
+//     {
+//         // std::cout << "tps : " << tps << std::endl;
+//         int n = 0;
+//         for (auto &i : parts)
+//         {
+//             i.Integrer(tps);
+//             // std::cout << names[n] << " : " << i.position << std::endl;
+//             std::cout << i.position.x << ", " << i.position.y << ", " << n << std::endl;
+//             n += 1;
+//         }
+//         tps += 0.3;
+       
+//         // std::cout << std::endl;
+
+//         if (tps > 4)
+//         {
+//             stop = true;
+//         }
+//     }
 
 //     return 0;
 // }
