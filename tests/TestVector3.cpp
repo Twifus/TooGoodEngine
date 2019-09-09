@@ -2,7 +2,6 @@
 
 #include <cassert>
 #include <stdexcept>
-#include <limits>
 
 namespace TooGoodEngine
 {

@@ -71,9 +71,6 @@ namespace TooGoodEngine
 
 	Vector3 & Vector3::operator/=(const Vector3 & other)
 	{
-		if (other.x == 0 || other.y == 0 || other.z == 0)
-			throw Exceptions::divided_by_zero();
-
 		x /= other.x;
 		y /= other.y;
 		z /= other.z;
@@ -90,9 +87,6 @@ namespace TooGoodEngine
 
 	Vector3 & Vector3::operator/=(double k)
 	{
-		if (k == 0)
-			throw Exceptions::divided_by_zero();
-
 		x /= k;
 		y /= k;
 		z /= k;
