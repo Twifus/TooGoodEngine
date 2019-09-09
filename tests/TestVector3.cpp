@@ -2,7 +2,7 @@
 
 #include <cassert>
 #include <stdexcept>
-#include "Exceptions.hpp"
+#include <limits>
 
 namespace TooGoodEngine
 {
@@ -16,8 +16,8 @@ namespace TooGoodEngine
 				v1(1, 2, 3),
 				v2(-10.5f, 9.35, 4 / 5);
 			assert(v0.x == 0 && v0.y == 0 && v0.z == 0);
-			assert(v1.x == 0 && v1.y == 0 && v1.z == 0);
-			assert(v2.x == -10.5 && v2.z == 9.35 && v2.z == 4 / 5);
+			assert(v1.x == 1 && v1.y == 2 && v1.z == 3);
+			assert(v2.x == -10.5f && v2.y == 9.35 && v2.z == 4 / 5);
 		}
 
 		static void TestComparison()
@@ -50,24 +50,17 @@ namespace TooGoodEngine
 			const Vector3
 				v0(2, 2, 2),
 				v1(4, 8, 16),
-				v2(0, 1, 2);
+				v2(0, 0, 0);
 
-			assert(v0 + v1 == Vector3(6, 10, 18));
-			assert(v0 - v1 == Vector3(2, 6, 14));
-			assert(v0 * v1 == Vector3(8, 16, 32));
-			assert(v0 / v1 == Vector3(2, 4, 8));
+			assert(v1 + v0 == Vector3(6, 10, 18));
+			assert(v1 - v0 == Vector3(2, 6, 14));
+			assert(v1 * v0 == Vector3(8, 16, 32));
+			assert(v1 / v0 == Vector3(2, 4, 8));
 
 			assert(-v0 == Vector3(-2, -2, -2));
 
-			try
-			{
-				Vector3 v = v1 / v2;
-				assert(false);
-			}
-			catch (const std::exception & e)
-			{
-				assert(typeid(e) == typeid(Exceptions::divided_by_zero));
-			}
+			Vector3 v = v1 / v2;
+			assert(isinf(v.x) && isinf(v.y) && isinf(v.z));
 		}
 
 		static void TestVectorToScalarOperator()
@@ -78,23 +71,16 @@ namespace TooGoodEngine
 			assert(v0 * 2 == Vector3(4, 4, 4));
 			assert(v0 / 2 == Vector3(1, 1, 1));
 
-			try
-			{
-				Vector3 v = v / 0;
-				assert(false);
-			}
-			catch (const std::exception & e)
-			{
-				assert(typeid(e) == typeid(Exceptions::divided_by_zero));
-			}
+			Vector3 v = v0 / 0;
+			assert(isinf(v.x) && isinf(v.y) && isinf(v.z));
 		}
 
 		static void TestAffectationOperators()
 		{
 			const Vector3
-				v0(2, 2, 2),
-				v1(4, 8, 16);
-			Vector3 v2(2, 2, 2);
+				v0(4, 8, 16),
+				v1(2, 2, 2);
+			Vector3 v2(4, 8, 16);
 			Vector3* p = &v2;
 
 			assert((v2 = v1) == v1);
@@ -195,17 +181,10 @@ namespace TooGoodEngine
 			assert(v2.Normalized() == Vector3(0, 0, 1));
 
 			double x = 1 / std::sqrt(3);
-			assert(v4.Normalized() == Vector3(x, x, x));
+			assert(v3.Normalized() == Vector3(x, x, x));
 
-			try
-			{
-				Vector3 v = v4.Normalized();
-				assert(false);
-			}
-			catch (const std::exception & e)
-			{
-				assert(typeid(e) == typeid(Exceptions::divided_by_zero));
-			}
+			Vector3 v = v4.Normalized();
+			assert(isnan(v.x) && isnan(v.y) && isnan(v.z));
 		}
 	};
 }
