@@ -20,9 +20,6 @@ include_directories(${SDL2_INCLUDE_DIR})
 include(CTest)
 include_directories("include")
 
-add_executable(TestSDL src/Test.cpp)
-target_link_libraries(TestSDL ${SDL2_LIBRARIES})
-
 add_executable(Particle src/Particle.cpp include/Particle.hpp src/Vector3.cpp include/Vector3.hpp)
 
 add_executable(Game src/Game.cpp src/Frame.cpp include/Frame.hpp src/Particle.cpp include/Particle.hpp src/Vector3.cpp include/Vector3.hpp)
