@@ -1,12 +1,14 @@
 #pragma once
 
+#include <ctime>
+
 namespace TooGoodEngine
 {
 	class Frame
 	{
 	private:
-		double lastFrame;
-		double deltaFrame;
+		std::time_t lastFrame;
+		std::time_t deltaFrame;
 
 	public:
 		Frame();
