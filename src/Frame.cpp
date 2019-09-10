@@ -1,10 +1,10 @@
 #include "Frame.hpp"
 #include <ctime>
-#include <cstdio>
+/*#include <cstdio>
 #include <cassert>
 #include <stdexcept>
 #include <unistd.h>
-
+*/
 namespace TooGoodEngine
 {
 	Frame::Frame()
@@ -21,12 +21,12 @@ namespace TooGoodEngine
 	void Frame::computeDeltaFrame()
 	{
 		std::time_t t = time(NULL);
-		deltaFrame =(double) (t - lastFrame) * 1000;
+		deltaFrame =(double) (t - lastFrame);
 		lastFrame = t;
 	}
 }
 
-int main() 
+/*int main() 
 {
 	using namespace TooGoodEngine;
 
@@ -37,4 +37,4 @@ int main()
 	f->computeDeltaFrame();
 	printf("delta frame : %f", f->getDeltaFrame());
 	return EXIT_SUCCESS;
-}
+}*/
