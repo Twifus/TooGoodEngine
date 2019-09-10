@@ -46,7 +46,7 @@ namespace TooGoodEngine
         // update vélocité
         velocite = velocite * std::pow(damping, temps) + acceleration * temps;
         // update acceleration (constant pour l'instant ?)
-        acceleration = inverseMasse * Vector3(0, -g, 0);
+        acceleration = Vector3(0, -g, 0);
     }
 }
 

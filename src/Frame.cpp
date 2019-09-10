@@ -1,23 +1,40 @@
-#include ннн<ctime>
 #include "Frame.hpp"
-
+#include <ctime>
+/*#include <cstdio>
+#include <cassert>
+#include <stdexcept>
+#include <unistd.h>
+*/
 namespace TooGoodEngine
 {
 	Frame::Frame()
 	{
-		this.lastFrame = 0;
-		this.deltaFrame = 0;
+		lastFrame = (double) time(NULL);
+		deltaFrame = 0.0;
 	}
 
 	double Frame::getDeltaFrame() const
 	{
-		return this.deltaFrame;
+		return deltaFrame;
 	}
 
-	void Frame::computeDeltaFrame() const
+	void Frame::computeDeltaFrame()
 	{
-		clock_t t = clock();
-		this.deltaFrame = (double)(t - this.lastFrame) / CLOCKS_PER_SECOND;
-		this.lastFrame = t;
+		std::time_t t = time(NULL);
+		deltaFrame =(double) (t - lastFrame);
+		lastFrame = t;
 	}
 }
+
+/*int main() 
+{
+	using namespace TooGoodEngine;
+
+	Frame * f = new Frame();
+	f->computeDeltaFrame();
+	printf("delta frame : %f\n", f->getDeltaFrame());
+	sleep(2);
+	f->computeDeltaFrame();
+	printf("delta frame : %f", f->getDeltaFrame());
+	return EXIT_SUCCESS;
+}*/
