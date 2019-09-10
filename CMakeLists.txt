@@ -21,7 +21,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
 include(CTest)
 include_directories("include")
 
-add_executable(Particule src/Particule.cpp include/Particule.hpp src/Vector3.cpp include/Vector3.hpp)
+add_executable(Game src/Game.cpp src/Frame.cpp include/Frame.hpp src/Particle.cpp include/Particle.hpp src/Vector3.cpp include/Vector3.hpp)
 
 add_executable(TestVector3 tests/TestVector3.cpp src/Vector3.cpp include/Vector3.hpp)
 add_test(TestVector3 COMMAND "TestVector3")

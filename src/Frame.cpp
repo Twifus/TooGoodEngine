@@ -1,5 +1,4 @@
 #include "Frame.hpp"
-#include <ctime>
 /*#include <cstdio>
 #include <cassert>
 #include <stdexcept>
@@ -9,7 +8,7 @@ namespace TooGoodEngine
 {
 	Frame::Frame()
 	{
-		lastFrame = (double) time(NULL);
+		lastFrame = time(NULL);
 		deltaFrame = 0.0;
 	}
 
@@ -21,7 +20,7 @@ namespace TooGoodEngine
 	void Frame::computeDeltaFrame()
 	{
 		std::time_t t = time(NULL);
-		deltaFrame =(double) (t - lastFrame);
+		deltaFrame =(t - lastFrame);
 		lastFrame = t;
 	}
 }

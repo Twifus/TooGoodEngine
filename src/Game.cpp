@@ -2,36 +2,37 @@
 #include "Frame.hpp"
 #include "Vector3.hpp"
 
+#include <iostream>
+
 #define PARTICLES_LENGTH 3
 
-void update(double deltatime, Particle& particle) 
-{
-	particle.Update(deltatime);
-}
+using namespace TooGoodEngine;
+
 
 void display(Particle& particle)
 {
-
+	std::cout << particle.position << std::endl;
 }
 
 int main() 
 {
 	Frame f = Frame();
 	Particle p[] = { Particle(), Particle(0.7, 3), Particle(0.5, 5) };
-	while (true) 
+	bool stop = false;
+	while (!stop) 
 	{
-		f.computeDeltaTime();
+		f.computeDeltaFrame();
 
 		//Loop for particles' position update
-		for (size_t i = 0; i < PARTICLES_LENGTH; i++)
+		for (auto &i : p)
 		{
-			update(f.getDeltaTime(),&p[i]);
+			i.Update(f.getDeltaFrame());
 		}
 
 		//Loop for particles display
 		for (size_t i = 0; i < PARTICLES_LENGTH; i++)
 		{
-			display(&p[i]);
+			display(p[i]);
 		}
 	}
 }
