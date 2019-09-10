@@ -1,6 +1,6 @@
 #pragma once
 
-namespace TooGoddEngine
+namespace TooGoodEngine
 {
 	class Frame
 	{
@@ -9,7 +9,8 @@ namespace TooGoddEngine
 		double deltaFrame;
 
 	public:
-		void computeDeltaFrame() const;
+		Frame();
+		void computeDeltaFrame();
 		double getDeltaFrame() const;
 	};
 }
