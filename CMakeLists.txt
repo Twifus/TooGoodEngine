@@ -3,17 +3,13 @@ cmake_minimum_required(VERSION 3.0)
 project(TooGoodEngine
 	LANGUAGES CXX C)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
-
 # SDL2
 
 if(WIN32)
-	if (${CMAKE_SIZEOF_VOID_P} MATCHES 8)
-		set(SDL2_PATH "${CMAKE_SOURCE_DIR}/external/SDL2-2.0.10/x86_64-w64-mingw32")
-	else()
-		set(SDL2_PATH "${CMAKE_SOURCE_DIR}/external/SDL2-2.0.10/i686-w64-mingw32")
-	endif()
+	set(SDL2_PATH "${CMAKE_SOURCE_DIR}/external/SDL2-2.0.10")
 endif()
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
 
 find_package(SDL2 REQUIRED)
 message(${SDL2_INCLUDE_DIR})
@@ -25,7 +21,7 @@ include(CTest)
 include_directories("include")
 
 add_executable(TestSDL src/Test.cpp)
-target_link_libraries(TestSDL ${SDL2_LIBRARY})
+target_link_libraries(TestSDL ${SDL2_LIBRARIES})
 
 add_executable(Particle src/Particle.cpp include/Particle.hpp src/Vector3.cpp include/Vector3.hpp)
 
