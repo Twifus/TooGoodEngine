@@ -21,7 +21,7 @@ namespace TooGoodEngine
 	void Frame::computeDeltaFrame()
 	{
 		std::time_t t = time(NULL);
-		deltaFrame =(double) (t - lastFrame);
+		deltaFrame =(double) (t - lastFrame) * 1000;
 		lastFrame = t;
 	}
 }
