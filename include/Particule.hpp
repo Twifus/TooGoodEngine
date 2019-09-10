@@ -9,7 +9,7 @@ namespace TooGoodEngine
     private:
         double masse;
         double inverseMasse;
-        double dumping;
+        double damping;
 
     public:
         Vector3 position;
@@ -17,13 +17,11 @@ namespace TooGoodEngine
         Vector3 acceleration;
 
         Particule();
-        Particule(double m);
-        Particule(double m, Vector3 pos);
+        Particule(double d, double m);
 
         double InverseMasse() const;
         void SetMasse(double m);
         double GetMasse() const;
-        void SetDumping(double d);
 
         void Integrer(double temps);
     };
