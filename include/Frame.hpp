@@ -1,14 +1,15 @@
 #pragma once
 
-#include <ctime>
+#include <chrono>
 
 namespace TooGoodEngine
 {
+	using clock_tick = std::chrono::time_point<std::chrono::high_resolution_clock>;
 	class Frame
 	{
 	private:
-		std::time_t lastFrame;
-		std::time_t deltaFrame;
+		clock_tick lastFrame;
+		double deltaFrame;
 
 	public:
 		Frame();
