@@ -9,7 +9,7 @@
 #define VIEW_WIDTH 1280
 #define VIEW_HEIGHT 720
 
-#define PIXEL_UNIT 0.01f
+#define PIXEL_UNIT 0.01
 
 #define BOX_SIZE 16
 
@@ -27,7 +27,7 @@ public:
 
 ViewPoint WorldToView(Vector3 pos)
 {
-	return ViewPoint((pos.x / PIXEL_UNIT) + (2 * AXIS_OFFSET + AXIS_WIDTH / 2) - BOX_SIZE / 2, VIEW_HEIGHT - (pos.y / PIXEL_UNIT) - (2 * AXIS_OFFSET + AXIS_WIDTH / 2) - BOX_SIZE / 2);
+	return ViewPoint((pos.x / PIXEL_UNIT) + (double)(2 * AXIS_OFFSET + AXIS_WIDTH / 2) - BOX_SIZE / 2, VIEW_HEIGHT - (pos.y / PIXEL_UNIT) - (double)(2 * AXIS_OFFSET + AXIS_WIDTH / 2) - BOX_SIZE / 2);
 }
 
 void DrawAxes(SDL_Renderer *renderer)
@@ -92,7 +92,7 @@ int main (int argc, char* argv[])
 	{
 		f.computeDeltaFrame();
 
-		std::cout << f.getDeltaFrame() << std::endl;
+		// std::cout << f.getDeltaFrame() << std::endl;
 
 		if (SDL_PollEvent(&event))
 		{
@@ -115,8 +115,8 @@ int main (int argc, char* argv[])
 		{
 			
 			ViewPoint vp = WorldToView(p[i].position);
-			r.x = vp.x;
-			r.y = vp.y;
+			r.x = (int)vp.x;
+			r.y = (int)vp.y;
 
 			// Set color to blue (will change rect color)
 			SDL_SetRenderDrawColor( renderer, std::get<0>(c[i]), std::get<1>(c[i]), std::get<2>(c[i]), 255 );

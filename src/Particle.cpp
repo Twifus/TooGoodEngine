@@ -12,8 +12,16 @@ namespace TooGoodEngine
     Particle::Particle() :
     mass(1), inverseMass(1), damping(0.95) {}
 
-    Particle::Particle(double d, double m) :
-    mass(m), inverseMass(1/mass), damping(d) {}
+	Particle::Particle(double m, double d) :
+		mass(m), inverseMass(1 / mass), damping(d) {}
+
+    Particle::Particle(double m,
+		Vector3 p,
+		Vector3 v,
+		Vector3 a,
+		double d) :
+	mass(m), inverseMass(1/mass), damping(d),
+	position(p), velocity(v), acceleration(a) {}
 
     double Particle::InverseMasse() const
     {
