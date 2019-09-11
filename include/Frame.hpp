@@ -13,7 +13,7 @@ namespace TooGoodEngine
 
 	public:
 		Frame();
-		void computeDeltaFrame();
-		double getDeltaFrame() const;
+		void computeDeltaFrame();		// Compute the time between the current and the last frame
+		double getDeltaFrame() const;	// Getter for the time between two frames
 	};
 }
