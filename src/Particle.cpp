@@ -51,9 +51,9 @@ namespace TooGoodEngine
     {
         //update position
         position = position + velocity * time;
-        // update vélocité
+        // update velocity
         velocity = velocity * std::pow(damping, time) + acceleration * time;
-        // update acceleration (constant pour l'instant ?)
+        // update acceleration (no forces yet, except gravity...)
         acceleration = Vector3(0, -g, 0);
     }
 }
