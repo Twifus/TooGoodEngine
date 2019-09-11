@@ -1,6 +1,7 @@
 #include "Vector3.hpp"
 
 #include <cassert>
+#include <cmath>
 #include <stdexcept>
 
 namespace TooGoodEngine
@@ -59,7 +60,7 @@ namespace TooGoodEngine
 			assert(-v0 == Vector3(-2, -2, -2));
 
 			Vector3 v = v1 / v2;
-			assert(isinf(v.x) && isinf(v.y) && isinf(v.z));
+			assert(std::isinf(v.x) && std::isinf(v.y) && std::isinf(v.z));
 		}
 
 		static void TestVectorToScalarOperator()
@@ -71,7 +72,7 @@ namespace TooGoodEngine
 			assert(v0 / 2 == Vector3(1, 1, 1));
 
 			Vector3 v = v0 / 0;
-			assert(isinf(v.x) && isinf(v.y) && isinf(v.z));
+			assert(std::isinf(v.x) && std::isinf(v.y) && std::isinf(v.z));
 		}
 
 		static void TestAffectationOperators()
@@ -183,7 +184,7 @@ namespace TooGoodEngine
 			assert(v3.Normalized() == Vector3(x, x, x));
 
 			Vector3 v = v4.Normalized();
-			assert(isnan(v.x) && isnan(v.y) && isnan(v.z));
+			assert(std::isnan(v.x) && std::isnan(v.y) && std::isnan(v.z));
 		}
 	};
 }
