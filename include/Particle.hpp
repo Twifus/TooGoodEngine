@@ -16,11 +16,11 @@ namespace TooGoodEngine
         Vector3 velocity;
         Vector3 acceleration;
 
-		// Constructeur par défaut
+		// Constructeur par dï¿½faut
         Particle();
 		// Surcharge du constructeur pour la masse (et potentiellement le frottement)
 		Particle(double mass, double damping = 0.95);
-		// Surcharge du constructeur pour un initialisation complète
+		// Surcharge du constructeur pour un initialisation complï¿½te
         Particle(
 			double mass,
 			Vector3 position = Vector3(),
@@ -36,7 +36,7 @@ namespace TooGoodEngine
 		// Permet d'obtenir directement la valeur de 1/m
         double InverseMasse() const;
         
-		// Mise-à-jour des vecteurs pos/vel/acc en fonction du temps
+		// Mise-ï¿½-jour des vecteurs pos/vel/acc en fonction du temps
         void Update(double temps);
     };
 }

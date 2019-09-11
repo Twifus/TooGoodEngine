@@ -18,6 +18,7 @@
 
 using namespace TooGoodEngine;
 
+// Class representing a point of the viewport
 class ViewPoint
 {
 public:
@@ -25,11 +26,13 @@ public:
 	ViewPoint(double x, double y) : x(x), y(y) {}
 };
 
+// This function converts a position in the game world to a point of the viewport
 ViewPoint WorldToView(Vector3 pos)
 {
 	return ViewPoint((pos.x / PIXEL_UNIT) + (double)(2 * AXIS_OFFSET + AXIS_WIDTH / 2) - BOX_SIZE / 2, VIEW_HEIGHT - (pos.y / PIXEL_UNIT) - (double)(2 * AXIS_OFFSET + AXIS_WIDTH / 2) - BOX_SIZE / 2);
 }
 
+// This funtion draw white axes on the given renderer. It helps locating particles in the world space.
 void DrawAxes(SDL_Renderer *renderer)
 {
 	SDL_Rect xaxis, yaxis;
@@ -54,6 +57,7 @@ void DrawAxes(SDL_Renderer *renderer)
 
 int main (int argc, char* argv[])
 {
+	// Create a sdl window
     SDL_Window* window = NULL;
     window = SDL_CreateWindow("Simulation de tir", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_SHOWN);
 
@@ -70,17 +74,17 @@ int main (int argc, char* argv[])
 	// Set background to black
     SDL_SetRenderDrawColor( renderer, 0, 0, 0, 255 );
 
-	// EVENT LOOP
 	SDL_Rect r;
 	r.w = BOX_SIZE;
 	r.h = BOX_SIZE;
 	SDL_Event event;
 	
+	// Particle init
 	Frame f = Frame();
-	std::vector<Particle> p = { Particle(), Particle(3, 0.7), Particle(5, 0.5) };
-	std::vector<Vector3> p0 = { Vector3(0, 7, 0), Vector3(0, 5, 0), Vector3() };
-	std::vector<Vector3> v = { Vector3(), Vector3(10, 0, 0), Vector3(10, 15, 0) };
-	std::vector<std::tuple<int, int, int>> c = { std::make_tuple(255, 0, 0), std::make_tuple(0, 255, 0), std::make_tuple(0, 0, 255) };
+	std::vector<Particle> p = { Particle(), Particle(3, 0.7), Particle(5, 0.5) }; // Particle
+	std::vector<Vector3> p0 = { Vector3(0, 7, 0), Vector3(0, 5, 0), Vector3() }; // Initial pos
+	std::vector<Vector3> v = { Vector3(), Vector3(10, 0, 0), Vector3(10, 15, 0) }; // Initial velocity
+	std::vector<std::tuple<int, int, int>> c = { std::make_tuple(255, 0, 0), std::make_tuple(0, 255, 0), std::make_tuple(0, 0, 255) }; // Color
 
 	for (int i = 0; i < p.size(); ++i)
 	{
@@ -88,12 +92,14 @@ int main (int argc, char* argv[])
 		p[i].velocity = v[i];
 	}
 
+	////////////////
+	// EVENT LOOP //
 	while (1)
 	{
+		// Mesure deltaTime since last frame
 		f.computeDeltaFrame();
 
-		// std::cout << f.getDeltaFrame() << std::endl;
-
+		// Event management
 		if (SDL_PollEvent(&event))
 		{
 			if (event.type == SDL_QUIT)
@@ -101,10 +107,13 @@ int main (int argc, char* argv[])
 				break;
 			}
 		}
+
+		// Clear renderer before drawing the new frame
 		SDL_RenderClear(renderer);
 
 		DrawAxes(renderer);
 		
+		// Update each particle position
 		for (auto &i : p)
 		{
 			i.Update(f.getDeltaFrame());
@@ -118,16 +127,20 @@ int main (int argc, char* argv[])
 			r.x = (int)vp.x;
 			r.y = (int)vp.y;
 
-			// Set color to blue (will change rect color)
+			// Set color of particle
 			SDL_SetRenderDrawColor( renderer, std::get<0>(c[i]), std::get<1>(c[i]), std::get<2>(c[i]), 255 );
 
+			// Draw particle on rederer
 			SDL_RenderFillRect( renderer, &r );
 
+			// Reset color to black
 			SDL_SetRenderDrawColor( renderer, 0, 0, 0, 255 );
 		}
 
     	SDL_RenderPresent(renderer);
 	}
+	// EVENT LOOP //
+	////////////////
 
 
     SDL_DestroyWindow(window);
