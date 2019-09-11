@@ -8,9 +8,9 @@ Il est aussi nécessaire d'avoir CMake (version 3.0 minimum) pour compiler le pr
 
 # Compilation et tests
 ## Linux
-> cd build
-> cmake ..
-> make all test
+> cd build;
+> cmake ..;
+> make all test;
 > ./Game
 
 ## Windows
