@@ -1,8 +1,12 @@
 #pragma once
 #include "Particle.hpp"
 
-class ParticleForceGenerator
+namespace TooGoodEngine
 {
-public:
-	virtual void updateForce(Particle * particle, float time) = 0;
-};
+	class ParticleForceGenerator
+	{
+	public:
+		virtual void UpdateForce(Particle &particle, float time) = 0;
+	};
+}
+
