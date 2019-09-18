@@ -11,10 +11,11 @@ namespace TooGoodEngine
         double inverseMass;
         double damping;
 
+		Vector3 position;
+		Vector3 velocity;
+		Vector3 acceleration;
+
     public:
-        Vector3 position;
-        Vector3 velocity;
-        Vector3 acceleration;
 
 		// Default constructor
         Particle();
