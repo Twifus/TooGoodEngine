@@ -23,7 +23,17 @@ namespace TooGoodEngine
 	mass(m), inverseMass(1/mass), damping(d),
 	position(p), velocity(v), acceleration(a) {}
 
-    double Particle::InverseMasse() const
+	Vector3 Particle::GetPosition() const
+	{
+		return position;
+	}
+
+	Vector3 Particle::GetVelocity() const
+	{
+		return velocity;
+	}
+
+	double Particle::InverseMasse() const
     {
         return inverseMass;
     }
@@ -46,6 +56,16 @@ namespace TooGoodEngine
     {
         return mass;
     }
+
+	void Particle::AddForce(Vector3 newForce)
+	{
+		resultantForce += newForce;
+	}
+
+	void Particle::ClearForces()
+	{
+		resultantForce = Vector3(0, 0, 0);
+	}
 
     void Particle::Update(double time)
     {
