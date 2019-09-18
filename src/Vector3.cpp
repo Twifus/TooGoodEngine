@@ -93,36 +93,6 @@ namespace TooGoodEngine
 		return *this;
 	}
 
-	double Vector3::operator[](int index) const
-	{
-		switch (index)
-		{
-		case 0:
-			return x;
-		case 1:
-			return y;
-		case 2:
-			return z;
-		default:
-			throw std::out_of_range("Vector3 contains only 3 elements");
-		}
-	}
-
-	double& Vector3::operator[](int index)
-	{
-		switch (index)
-		{
-		case 0:
-			return x;
-		case 1:
-			return y;
-		case 2:
-			return z;
-		default:
-			throw std::out_of_range("Vector3 contains only 3 elements");
-		}
-	}
-
 	double Vector3::Dot(const Vector3 &lhs, const Vector3 &rhs)
 	{
 		return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;

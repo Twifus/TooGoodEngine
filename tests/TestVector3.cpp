@@ -98,36 +98,6 @@ namespace TooGoodEngine
 			assert((v2 /= v1) == Vector3(2, 4, 8));
 		}
 
-		static void TestIndexAccessor()
-		{
-			const Vector3 v0(0, 1, 2);
-			Vector3 v1(0, 1, 2);
-
-			assert(v0[0] == 0);
-			assert(v0[1] == 1);
-			assert(v0[2] == 2);
-
-			try
-			{
-				double x = v0[-1];
-				assert(false);
-			}
-			catch (const std::exception & e)
-			{
-				assert(typeid(e) == typeid(std::out_of_range));
-			}
-
-			try
-			{
-				double x = v0[3];
-				assert(false);
-			}
-			catch (const std::exception & e)
-			{
-				assert(typeid(e) == typeid(std::out_of_range));
-			}
-		}
-
 		static void TestDot()
 		{
 			const Vector3
@@ -197,7 +167,6 @@ int main(int argc, char *argv[])
 	TestVector3::TestVectorToVectorOperators();
 	TestVector3::TestVectorToScalarOperator();
 	TestVector3::TestAffectationOperators();
-	TestVector3::TestIndexAccessor();
 	TestVector3::TestDot();
 	TestVector3::TestCross();
 	TestVector3::TestMagnitude();

@@ -32,9 +32,6 @@ namespace TooGoodEngine
 		Vector3& operator*=(double k);						// Multiplication vector by scalar
 		Vector3& operator/=(double k);						// Division of a vector by a scalar
 
-		double operator[](int index) const;					// Get a component (0->x, 1->y, 2->z)
-		double& operator[](int index);						// Get a reference to a component (0->x, 1->y, 2->z)
-
 		static double Dot(const Vector3 & lhs, const Vector3 & rhs);	// Scalar product of two vectors
 		static Vector3 Cross(const Vector3 & lhs, const Vector3 & rhs);	// Mathematical cross product
 
