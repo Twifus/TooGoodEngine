@@ -19,7 +19,7 @@ namespace TooGoodEngine
 		Vector3 screenPos = WorldToView(p->GetPosition());
 		rect.x = screenPos.x;
 		rect.y = screenPos.y;
-		rect.w = rect.h = p->GetMass() * 5;
+		rect.w = rect.h = 10 ;//* p->GetMass();
 		color[0] = r;
 		color[1] = g;
 		color[2] = b;

@@ -8,8 +8,6 @@
 #include "Frame.hpp"
 #include "Sprite.hpp"
 
-
-
 using namespace TooGoodEngine;
 
 std::vector<Particle> particules;
@@ -21,14 +19,17 @@ SDL_Window* window = NULL;
 
 void initParticles()
 {
-	Particle stone = Particle(10, Vector3(0, 10, 0));
-	Particle bullet = Particle(1, Vector3(0, 0, 0), Vector3(100, 0, 0));
+	Particle stone = Particle(1, Vector3(0, 7, 0));
+	Particle bullet = Particle(3, Vector3(0, 5, 0), Vector3(10, 0, 0));
+	Particle rocket = Particle(5, Vector3(0, 0, 0), Vector3(10, 15, 0));
 
-	particules = { stone, bullet };
+	particules = { stone, bullet, rocket };
 
-	for (auto &i : particules)
+	int colors[][3] = {{255,0,0}, {0,255,0}, {0,0,255}};
+
+	for (int i=0; i < particules.size(); i++)
 	{
-		sprites.push_back(Sprite(&i));
+		sprites.push_back(Sprite(&particules[i], colors[i][0], colors[i][1], colors[i][2]));
 	}
 
 }
