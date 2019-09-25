@@ -13,25 +13,28 @@ namespace TooGoodEngine
 		);
 	}
 
-	Sprite::Sprite(Particle* p)
+	Sprite::Sprite(Particle* p, int r, int g, int b)
 	{
 		parent = p;
 		Vector3 screenPos = WorldToView(p->GetPosition());
 		rect.x = screenPos.x;
 		rect.y = screenPos.y;
 		rect.w = rect.h = p->GetMass() * 5;
+		color[0] = r;
+		color[1] = g;
+		color[2] = b;
 	}
 
-	Sprite::Draw(SDL_Renderer* renderer)
+	void Sprite::Draw(SDL_Renderer* renderer)
 	{
-		Vector3 screenPos = WorldToView(parent->position);
+		Vector3 screenPos = WorldToView(parent->GetPosition());
 		rect.x = screenPos.x;
 		rect.y = screenPos.y;
 
 		//TODO : couleur et ligne en dessous
 
 		// Set color of particle
-		SDL_SetRenderDrawColor(renderer, std::get<0>(color), std::get<1>(color), std::get<2>(color), 255);
+		SDL_SetRenderDrawColor(renderer, color[0], color[1], color[2], 255);
 
 		// Draw particle on rederer
 		SDL_RenderFillRect(renderer, &rect);

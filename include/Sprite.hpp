@@ -19,10 +19,10 @@ namespace TooGoodEngine
 	{
 	private:
 		SDL_Rect rect;
-		std::tuple<int, int, int> color;
-		Particle* p;
+		int color[3];
+		Particle* parent;
 	public:
-		Sprite(Particle* p);
+		Sprite(Particle* p,  int r = 255, int g = 0, int b = 0);
 		void Draw(SDL_Renderer* renderer);
 	};
 
