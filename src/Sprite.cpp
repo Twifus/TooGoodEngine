@@ -7,8 +7,8 @@ namespace TooGoodEngine
 	Vector3 WorldToView(Vector3 pos)
 	{
 		return Vector3(
-			(pos.x / PIXEL_UNIT) + (double)(2 * AXIS_OFFSET + AXIS_WIDTH / 2) - BOX_SIZE / 2,
-			VIEW_HEIGHT - (pos.y / PIXEL_UNIT) - (double)(2 * AXIS_OFFSET + AXIS_WIDTH / 2) - BOX_SIZE / 2,
+			(pos.x / PIXEL_UNIT) + static_cast<double>(2 * AXIS_OFFSET + AXIS_WIDTH / 2) - BOX_SIZE / 2,
+			VIEW_HEIGHT - (pos.y / PIXEL_UNIT) - static_cast<double>(2 * AXIS_OFFSET + AXIS_WIDTH / 2) - BOX_SIZE / 2,
 			0
 		);
 	}
@@ -17,8 +17,8 @@ namespace TooGoodEngine
 	{
 		parent = p;
 		Vector3 screenPos = WorldToView(p->GetPosition());
-		rect.x = screenPos.x;
-		rect.y = screenPos.y;
+		rect.x = static_cast<int>(screenPos.x);
+		rect.y = static_cast<int>(screenPos.y);
 		rect.w = rect.h = 10 ;//* p->GetMass();
 		color[0] = r;
 		color[1] = g;
@@ -28,8 +28,8 @@ namespace TooGoodEngine
 	void Sprite::Draw(SDL_Renderer* renderer)
 	{
 		Vector3 screenPos = WorldToView(parent->GetPosition());
-		rect.x = screenPos.x;
-		rect.y = screenPos.y;
+		rect.x = static_cast<int>(screenPos.x);
+		rect.y = static_cast<int>(screenPos.y);
 
 		//TODO : couleur et ligne en dessous
 
