@@ -1,11 +1,11 @@
 #include "ForcesRegister.hpp"
 #include "..\include\ForcesRegistery.hpp"
 
-TooGoodEngine::ForcesRegistery::ForcesRegistryEntry::ForcesRegistryEntry(Particle & particle, ParticleForceGenerator & generator) : particle(particle), generator(generator) {}
+TooGoodEngine::ForcesRegistery::RegistryEntry::RegistryEntry(Particle & particle, ParticleForceGenerator & generator) : particle(particle), generator(generator) {}
 
 void TooGoodEngine::ForcesRegistery::Add(Particle & particle, ParticleForceGenerator & generator)
 {
-	//registry.add
+	registry.push_back(ForcesRegistery::RegistryEntry(particle, generator));
 }
 
 void TooGoodEngine::ForcesRegistery::Clear()

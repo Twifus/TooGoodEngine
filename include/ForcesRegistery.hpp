@@ -9,15 +9,15 @@ namespace TooGoodEngine
 	class ForcesRegistery
 	{
 	private:
-		struct ForcesRegistryEntry
+		struct RegistryEntry
 		{
 			Particle& particle;
 			ParticleForceGenerator &generator;
 
-			ForcesRegistryEntry(Particle& particle, ParticleForceGenerator& generator);
+			RegistryEntry(Particle& particle, ParticleForceGenerator& generator);
 		};
 
-		std::vector<ForcesRegistryEntry> registry;
+		std::vector<RegistryEntry> registry;
 
 	public:
 		void Add(Particle& particle, ParticleForceGenerator& generator);
