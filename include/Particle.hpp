@@ -23,34 +23,33 @@ namespace TooGoodEngine
         Particle();
         
 		// Overloaded constructor to setup mass (and damping if needed)
-		Particle(double mass, double damping = 0.95);
+		Particle(double mass, double damping);
 
-		// Overloaded constructor for a full initialisation
+		// Overloaded constructor for a full initialization
         Particle(
 			double mass,
 			Vector3 position = Vector3(),
 			Vector3 velocity = Vector3(),
-			Vector3 acceleration = Vector3(),
 			double damping = 0.95
 		);
 
-		// Mass accesors
+		// Mass accessors
 		void SetMass(double m);
 		double GetMass() const;
 
-		// Position, velocity and accel accessors
+		// Position, velocity and acceleration accessors
 		Vector3 GetPosition() const;
 		Vector3 GetVelocity() const;
 
 		// Easy way to get 1/m (save calculation time)
-        double InverseMass() const;
+        double GetInverseMass() const;
 
 		// Add a force to the resultant force buffer
 		void AddForce(Vector3 newForce);
 		// Clear the resultant force
 		void ClearForces();
         
-		// Updating physics of the particle (pos, vel, acc according time spend)
+		// Updating physics of the particle (position, velocity, acceleration according time spend)
         void Update(double time);
     };
 }

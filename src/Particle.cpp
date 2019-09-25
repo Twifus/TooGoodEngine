@@ -9,19 +9,14 @@ static double g = 10;
 
 namespace TooGoodEngine
 {
-    Particle::Particle() :
-    mass(1), inverseMass(1), damping(0.95) {}
+    Particle::Particle() : Particle(1) {}
 
-	Particle::Particle(double m, double d) :
-		mass(m), inverseMass(1 / mass), damping(d) {}
+	Particle::Particle(double m, double d) : Particle(m, Vector3(), Vector3(), d) {}
 
-    Particle::Particle(double m,
-		Vector3 p,
-		Vector3 v,
-		Vector3 a,
-		double d) :
-	mass(m), inverseMass(1/mass), damping(d),
-	position(p), velocity(v), acceleration(a) {}
+    Particle::Particle(double m, Vector3 p, Vector3 v, double d) : damping(d), position(p), velocity(v)
+	{
+		SetMass(m);
+	}
 
 	Vector3 Particle::GetPosition() const
 	{
@@ -33,7 +28,7 @@ namespace TooGoodEngine
 		return velocity;
 	}
 
-	double Particle::InverseMass() const
+	double Particle::GetInverseMass() const
     {
         return inverseMass;
     }
