@@ -33,7 +33,7 @@ namespace TooGoodEngine
 		return velocity;
 	}
 
-	double Particle::InverseMasse() const
+	double Particle::InverseMass() const
     {
         return inverseMass;
     }

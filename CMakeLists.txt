@@ -18,7 +18,11 @@ include(CTest)
 include_directories("include")
 
 # Game
-add_executable(Game src/Game.cpp src/Vector3.cpp include/Vector3.hpp src/Particle.cpp include/Particle.hpp src/Frame.cpp include/Frame.hpp)
+add_executable(Game src/Game.cpp
+			   src/Vector3.cpp  include/Vector3.hpp
+			   src/Particle.cpp include/Particle.hpp
+			   src/Frame.cpp    include/Frame.hpp
+			   src/Sprite.cpp   include/Sprite.hpp)
 target_link_libraries(Game ${SDL2_LIBRARY})
 if(WIN32) # On Windows systems, copy SDL2.dll to build directory
 	if(CMAKE_SIZEOF_VOID_P EQUAL 8)

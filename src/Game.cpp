@@ -2,37 +2,36 @@
 #include <SDL.h>
 #include <vector>
 #include <tuple>
+
 #include "Vector3.hpp"
 #include "Particle.hpp"
 #include "Frame.hpp"
+#include "Sprite.hpp"
 
-#define VIEW_WIDTH 1280
-#define VIEW_HEIGHT 720
 
-#define PIXEL_UNIT 0.01
-
-#define BOX_SIZE 16
-
-#define AXIS_WIDTH 4
-#define AXIS_OFFSET 5
 
 using namespace TooGoodEngine;
 
-// Class representing a point of the viewport
-class ViewPoint
-{
-public:
-	double x, y;
-	ViewPoint(double x, double y) : x(x), y(y) {}
-};
+std::vector<Particle> particules;
+std::vector<Sprite> sprites;
 
-// This function converts a position in the game world to a point of the viewport
-ViewPoint WorldToView(Vector3 pos)
-{
-	return ViewPoint((pos.x / PIXEL_UNIT) + (double)(2 * AXIS_OFFSET + AXIS_WIDTH / 2) - BOX_SIZE / 2, VIEW_HEIGHT - (pos.y / PIXEL_UNIT) - (double)(2 * AXIS_OFFSET + AXIS_WIDTH / 2) - BOX_SIZE / 2);
-}
+// SDL_Rect r;
+SDL_Event event;
+SDL_Window* window = NULL;
 
-// This function draw white axes on the given renderer. It helps locating particles in the world space.
+void initParticles()
+{
+	Particle stone = Particle(10, Vector3(0, 10, 0));
+	Particle bullet = Particle(1, Vector3(0, 0, 0), Vector3(100, 0, 0));
+
+	particules = { stone, bullet };
+
+	for (auto &i : particules)
+	{
+		sprites.push_back(Sprite(&i));
+	}
+
+// This funtion draw white axes on the given renderer. It helps locating particles in the world space.
 void DrawAxes(SDL_Renderer *renderer)
 {
 	SDL_Rect xaxis, yaxis;
@@ -55,21 +54,21 @@ void DrawAxes(SDL_Renderer *renderer)
 	SDL_SetRenderDrawColor( renderer, 0, 0, 0, 255 );
 }
 
-int main (void)
+int main (int argc, char* argv[])
 {
-	// Create a SDL window
+	// Create a sdl window
     SDL_Window* window = NULL;
     window = SDL_CreateWindow("Simulation de tir", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_SHOWN);
 
 	if (!window)
-		return EXIT_FAILURE;
+		return nullptr;
 
-    // Create a renderer
-    SDL_Renderer* renderer = NULL;
-    renderer =  SDL_CreateRenderer( window, -1, 0);
+	// Create a renderer
+	SDL_Renderer* renderer = NULL;
+	renderer = SDL_CreateRenderer(window, -1, 0);
 
 	if (!renderer)
-		return EXIT_FAILURE;
+		return nullptr;
 
 	// Set background to black
     SDL_SetRenderDrawColor( renderer, 0, 0, 0, 255 );
@@ -79,19 +78,22 @@ int main (void)
 	r.h = BOX_SIZE;
 	SDL_Event event;
 	
-	// Particle initialization
+	// Particle init
 	Frame f = Frame();
 	std::vector<Particle> p = { Particle(), Particle(3, 0.7), Particle(5, 0.5) }; // Particle
 	std::vector<Vector3> p0 = { Vector3(0, 7, 0), Vector3(0, 5, 0), Vector3() }; // Initial pos
 	std::vector<Vector3> v = { Vector3(), Vector3(10, 0, 0), Vector3(10, 15, 0) }; // Initial velocity
 	std::vector<std::tuple<int, int, int>> c = { std::make_tuple(255, 0, 0), std::make_tuple(0, 255, 0), std::make_tuple(0, 0, 255) }; // Color
 
-	for (int i = 0; i < p.size(); ++i)
-	{
-		p[i].position = p0[i];
-		p[i].velocity = v[i];
-	}
+int main (int argc, char* argv[])
+{
+	initParticles();
+	SDL_Renderer* renderer = initRenderer();
+	if (renderer == nullptr)
+		return EXIT_FAILURE;
 
+	Frame f = Frame();
+	
 	////////////////
 	// EVENT LOOP //
 	while (1)
@@ -114,13 +116,13 @@ int main (void)
 		DrawAxes(renderer);
 		
 		// Update each particle position
-		for (auto &i : p)
+		for (auto &i : particules)
 		{
 			i.Update(f.getDeltaFrame());
 		}
 
 		//Loop for particles display
-		for (size_t i = 0; i < p.size(); i++)
+		for (auto &i : sprites)
 		{
 			
 			ViewPoint vp = WorldToView(p[i].position);
@@ -130,7 +132,7 @@ int main (void)
 			// Set color of particle
 			SDL_SetRenderDrawColor( renderer, std::get<0>(c[i]), std::get<1>(c[i]), std::get<2>(c[i]), 255 );
 
-			// Draw particle on renderer
+			// Draw particle on rederer
 			SDL_RenderFillRect( renderer, &r );
 
 			// Reset color to black

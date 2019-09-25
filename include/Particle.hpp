@@ -43,7 +43,7 @@ namespace TooGoodEngine
 		Vector3 GetVelocity() const;
 
 		// Easy way to get 1/m (save calculation time)
-        double InverseMasse() const;
+        double InverseMass() const;
 
 		// Add a force to the resultant force buffer
 		void AddForce(Vector3 newForce);
@@ -51,6 +51,6 @@ namespace TooGoodEngine
 		void ClearForces();
         
 		// Updating physics of the particle (pos, vel, acc according time spend)
-        void Update(double temps);
+        void Update(double time);
     };
 }
