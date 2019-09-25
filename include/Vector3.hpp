@@ -18,14 +18,14 @@ namespace TooGoodEngine
 		bool operator!=(const Vector3 & other) const;		// Comparison like above
 
 		Vector3 operator+(const Vector3 & other) const;		// Addition component by component
-		Vector3 operator-(const Vector3 & other) const;		// Substraction by component
+		Vector3 operator-(const Vector3 & other) const;		// Subtraction by component
 		Vector3 operator*(const Vector3 & other) const;		// Multiplication by component
 		Vector3 operator/(const Vector3 & other) const;		// Division by component
 
 		Vector3 operator-() const;							// Opposite vector
 
 		Vector3& operator+=(const Vector3 & other);			// Addition by component
-		Vector3& operator-=(const Vector3 & other);			// Substraction by component
+		Vector3& operator-=(const Vector3 & other);			// Subtraction by component
 		Vector3& operator*=(const Vector3 & other);			// Multiplication by component
 		Vector3& operator/=(const Vector3 & other);			// Division by component
 
@@ -41,7 +41,7 @@ namespace TooGoodEngine
 	};
 
 	Vector3 operator*(const Vector3 & v, double k);			// Multiplication by scalar
-	Vector3 operator*(double k, const Vector3 & v);			// Symetrical of the multiplication by a scalar
+	Vector3 operator*(double k, const Vector3 & v);			// Symmetrical of the multiplication by a scalar
 	Vector3 operator/(const Vector3 & v, double k);			// Division by a scalar
 
 	std::ostream& operator<<(std::ostream & stream, const Vector3 & v);	// Console display of a vector

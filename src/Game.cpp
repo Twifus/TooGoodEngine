@@ -32,7 +32,7 @@ ViewPoint WorldToView(Vector3 pos)
 	return ViewPoint((pos.x / PIXEL_UNIT) + (double)(2 * AXIS_OFFSET + AXIS_WIDTH / 2) - BOX_SIZE / 2, VIEW_HEIGHT - (pos.y / PIXEL_UNIT) - (double)(2 * AXIS_OFFSET + AXIS_WIDTH / 2) - BOX_SIZE / 2);
 }
 
-// This funtion draw white axes on the given renderer. It helps locating particles in the world space.
+// This function draw white axes on the given renderer. It helps locating particles in the world space.
 void DrawAxes(SDL_Renderer *renderer)
 {
 	SDL_Rect xaxis, yaxis;
@@ -55,9 +55,9 @@ void DrawAxes(SDL_Renderer *renderer)
 	SDL_SetRenderDrawColor( renderer, 0, 0, 0, 255 );
 }
 
-int main (int argc, char* argv[])
+int main (void)
 {
-	// Create a sdl window
+	// Create a SDL window
     SDL_Window* window = NULL;
     window = SDL_CreateWindow("Simulation de tir", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_SHOWN);
 
@@ -79,7 +79,7 @@ int main (int argc, char* argv[])
 	r.h = BOX_SIZE;
 	SDL_Event event;
 	
-	// Particle init
+	// Particle initialization
 	Frame f = Frame();
 	std::vector<Particle> p = { Particle(), Particle(3, 0.7), Particle(5, 0.5) }; // Particle
 	std::vector<Vector3> p0 = { Vector3(0, 7, 0), Vector3(0, 5, 0), Vector3() }; // Initial pos
@@ -96,7 +96,7 @@ int main (int argc, char* argv[])
 	// EVENT LOOP //
 	while (1)
 	{
-		// Mesure deltaTime since last frame
+		// Measure deltaTime since last frame
 		f.computeDeltaFrame();
 
 		// Event management
@@ -130,7 +130,7 @@ int main (int argc, char* argv[])
 			// Set color of particle
 			SDL_SetRenderDrawColor( renderer, std::get<0>(c[i]), std::get<1>(c[i]), std::get<2>(c[i]), 255 );
 
-			// Draw particle on rederer
+			// Draw particle on renderer
 			SDL_RenderFillRect( renderer, &r );
 
 			// Reset color to black
