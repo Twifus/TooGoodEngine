@@ -6,6 +6,12 @@
 
 namespace TooGoodEngine
 {
+	const Vector3 Vector3::zero(0, 0, 0);
+	const Vector3 Vector3::one(1, 1, 1);
+	const Vector3 Vector3::right(1, 0, 0);
+	const Vector3 Vector3::up(0, 1, 0);
+	const Vector3 Vector3::forward(0, 0, 1);
+
 	Vector3::Vector3() : x(0), y(0), z(0) {}
 
 	Vector3::Vector3(double x, double y, double z) : x(x), y(y), z(z) {}

@@ -2,7 +2,7 @@
 
 namespace TooGoodEngine
 {
-	Vector3 GravityForceGenerator::gravity(0, -10, 0);
+	Vector3 GravityForceGenerator::gravity = -10 * Vector3::up;
 
 	void GravityForceGenerator::UpdateForce(Particle &particle, double time) const
 	{

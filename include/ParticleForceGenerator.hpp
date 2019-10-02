@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Particle.hpp"
 
 namespace TooGoodEngine

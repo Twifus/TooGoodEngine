@@ -11,6 +11,12 @@ namespace TooGoodEngine
 		double y;
 		double z;
 
+		static const Vector3 zero;
+		static const Vector3 one;
+		static const Vector3 right;
+		static const Vector3 up;
+		static const Vector3 forward;
+
 		Vector3();
 		Vector3(double x, double y, double z);
 

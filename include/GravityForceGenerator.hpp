@@ -1,4 +1,5 @@
 #pragma once
+
 #include "ParticleForceGenerator.hpp"
 #include "Vector3.hpp"
 
