@@ -46,6 +46,7 @@ namespace TooGoodEngine
 
 		// Add a force to the resultant force buffer
 		void AddForce(Vector3 newForce);
+
 		// Clear the resultant force
 		void ClearForces();
         

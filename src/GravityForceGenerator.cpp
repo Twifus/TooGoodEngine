@@ -2,18 +2,13 @@
 
 namespace TooGoodEngine
 {
-	static double g = 10;
+	Vector3 GravityForceGenerator::gravity(0, -10, 0);
 
-	void GravityForceGenerator::GravityForceGenerator()
-	{
-		gravity = Vector3(0, -g, 0);
-	}
-
-	void GravityForceGenerator::UpdateForce(Particle &particle, float time)
+	void GravityForceGenerator::UpdateForce(Particle &particle, double time) const
 	{
 		if (particle.GetMass() != 0)
 		{
-			particle.AddForce(particle.GetMass()*gravity);
+			particle.AddForce(particle.GetMass() * gravity);
 		}
 	}
 }

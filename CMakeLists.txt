@@ -21,9 +21,17 @@ include_directories("include")
 add_executable(Game src/Game.cpp
 			   src/Vector3.cpp  include/Vector3.hpp
 			   src/Particle.cpp include/Particle.hpp
+			   src/ForcesRegistery.cpp include/ForcesRegistery.hpp
+			   include/ParticleForceGenerator.hpp
+			   src/GravityForceGenerator.cpp include/GravityForceGenerator.hpp
+			   src/SpringForceGenerator.cpp include/SpringForceGenerator.hpp
+			   src/BungeeSpringForceGenerator.cpp include/BungeeSpringForceGenerator.hpp
+			   src/AnchoredSpringForceGenerator.cpp include/AnchoredSpringForceGenerator.hpp
 			   src/Frame.cpp    include/Frame.hpp
 			   src/Sprite.cpp   include/Sprite.hpp)
+
 target_link_libraries(Game ${SDL2_LIBRARY})
+
 if(WIN32) # On Windows systems, copy SDL2.dll to build directory
 	if(CMAKE_SIZEOF_VOID_P EQUAL 8)
 		add_custom_command(TARGET Game POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_SOURCE_DIR}/external/SDL2-2.0.10/lib/x64/SDL2.dll $<TARGET_FILE_DIR:Game>)

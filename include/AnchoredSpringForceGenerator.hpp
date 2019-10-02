@@ -5,14 +5,15 @@
 
 namespace TooGoodEngine
 {
-	class AnchoredSpringForceGenerator(ParticleForceGenerator)
+	class AnchoredSpringForceGenerator : ParticleForceGenerator
 	{
-	public:
+	private:
 		Vector3 &anchoredPoint;
 		double k;
 		double length;
 
+	public:
 		AnchoredSpringForceGenerator(Vector3 &point, double k, double length);
-		void UpdateForce(Particle &particle, float time);
+		void UpdateForce(Particle &particle, double time) const;
 	};
 }

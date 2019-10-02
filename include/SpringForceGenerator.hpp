@@ -5,14 +5,15 @@
 
 namespace TooGoodEngine
 {
-	class SpringForceGenerator(ParticleForceGenerator)
+	class SpringForceGenerator : ParticleForceGenerator
 	{
-	public:
+	private:
 		Particle &extremeParticle;
 		double k;
 		double length;
 
+	public:
 		SpringForceGenerator(Particle &particle, double k, double length);
-		void UpdateForce(Particle &particle, float time);
+		void UpdateForce(Particle &particle, double time) const;
 	};
 }

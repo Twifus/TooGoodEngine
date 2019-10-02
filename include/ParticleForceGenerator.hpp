@@ -6,7 +6,8 @@ namespace TooGoodEngine
 	class ParticleForceGenerator
 	{
 	public:
-		virtual void UpdateForce(Particle &particle, float time) = 0;
+		virtual ~ParticleForceGenerator() = default;
+		virtual void UpdateForce(Particle &particle, double time) const = 0;
 	};
 }
 

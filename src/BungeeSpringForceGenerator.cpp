@@ -3,13 +3,14 @@
 namespace TooGoodEngine
 {
 
-	void BungeeSpringForceGenerator::BungeeSpringForceGenerator(Particle &particle, double k, double length) :
+	BungeeSpringForceGenerator::BungeeSpringForceGenerator(Particle &particle, double k, double length) :
 		extremeParticle(particle), k(k), length(length) {}
 
-	void BungeeSpringForceGenerator::UpdateForce(Particle &particle, float time)
+	void BungeeSpringForceGenerator::UpdateForce(Particle &particle, double time) const
 	{
-		double appliedLength = (particle.GetPosition() - extremeParticle.GetPosition()).Magnitude();
+		Vector3 direction = (particle.GetPosition() - extremeParticle.GetPosition());
+		double appliedLength = direction.Magnitude();
 		if (appliedLength > length)
-			particle.AddForce(-k * (appliedLength - length));
+			particle.AddForce(-k * (appliedLength - length) * direction.Normalized());
 	}
 }

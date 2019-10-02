@@ -2,12 +2,12 @@
 
 namespace TooGoodEngine
 {
-
-	void SpringForceGenerator::SpringForceGenerator(Particle &particle, double k, double length) : 
+	SpringForceGenerator::SpringForceGenerator(Particle &particle, double k, double length) : 
 		extremeParticle(particle), k(k), length(length) {}
 
-	void SpringForceGenerator::UpdateForce(Particle &particle, float time)
+	void SpringForceGenerator::UpdateForce(Particle &particle, double time) const
 	{
-		particle.AddForce(-k * (particle.GetPosition() - extremeParticle.GetPosition()).Magnitude() - length));
+		Vector3 direction = (particle.GetPosition() - extremeParticle.GetPosition());
+		particle.AddForce(-k * (direction.Magnitude() - length) * direction.Normalized());
 	}
 }

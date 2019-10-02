@@ -4,13 +4,14 @@
 
 namespace TooGoodEngine
 {
-	class GravityForceGenerator(ParticleForceGenerator)
+	class GravityForceGenerator : ParticleForceGenerator
 	{
-	public:
-		Vector3 gravity;
+	private:
+		static Vector3 gravity;
 
-		GravityForceGenerator();
-		void UpdateForce(Particle &particle, float time);
+	public:
+		GravityForceGenerator() = default;
+		void UpdateForce(Particle &particle, double time) const;
 	};
 }
 
