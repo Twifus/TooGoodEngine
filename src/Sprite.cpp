@@ -16,7 +16,7 @@ namespace TooGoodEngine
 	Sprite::Sprite(Particle* p, int r, int g, int b)
 	{
 		parent = p;
-		Vector3 screenPos = WorldToView(p->GetPosition());
+		Vector3 screenPos = WorldToView(p->position);
 		rect.x = static_cast<int>(screenPos.x);
 		rect.y = static_cast<int>(screenPos.y);
 		rect.w = rect.h = 10 ;//* p->GetMass();
@@ -27,7 +27,7 @@ namespace TooGoodEngine
 
 	void Sprite::Draw(SDL_Renderer* renderer)
 	{
-		Vector3 screenPos = WorldToView(parent->GetPosition());
+		Vector3 screenPos = WorldToView(parent->position);
 		rect.x = static_cast<int>(screenPos.x);
 		rect.y = static_cast<int>(screenPos.y);
 

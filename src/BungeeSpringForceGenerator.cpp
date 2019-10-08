@@ -8,7 +8,7 @@ namespace TooGoodEngine
 
 	void BungeeSpringForceGenerator::UpdateForce(Particle &particle, double time) const
 	{
-		Vector3 direction = (particle.GetPosition() - extremeParticle.GetPosition());
+		Vector3 direction = (particle.position - extremeParticle.position);
 		double appliedLength = direction.Magnitude();
 		if (appliedLength > length)
 			particle.AddForce(-k * (appliedLength - length) * direction.Normalized());

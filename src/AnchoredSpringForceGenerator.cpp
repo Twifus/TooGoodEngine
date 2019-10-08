@@ -8,7 +8,7 @@ namespace TooGoodEngine
 
 	void AnchoredSpringForceGenerator::UpdateForce(Particle &particle, double time) const
 	{
-		Vector3 direction = (particle.GetPosition() - anchor);
+		Vector3 direction = (particle.position - anchor);
 		particle.AddForce(-k * (direction.Magnitude() - length) * direction.Normalized());
 	}
 }

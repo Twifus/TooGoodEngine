@@ -19,9 +19,9 @@ SDL_Window* window = NULL;
 
 void initParticles()
 {
-	Particle stone = Particle(1, Vector3(0, 7, 0));
-	Particle bullet = Particle(3, Vector3(0, 5, 0), Vector3(10, 0, 0));
-	Particle rocket = Particle(5, Vector3(0, 0, 0), Vector3(10, 15, 0));
+	Particle stone = Particle(1, 1, Vector3(0, 7, 0));
+	Particle bullet = Particle(3, 1, Vector3(0, 5, 0), Vector3(10, 0, 0));
+	Particle rocket = Particle(5, 1, Vector3(0, 0, 0), Vector3(10, 15, 0));
 
 	particules = { stone, bullet, rocket };
 

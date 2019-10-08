@@ -11,16 +11,10 @@ namespace TooGoodEngine
 {
     Particle::Particle() : Particle(1) {}
 
-	Particle::Particle(double m, double d) : Particle(m, Vector3(), Vector3(), d) {}
-
-    Particle::Particle(double m, Vector3 p, Vector3 v, double d) : damping(d), position(p), velocity(v)
+    Particle::Particle(double m, double r, Vector3 p, Vector3 v, double d)
+    : radius(r), damping(d), position(p), velocity(v)
 	{
 		SetMass(m);
-	}
-
-	Vector3 Particle::GetPosition() const
-	{
-		return position;
 	}
 
 	Vector3 Particle::GetVelocity() const
@@ -64,7 +58,7 @@ namespace TooGoodEngine
 
 	void Particle::ClearForces()
 	{
-		resultantForce = Vector3(0, 0, 0);
+		resultantForce = Vector3::zero;
 	}
 
     void Particle::Update(double time)

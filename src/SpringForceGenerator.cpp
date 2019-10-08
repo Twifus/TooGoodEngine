@@ -7,7 +7,7 @@ namespace TooGoodEngine
 
 	void SpringForceGenerator::UpdateForce(Particle &particle, double time) const
 	{
-		Vector3 direction = (particle.GetPosition() - extremeParticle.GetPosition());
+		Vector3 direction = (particle.position - extremeParticle.position);
 		particle.AddForce(-k * (direction.Magnitude() - length) * direction.Normalized());
 	}
 }
