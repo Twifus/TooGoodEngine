@@ -3,7 +3,7 @@
 
 namespace TooGoodEngine
 {
-    // This funtion draw white axes on the given renderer. It helps locating particles in the world space.
+    // This function draw white axes on the given renderer. It helps locating particles in the world space.
 	void DrawAxes(SDL_Renderer* renderer)
 	{
 		SDL_Rect xaxis, yaxis;
@@ -29,23 +29,17 @@ namespace TooGoodEngine
     // Constructor
     GameSDL::GameSDL()
     {
-        // Create a sdl window
+        // Create a SDL window
         window = SDL_CreateWindow("Simulation de tir", 
                                   SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                                   VIEW_WIDTH, VIEW_HEIGHT,
                                   SDL_WINDOW_SHOWN);
-        if (!window)
-            // raise error
 
         // Create a renderer
         renderer = SDL_CreateRenderer(window, -1, 0);
-        if (!renderer)
-            // error
 
         // Select the color for drawing : black
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-
-        // DrawAxes(renderer);
     }
 
     // Destructor
@@ -56,11 +50,11 @@ namespace TooGoodEngine
         SDL_Quit();
     }
 
-    // Add a particle sprite to the environement
+    // Add a particle sprite to the environment
     void GameSDL::CreateSprite(Particle* p,  const char* spritePath)
     {
-        Sprite s = Sprite(p, spritePath, renderer);
-        sprites.push_back(s);
+		Sprite s = Sprite(p, spritePath, renderer);
+		sprites.push_back(s);
     }
 
     void GameSDL::DeleteSprite(Particle* p)
@@ -86,7 +80,7 @@ namespace TooGoodEngine
     // Draw all particles and refresh the screen
     void GameSDL::render()
     {
-        SDL_RenderClear(renderer);
+		SDL_RenderClear(renderer);
         for(Sprite& s : sprites)
         {
             s.Draw(renderer);

@@ -12,12 +12,11 @@ namespace TooGoodEngine
 	{
 	private:
 		Particle* parent;
-		SDL_Texture* texture;
+		std::shared_ptr<SDL_Texture> texture;
 		SDL_Rect rectSrc;
 		SDL_Rect rectDst;
 	public:
 		Sprite(Particle* p,  const char* spritePath, SDL_Renderer* gameRenderer);
-		~Sprite();
 		int SameParent(Particle* p);
 		void Draw(SDL_Renderer* renderer);
 	};
