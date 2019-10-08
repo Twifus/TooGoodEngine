@@ -6,7 +6,7 @@ project(TooGoodEngine
 ## SDL2
 if(WIN32) # On Windows systems, search for SDL2 in `external` directory
 	set(SDL2_PATH "${CMAKE_SOURCE_DIR}/external/SDL2-2.0.10")
-	set(SDL2_IMAGE_PATH "${CMAKE_SOURCE_DIR}/external/SDL2_image-2.0.5")
+	set(SDL2_image_PATH "${CMAKE_SOURCE_DIR}/external/SDL2_image-2.0.5")
 endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
