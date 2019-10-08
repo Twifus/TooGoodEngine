@@ -28,7 +28,8 @@ add_executable(Game src/Game.cpp
 			   src/BungeeSpringForceGenerator.cpp include/BungeeSpringForceGenerator.hpp
 			   src/AnchoredSpringForceGenerator.cpp include/AnchoredSpringForceGenerator.hpp
 			   src/Frame.cpp    include/Frame.hpp
-			   src/Sprite.cpp   include/Sprite.hpp)
+			   src/Sprite.cpp   include/Sprite.hpp
+		       src/Blob.cpp 	include/Blob.hpp)
 
 target_link_libraries(Game ${SDL2_LIBRARY})
 
