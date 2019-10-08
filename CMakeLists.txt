@@ -34,7 +34,8 @@ add_executable(Game src/Game.cpp
 			   include/ParticleContactGenerator.hpp
 			   # src/LinkContactGenerator.cpp include/LinkContactGenerator.hpp
 			   src/Frame.cpp    include/Frame.hpp
-			   src/Sprite.cpp   include/Sprite.hpp)
+			   src/Sprite.cpp   include/Sprite.hpp
+		       src/Blob.cpp 	include/Blob.hpp)
 
 target_link_libraries(Game ${SDL2_LIBRARY})
 

@@ -47,6 +47,9 @@ namespace TooGoodEngine
 		// Add a force to the resultant force buffer
 		void AddForce(Vector3 newForce);
 
+		// Make an impulsion on the velocity (result of a collision)
+		void Impulsion(Vector3 newImpulsion);
+
 		// Clear the resultant force
 		void ClearForces();
         

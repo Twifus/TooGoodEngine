@@ -1,27 +1,27 @@
 #pragma once
 
-#include <array>
-#include <memory>
-
-#include "Particle.hpp"
 #include "Vector3.hpp"
+#include "Particle.hpp"
 
 namespace TooGoodEngine
 {
 	class ParticleContact
 	{
 	private:
-		std::array<std::shared_ptr<Particle>, 2> particles;
-		double restitution;
-		double interpenetration;
-		Vector3 normal;
+		Particle* particles[2];
+		float restitution; // coef d'élasiticité
+		float interpenetration; // distance d'interpenetration
+		Vector3 contactNormal;
 
-		void ResolveResultingVelocity(double time);
-		void ResolveInterpenetration();
+		double ApprochVelocity();
 
 	public:
-		ParticleContact()
-		double ApproachVelocity() const;
+		ParticleContact();
+		~ParticleContact();
+
+		void ResolveVelocity(double time);
+		void ResolvePenetration(double time);
+
 		void Resolve(double time);
 	};
 }
