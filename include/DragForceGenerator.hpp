@@ -1,7 +1,7 @@
 #pragma once
 
+#include "Particle.hpp"
 #include "ParticleForceGenerator.hpp"
-#include "Vector3.hpp"
 
 namespace TooGoodEngine
 {

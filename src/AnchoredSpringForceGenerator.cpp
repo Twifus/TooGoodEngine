@@ -4,11 +4,11 @@ namespace TooGoodEngine
 {
 
 	AnchoredSpringForceGenerator::AnchoredSpringForceGenerator(Vector3 &point, double k, double length) :
-		anchoredPoint(point), k(k), length(length) {}
+		anchor(point), k(k), length(length) {}
 
 	void AnchoredSpringForceGenerator::UpdateForce(Particle &particle, double time) const
 	{
-		Vector3 direction = (particle.GetPosition() - anchoredPoint);
+		Vector3 direction = (particle.GetPosition() - anchor);
 		particle.AddForce(-k * (direction.Magnitude() - length) * direction.Normalized());
 	}
 }

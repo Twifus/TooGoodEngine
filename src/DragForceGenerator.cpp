@@ -6,6 +6,6 @@ namespace TooGoodEngine
 
 	void DragForceGenerator::UpdateForce(Particle& particle, double time) const
 	{
-		Particle.AddForce(-(k1 * particle.GetVelocity().Magnitude() + k2 * particle.GetVelocity().SquaredMagnitude()) * particle.GetVelocity().Normalized());
+		particle.AddForce(-(k1 * particle.GetVelocity().Magnitude() + k2 * particle.GetVelocity().SquaredMagnitude()) * particle.GetVelocity().Normalized());
 	}
 }

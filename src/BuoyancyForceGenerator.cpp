@@ -7,7 +7,7 @@ namespace TooGoodEngine
 
 	void BuoyancyForceGenerator::UpdateForce(Particle& particle, double time) const
 	{
-		double d = (particle.GetPosition() - liquidHeight - maxDepth) / (2 * maxDepth);
+		double d = (Vector3::Dot(particle.GetPosition(), Vector3::up) - liquidHeight - maxDepth) / (2 * maxDepth);
 		if (d <= 0)
 			return;
 		else if (d >= 1)
