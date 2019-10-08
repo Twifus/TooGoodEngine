@@ -36,6 +36,8 @@ namespace TooGoodEngine
 		void SetMass(double m);
 		double GetMass() const;
 
+		double GetRadius() const;
+		
 		// Velocity accessors
 		Vector3 GetVelocity() const;
 
