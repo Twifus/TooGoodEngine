@@ -14,7 +14,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
 
-find_package(SDL2_IMAGE REQUIRED)
+find_package(SDL2_image REQUIRED)
 include_directories(${SDL2_IMAGE_INCLUDE_DIR})
 ##
 
@@ -36,7 +36,9 @@ add_executable(Game src/Game.cpp
 			   src/StiffSpringForceGenerator.cpp include/StiffSpringForceGenerator.hpp
 			   src/ParticleContact.cpp include/ParticleContact.hpp
 			   include/ParticleContactGenerator.hpp
-			   src/LinkContactGenerator.cpp include/LinkContactGenerator.hpp
+			   #src/LinkContactGenerator.cpp include/LinkContactGenerator.hpp
+			   include/CommonSDL.hpp
+			   src/GameSDL.cpp  include/GameSDL.hpp
 			   src/Frame.cpp    include/Frame.hpp
 			   src/Sprite.cpp   include/Sprite.hpp
 		       src/Blob.cpp 	include/Blob.hpp)
