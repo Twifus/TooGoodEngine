@@ -24,9 +24,15 @@ add_executable(Game src/Game.cpp
 			   src/ForcesRegistery.cpp include/ForcesRegistery.hpp
 			   include/ParticleForceGenerator.hpp
 			   src/GravityForceGenerator.cpp include/GravityForceGenerator.hpp
+			   src/DragForceGenerator.cpp include/DragForceGenerator.hpp
 			   src/SpringForceGenerator.cpp include/SpringForceGenerator.hpp
 			   src/BungeeSpringForceGenerator.cpp include/BungeeSpringForceGenerator.hpp
 			   src/AnchoredSpringForceGenerator.cpp include/AnchoredSpringForceGenerator.hpp
+			   src/BuoyancyForceGenerator.cpp include/BuoyancyForceGenerator.hpp
+			   src/StiffSpringForceGenerator.cpp include/StiffSpringForceGenerator.hpp
+			   # src/ParticleContact.cpp include/ParticleContact.hpp
+			   include/ParticleContactGenerator.hpp
+			   # src/LinkContactGenerator.cpp include/LinkContactGenerator.hpp
 			   src/Frame.cpp    include/Frame.hpp
 			   src/Sprite.cpp   include/Sprite.hpp
 		       src/Blob.cpp 	include/Blob.hpp)

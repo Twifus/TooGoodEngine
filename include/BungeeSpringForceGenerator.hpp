@@ -1,19 +1,19 @@
 #pragma once
 
+#include "Particle.hpp"
 #include "ParticleForceGenerator.hpp"
-#include "Vector3.hpp"
 
 namespace TooGoodEngine
 {
 	class BungeeSpringForceGenerator : ParticleForceGenerator
 	{
 	private:
-		Particle &extremeParticle;
+		Particle& extremeParticle;
 		double k;
 		double length;
 
 	public:
-		BungeeSpringForceGenerator(Particle &particle, double k, double length);
+		BungeeSpringForceGenerator(Particle& particle, double k, double length);
 		void UpdateForce(Particle &particle, double time) const;
 	};
 }

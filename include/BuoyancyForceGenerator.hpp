@@ -1,8 +1,11 @@
 #pragma once
 
+#include "Particle.hpp"
+#include "ParticleForceGenerator.hpp"
+
 namespace TooGoodEngine
 {
-	class BuoyancyForceGenerator
+	class BuoyancyForceGenerator : ParticleForceGenerator
 	{
 	private:
 		double maxDepth, volume, liquidHeight, density;
