@@ -21,6 +21,7 @@ namespace TooGoodEngine
 
 	public:
 		void Add(Particle& particle, ParticleForceGenerator& generator);
+		void UpdateForces(double time);
 		void Clear();
 	};
 }

@@ -9,6 +9,14 @@ namespace TooGoodEngine
 		registry.push_back(ForcesRegistery::RegistryEntry(particle, generator));
 	}
 
+	void ForcesRegistery::UpdateForces(double time)
+	{
+		for (RegistryEntry entry : registry)
+		{
+			entry.generator.UpdateForce(entry.particle, time);
+		}
+	}
+
 	void ForcesRegistery::Clear()
 	{
 		registry.clear();
