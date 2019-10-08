@@ -17,6 +17,11 @@ namespace TooGoodEngine
 		SetMass(m);
 	}
 
+    double Particle::GetRadius() const
+    {
+        return radius;
+    }
+
 	Vector3 Particle::GetVelocity() const
 	{
 		return velocity;
