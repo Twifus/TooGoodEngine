@@ -13,14 +13,14 @@ namespace TooGoodEngine
         float interpenetration; // distance d'interpenetration
         Vector3 contactNormal;
 
-        double ApprochVelocity();
+        void ResolveVelocity(double time);
+        void ResolvePenetration(double time);
 
     public:
         ParticleContact();
         ~ParticleContact();
 
-        void ResolveVelocity(double time);
-        void ResolvePenetration(double time);
+        double ApprochVelocity();
 
         void Resolve(double time);
     };
