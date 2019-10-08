@@ -52,8 +52,9 @@ int main (int argc, char* argv[])
 		int exit = gameSDL.HandleEvents();
 		if (exit == -1)
 			break;
-			
+
 		gameSDL.render();
+		std::cout << "fin de boucle" << std::endl;
 	}
 	// EVENT LOOP //
 	////////////////

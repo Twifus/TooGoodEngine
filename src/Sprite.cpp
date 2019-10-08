@@ -24,11 +24,16 @@ namespace TooGoodEngine
 	Sprite::Sprite(Particle* p, const char* spritePath, SDL_Renderer* gameRenderer)
 	{
 		parent = p;
+
 		Vector3 screenPos = WorldToView(p->position);
 		rectDst.x = static_cast<int>(screenPos.x - p->GetRadius());
 		rectDst.y = static_cast<int>(screenPos.y - p->GetRadius());
 		rectDst.w = rectDst.h = 2 * p->GetRadius();
+
 		texture = LoadImage(spritePath, gameRenderer);
+
+		rectSrc.x = rectSrc.y = 0;
+		rectSrc.h = rectSrc.w = 64;
 	}
 
 	Sprite::~Sprite()
