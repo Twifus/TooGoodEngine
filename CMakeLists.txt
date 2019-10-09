@@ -64,6 +64,50 @@ endif()
 
 add_custom_command(TARGET Game POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/sprites $<TARGET_FILE_DIR:Game>/sprites)
 
+# Test Blob
+add_executable(BlobScene src/BlobScene.cpp
+		src/Vector3.cpp  include/Vector3.hpp
+		src/Particle.cpp include/Particle.hpp
+		src/ForcesRegistery.cpp include/ForcesRegistery.hpp
+		include/ParticleForceGenerator.hpp
+		src/GravityForceGenerator.cpp include/GravityForceGenerator.hpp
+		src/DragForceGenerator.cpp include/DragForceGenerator.hpp
+		src/SpringForceGenerator.cpp include/SpringForceGenerator.hpp
+		src/BungeeSpringForceGenerator.cpp include/BungeeSpringForceGenerator.hpp
+		src/AnchoredSpringForceGenerator.cpp include/AnchoredSpringForceGenerator.hpp
+		src/BuoyancyForceGenerator.cpp include/BuoyancyForceGenerator.hpp
+		src/StiffSpringForceGenerator.cpp include/StiffSpringForceGenerator.hpp
+		src/ParticleContact.cpp include/ParticleContact.hpp
+		src/ParticleContactResolver.cpp include/ParticleContactResolver.hpp
+		include/ParticleContactGenerator.hpp
+		src/LinkContactGenerator.cpp include/LinkContactGenerator.hpp
+		src/CableContactGenerator.cpp include/CableContactGenerator.hpp
+		include/CommonSDL.hpp
+		src/GameSDL.cpp  include/GameSDL.hpp
+		src/Frame.cpp    include/Frame.hpp
+		src/Sprite.cpp   include/Sprite.hpp
+		src/Blob.cpp 	include/Blob.hpp)
+
+target_link_libraries(BlobScene ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY})
+
+if(WIN32) # On Windows systems, copy SDL2.dll to build directory
+	if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+		SET(ARCH_PATH "x64")
+	else()
+		SET(ARCH_PATH "x86")
+	endif()
+	add_custom_command(TARGET BlobScene POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SDL2_PATH}/lib/${ARCH_PATH}/SDL2.dll $<TARGET_FILE_DIR:BlobScene>)
+	add_custom_command(TARGET BlobScene POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SDL2_IMAGE_PATH}/lib/${ARCH_PATH}/libjpeg-9.dll $<TARGET_FILE_DIR:BlobScene>)
+	add_custom_command(TARGET BlobScene POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SDL2_IMAGE_PATH}/lib/${ARCH_PATH}/libpng16-16.dll $<TARGET_FILE_DIR:BlobScene>)
+	add_custom_command(TARGET BlobScene POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SDL2_IMAGE_PATH}/lib/${ARCH_PATH}/libtiff-5.dll $<TARGET_FILE_DIR:BlobScene>)
+	add_custom_command(TARGET BlobScene POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SDL2_IMAGE_PATH}/lib/${ARCH_PATH}/libwebp-7.dll $<TARGET_FILE_DIR:BlobScene>)
+	add_custom_command(TARGET BlobScene POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SDL2_IMAGE_PATH}/lib/${ARCH_PATH}/zlib1.dll $<TARGET_FILE_DIR:BlobScene>)
+	add_custom_command(TARGET BlobScene POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SDL2_IMAGE_PATH}/lib/${ARCH_PATH}/SDL2_image.dll $<TARGET_FILE_DIR:BlobScene>)
+endif()
+
+add_custom_command(TARGET BlobScene POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/sprites $<TARGET_FILE_DIR:BlobScene>/sprites)
+
+
 # TestVector3
 add_executable(TestVector3 tests/TestVector3.cpp src/Vector3.cpp include/Vector3.hpp)
 add_test(Test_Vector3 TestVector3)

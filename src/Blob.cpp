@@ -1,10 +1,12 @@
 #include <Blob.hpp>
 #include <ForcesRegistery.hpp>
 #include <SpringForceGenerator.hpp>
+#include <algorithm>
+#include <iostream>
 
-#define INTER_PARTICLE_DIST (PIXEL_UNIT * 30.)
-#define ELASTICITY 10.0
-#define ELEMENT_RADIUS (PIXEL_UNIT * 13.)
+#define INTER_PARTICLE_DIST (1.25)
+#define ELASTICITY 1.0
+#define ELEMENT_RADIUS (0.5)
 
 Blob::Blob(Vector3 pos) : assembled(true) {
     // Create all particles of the blob
@@ -218,6 +220,12 @@ void Blob::initForces() {
     internalForces.push_back(SpringSave{blobElements[7], SpringForceGenerator(blobElements[18], ELASTICITY, INTER_PARTICLE_DIST)});
 }
 
+void Blob::initDisplay(GameSDL& gameSdl) {
+    for (auto& blobElement : blobElements) {
+        gameSdl.CreateSprite(&blobElement, "sprites/red_circle.png");
+    }
+}
+
 void Blob::addForces(ForcesRegistery &registery) {
     if (assembled) {
         for (auto i = internalForces.begin(); i != internalForces.end(); ++i) {
@@ -228,4 +236,34 @@ void Blob::addForces(ForcesRegistery &registery) {
 
 void Blob::changeState() {
     assembled = !assembled;
+    std::cout << "change !" << std::endl;
+}
+
+void Blob::addInternalContacts(ParticleContactResolver& resolver) {
+    for (int i = 0; i < BLOB_NB_COMPONENTS; ++i)
+    {
+        for (auto j = i + 1; j < BLOB_NB_COMPONENTS; ++j)
+        {
+            if ((blobElements[i].position - blobElements[j].position).Magnitude() <= blobElements[i].GetRadius() + blobElements[j].GetRadius())
+            {
+                resolver.AddContact(ParticleContact(&(blobElements[i]), &(blobElements[j]), 0.7));
+            }
+        }
+        if (blobElements[i].position.y <= -3.0 + ELEMENT_RADIUS)
+            resolver.AddContact(ParticleContact(&(blobElements[i]), Vector3(0,-3,0), Vector3::up, 0.0));
+    }
+}
+
+void Blob::applyForceOnAll(ForcesRegistery& registery, ParticleForceGenerator& generator) {
+    for (auto &blobElement : blobElements) {
+        registery.Add(blobElement, generator);
+    }
+}
+
+void Blob::updatePosition(double delta) {
+    for (auto &i : blobElements)
+    {
+        i.Update(delta);
+        i.ClearForces();
+    }
 }
