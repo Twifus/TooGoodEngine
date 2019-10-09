@@ -9,13 +9,9 @@ namespace TooGoodEngine
     private:
         double mass;
         double inverseMass;
-        double damping;
-
 		double radius;
-
 		Vector3 velocity;
 		Vector3 acceleration;
-
 		Vector3 resultantForce;
 
     public:
@@ -28,8 +24,7 @@ namespace TooGoodEngine
         Particle(
 			double mass, double radius = 1,
 			Vector3 position = Vector3::zero,
-			Vector3 velocity = Vector3::zero,
-			double damping = 0.95
+			Vector3 velocity = Vector3::zero
 		);
 
 		// Mass accessors

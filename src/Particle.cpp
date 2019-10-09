@@ -11,8 +11,8 @@ namespace TooGoodEngine
 {
     Particle::Particle() : Particle(1) {}
 
-    Particle::Particle(double m, double r, Vector3 p, Vector3 v, double d)
-    : damping(d), radius(r), velocity(v), position(p)
+    Particle::Particle(double m, double r, Vector3 p, Vector3 v)
+    : radius(r), velocity(v), position(p)
 	{
 		SetMass(m);
 	}
@@ -68,10 +68,12 @@ namespace TooGoodEngine
 
     void Particle::Update(double time)
     {
-        //update position
-        position = position + velocity * time;
+        acceleration = inverseMass * resultantForce;
+        //acceleration -= 10 * Vector3::up;
         // update velocity
-        velocity = velocity * std::pow(damping, time) + acceleration * time;
+        velocity = velocity + acceleration * time;
+        //update position
+        position = position + velocity * time; 
     }
 }
 

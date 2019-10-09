@@ -8,12 +8,11 @@ namespace TooGoodEngine
         particles[0] = a;
         particles[1] = b;
         contactNormal = (b == nullptr) ? Vector3::up : (a->position - b->position).Normalized();
+        interpenetration = (b == nullptr) ? 0 :
+                        b->GetRadius() + a->GetRadius() - (b->position - a->position).SquaredMagnitude();
     }
 
-    ParticleContact::ParticleContact(Particle* a, float r)
-    {
-        ParticleContact(a,nullptr,r);
-    }
+    ParticleContact::ParticleContact(Particle* a, float r) : ParticleContact(a,nullptr,r) {}
 
     double ParticleContact::ApprochVelocity() const
     {
@@ -41,17 +40,17 @@ namespace TooGoodEngine
 
     void ParticleContact::ResolveVelocity(double time)
     {
-        double restitutionCoef = restitution * ApprochVelocity();
+        double restitutionCoef = (1+restitution) * ApprochVelocity()/2;
         particles[0]->Impulsion(particles[0]->GetMass() * restitutionCoef * contactNormal);
         if (particles[1] != nullptr)
         {
-            particles[1]->Impulsion(particles[1]->GetMass() * restitutionCoef * contactNormal);
+            particles[1]->Impulsion(- particles[1]->GetMass() * restitutionCoef * contactNormal);
         }
     }
 
     void ParticleContact::Resolve(double time)
     {
-        ResolvePenetration();
+        // ResolvePenetration();
         ResolveVelocity(time);
     }
 
