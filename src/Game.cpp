@@ -19,15 +19,15 @@ GameSDL gameSDL = GameSDL();
 
 void initParticles()
 {
-	Particle stone = Particle(1, 3, Vector3(0, 7, 0));
-	Particle bullet = Particle(3, 1, Vector3(0, 5, 0), Vector3(10, 0, 0));
-	Particle rocket = Particle(5, 2, Vector3(0, 0, 0), Vector3(10, 15, 0));
+	Particle stone = Particle(1, 0.1, Vector3(0, -2, 0));
+	Particle bullet = Particle(3, 0.3, Vector3(0, 3, 0));//, Vector3(10, 0, 0));
+	Particle rocket = Particle(5, 0.2, Vector3(6, 3, 0));//, Vector3(10, 15, 0));
 
 	particules = { stone, bullet, rocket };
 
-	gameSDL.CreateSprite(&stone,  "../sprites/red_circle.png");
-	gameSDL.CreateSprite(&bullet, "../sprites/white_circle.png");
-	gameSDL.CreateSprite(&rocket, "../sprites/green_circle.png");
+	gameSDL.CreateSprite(&particules[0], "../sprites/red_circle.png");
+	gameSDL.CreateSprite(&particules[1], "../sprites/white_circle.png");
+	gameSDL.CreateSprite(&particules[2], "../sprites/green_circle.png");
 }
 
 
@@ -54,7 +54,6 @@ int main (int argc, char* argv[])
 			break;
 
 		gameSDL.render();
-		std::cout << "fin de boucle" << std::endl;
 	}
 	// EVENT LOOP //
 	////////////////

@@ -3,29 +3,6 @@
 
 namespace TooGoodEngine
 {
-    // This function draw white axes on the given renderer. It helps locating particles in the world space.
-	void DrawAxes(SDL_Renderer* renderer)
-	{
-		SDL_Rect xaxis, yaxis;
-		xaxis.w = VIEW_WIDTH - 2 * AXIS_OFFSET;
-		xaxis.h = AXIS_WIDTH;
-		xaxis.x = AXIS_OFFSET;
-		xaxis.y = VIEW_HEIGHT - 2 * AXIS_OFFSET - AXIS_WIDTH;
-
-		yaxis.w = AXIS_WIDTH;
-		yaxis.h = VIEW_HEIGHT - 2 * AXIS_OFFSET;
-		yaxis.x = 2 * AXIS_OFFSET;
-		yaxis.y = AXIS_OFFSET;
-
-		// Set color to blue (will change rect color)
-		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-
-		SDL_RenderFillRect(renderer, &xaxis);
-		SDL_RenderFillRect(renderer, &yaxis);
-
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-	}
-
     // Constructor
     GameSDL::GameSDL()
     {

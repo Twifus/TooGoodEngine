@@ -35,10 +35,9 @@ namespace TooGoodEngine
 		// Mass accessors
 		void SetMass(double m);
 		double GetMass() const;
-
+		// Radius getter
 		double GetRadius() const;
-		
-		// Velocity accessors
+		// Velocity getter
 		Vector3 GetVelocity() const;
 
 		// Easy way to get 1/m (save calculation time)
