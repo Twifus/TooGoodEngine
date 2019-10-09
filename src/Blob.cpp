@@ -270,13 +270,12 @@ void Blob::updatePosition(double delta) {
 }
 
 void Blob::moveImpulse(Vector3 direction, ForcesRegistery &registery) {
-    if (!assembled)
+    if (!assembled) {
         direction = direction * 0.4;
-    blobElements[0].AddForce(direction * MOVE_FORCE);
-    blobElements[7].AddForce(direction * MOVE_FORCE);
-    blobElements[9].AddForce(direction * MOVE_FORCE);
-    blobElements[11].AddForce(direction * MOVE_FORCE);
-    blobElements[13].AddForce(direction * MOVE_FORCE);
-    blobElements[15].AddForce(direction * MOVE_FORCE);
-    blobElements[17].AddForce(direction * MOVE_FORCE);
+        for (int i = 0; i < BLOB_NB_COMPONENTS; ++i)
+            blobElements[i].AddForce(direction * MOVE_FORCE);
+    }
+    else
+        for (int i = 7; i < 18; i += 2)
+            blobElements[i].AddForce(direction * MOVE_FORCE);
 }
