@@ -6,9 +6,11 @@
 #include <Sprite.hpp>
 #include <SpringForceGenerator.hpp>
 #include "ForcesRegistery.hpp"
+#include "ParticleContactResolver.hpp"
+#include "GameSDL.hpp"
 
 #define BLOB_NB_COMPONENTS 19
-#define BLOB_COMPONENT_MASS 0.2
+#define BLOB_COMPONENT_MASS 1
 
 using namespace TooGoodEngine;
 
@@ -51,6 +53,8 @@ public:
      */
     explicit Blob(Vector3 pos = Vector3());
 
+    void initDisplay(GameSDL& gameSdl);
+
     /**
      * Add all internal forces to the registery if they are active
      * @param registery the force registery of the game
@@ -61,4 +65,12 @@ public:
      * Switch the activation of the internal springs
      */
     void changeState();
+
+    void addInternalContacts(ParticleContactResolver& resolver);
+
+    void applyForceOnAll(ForcesRegistery& registery, ParticleForceGenerator& generator);
+
+    void updatePosition(double delta);
+
+    void moveImpulse(Vector3 direction, ForcesRegistery& registery);
 };

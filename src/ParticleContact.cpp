@@ -2,71 +2,89 @@
 
 namespace TooGoodEngine
 {
-    ParticleContact::ParticleContact(Particle* a, Particle* b, double r)
+
+    ParticleContact::ParticleContact(Particle* a, Particle* b, float r)
     {
+        isBplane = 0;
         restitution = r;
-        particles[0] = a;
-        particles[1] = b;
-        contactNormal = (b == nullptr) ? Vector3::up : (a->position - b->position).Normalized();
-        interpenetration = (b == nullptr) ? 0 :
-                        b->GetRadius() + a->GetRadius() - (b->position - a->position).Magnitude();
+        particleA = a;
+        particleB = b;
+        contactNormal = (a->position - b->position).Normalized();
+        interpenetration = b->GetRadius() + a->GetRadius() - (b->position - a->position).Magnitude();
     }
 
-    ParticleContact::ParticleContact(Particle* a, double r) : ParticleContact(a,nullptr,r) {}
-
-    double ParticleContact::ApproachVelocity() const
+    ParticleContact::ParticleContact(Particle* a, Vector3 planPoint, Vector3 planNormal, float r)
     {
-        Vector3 vB = (particles[1] == nullptr) ? Vector3::zero : particles[1]->GetVelocity();
-        return Vector3::Dot((vB - particles[0]->GetVelocity()), contactNormal);
+        isBplane = 1;
+        restitution = r;
+        particleA = a;
+        particleB = nullptr;
+        contactNormal = planNormal.Normalized();
+        interpenetration = a->GetRadius() - Vector3::Dot(a->position - planPoint, contactNormal);
     }
+
+
+    double ParticleContact::ApprochVelocity() const
+    {
+        if (isBplane)
+        {
+            return Vector3::Dot((particleA->GetVelocity()), -contactNormal);
+        }
+        return Vector3::Dot((particleB->GetVelocity() - particleA->GetVelocity()), contactNormal);
+    }
+
 
     void ParticleContact::ResolvePenetration()
     {
-		if (particles[1] == nullptr)
-		{
-			particles[0]->position += interpenetration * contactNormal;
-		}
-		else
+        if (isBplane)
         {
-            double mA = particles[0]->GetMass();
-            double mB = particles[1]->GetMass();
+            particleA->position += interpenetration * contactNormal;
+        }
+        else
+        {
+            double mA = particleA->GetMass();
+            double mB = particleB->GetMass();
             Vector3 tmp = (1 / (mA + mB) * interpenetration) * contactNormal;
             Vector3 deltaPosA = mB * tmp;
             Vector3 deltaPosB = -mA * tmp;
-            particles[0]->position += deltaPosA;
-            particles[1]->position += deltaPosB;
-        } 
+            particleA->position += deltaPosA;
+            particleB->position += deltaPosB;
+        }
+
     }
 
-    void ParticleContact::ResolveVelocity(double time)
+
+    void ParticleContact::ResolveVelocity()
     {
-        if (particles[1])
+        if (isBplane)
+        {
+            double mA = particleA->GetMass();
+            double uA = Vector3::Dot(particleA->GetVelocity(), -contactNormal);
+            if (uA < 0) uA = -uA;
+            particleA->Impulsion(restitution * mA * 2 * uA * contactNormal);
+        }
+        else
         {
             // Getting actual values
-            double mA = particles[0]->GetMass();
-            double mB = particles[1]->GetMass();
-            double uA = Vector3::Dot(particles[0]->GetVelocity(), contactNormal);
-            double uB = Vector3::Dot(particles[1]->GetVelocity(), contactNormal);
+            double mA = particleA->GetMass();
+            double mB = particleB->GetMass();
+            double uA = Vector3::Dot(particleA->GetVelocity(), contactNormal);
+            double uB = Vector3::Dot(particleB->GetVelocity(), contactNormal);
             // Computing new ones
             double constant = (mA * uA + mB * uB) / (mA + mB);
             double vA = restitution * mB * (uB - uA) / (mA + mB) + constant;
             double vB = restitution * mA * (uA - uB) / (mA + mB) + constant;
             // Making impulses
-            particles[0]->Impulsion(mA * (vA - uA) * contactNormal);
-            particles[1]->Impulsion(mB * (vB - uB) * contactNormal);
-        }
-        else
-        {
-            double mA = particles[0]->GetMass();
-            double uA = Vector3::Dot(particles[0]->GetVelocity(), contactNormal);
-            particles[0]->Impulsion((1 + restitution) * mA * -uA * contactNormal);
-        }
+            particleA->Impulsion(mA * (vA - uA) * contactNormal);
+            particleB->Impulsion(mB * (vB - uB) * contactNormal); 
+        }   
     }
 
-    void ParticleContact::Resolve(double time)
+
+    void ParticleContact::Resolve()
     {
         ResolvePenetration();
-        ResolveVelocity(time);
+        ResolveVelocity();
     }
 
 } // namespace TooGoodEngine

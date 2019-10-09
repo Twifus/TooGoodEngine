@@ -13,7 +13,7 @@ namespace TooGoodEngine
 		contacts.clear();
 	}
 
-	void ParticleContactResolver::Resolve(double time)
+	void ParticleContactResolver::Resolve()
 	{
 		if (contacts.empty())
 			return;
@@ -24,7 +24,7 @@ namespace TooGoodEngine
 			auto maxElement = std::max_element(contacts.begin() + i, contacts.end(), [](ParticleContact& c1, ParticleContact& c2) { return c1.ApproachVelocity() < c2.ApproachVelocity(); });
 			if (maxElement->ApproachVelocity() < 0)
 				break;
-			maxElement->Resolve(time);
+			maxElement->Resolve();
 			std::iter_swap(contacts.begin() + i, maxElement);
 			++i;
 		} while (contacts.begin() + i < contacts.end());

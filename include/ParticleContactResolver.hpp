@@ -14,6 +14,6 @@ namespace TooGoodEngine
 	public:
 		void AddContact(ParticleContact contact);
 		void Clear();
-		void Resolve(double time);
+		void Resolve();
 	};
 }

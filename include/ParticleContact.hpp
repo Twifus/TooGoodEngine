@@ -5,27 +5,28 @@
 
 namespace TooGoodEngine
 {
-    // Class used to resolve a contact between 2 particles,
-    // or between 1 particle and the floor
 	class ParticleContact
 	{
 	private:
-		Particle* particles[2];
-		double restitution; // elasticity coefficient
-		double interpenetration; // distance
+		float restitution;
+		float interpenetration;
 		Vector3 contactNormal;
+		// The 2 elements
+		Particle* particleA;
+		Particle* particleB;
+		// if B is a plane, set to 1 else 0
+		int isBplane;
 
         // Sub functions to compute contact resolution
-        void ResolveVelocity(double time);
+        void ResolveVelocity();
         void ResolvePenetration();
 
 	public:
-        ParticleContact(Particle* a, double restitution);
-		ParticleContact(Particle* a, Particle* b, double restitution);
-
-        // Compute approach velocity value
-        double ApproachVelocity() const;
+		ParticleContact(Particle* a, Particle* b, float restitution);
+		ParticleContact(Particle* p, Vector3 planPoint, Vector3 planNormal, float restitution);
+        // Compute approch velocity value
+        double ApprochVelocity() const;
         // Resolve contact (penetration and impulsion)
-		void Resolve(double time);
+		void Resolve();
 	};
 }
