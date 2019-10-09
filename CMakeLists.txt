@@ -3,6 +3,12 @@ cmake_minimum_required(VERSION 3.0)
 project(TooGoodEngine
 	LANGUAGES CXX C)
 
+set(${PROJECT_NAME}_BASE_OUTPUT_DIR ${PROJECT_SOURCE_DIR}/build)
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${${PROJECT_NAME}_BASE_OUTPUT_DIR}/)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${${PROJECT_NAME}_BASE_OUTPUT_DIR}/)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${${PROJECT_NAME}_BASE_OUTPUT_DIR}/)
+
 ## SDL2
 if(WIN32) # On Windows systems, search for SDL2 in `external` directory
 	set(SDL2_PATH "${CMAKE_SOURCE_DIR}/external/SDL2-2.0.10")
@@ -35,6 +41,7 @@ add_executable(Game src/Game.cpp
 			   src/BuoyancyForceGenerator.cpp include/BuoyancyForceGenerator.hpp
 			   src/StiffSpringForceGenerator.cpp include/StiffSpringForceGenerator.hpp
 			   src/ParticleContact.cpp include/ParticleContact.hpp
+			   src/ParticleContactResolver.cpp include/ParticleContactResolver.hpp
 			   include/ParticleContactGenerator.hpp
 			   src/LinkContactGenerator.cpp include/LinkContactGenerator.hpp
 			   src/CableContactGenerator.cpp include/CableContactGenerator.hpp
@@ -52,13 +59,14 @@ if(WIN32) # On Windows systems, copy SDL2.dll to build directory
 	else()
 		SET(ARCH_PATH "x86")
 	endif()
-	add_custom_command(TARGET Game POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_SOURCE_DIR}/external/SDL2-2.0.10/lib/${ARCH_PATH}/SDL2.dll $<TARGET_FILE_DIR:Game>)
-	add_custom_command(TARGET Game POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_SOURCE_DIR}/external/SDL2_image-2.0.5/lib/${ARCH_PATH}/libjpeg-9.dll $<TARGET_FILE_DIR:Game>)
-	add_custom_command(TARGET Game POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_SOURCE_DIR}/external/SDL2_image-2.0.5/lib/${ARCH_PATH}/libpng16-16.dll $<TARGET_FILE_DIR:Game>)
-	add_custom_command(TARGET Game POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_SOURCE_DIR}/external/SDL2_image-2.0.5/lib/${ARCH_PATH}/libtiff-5.dll $<TARGET_FILE_DIR:Game>)
-	add_custom_command(TARGET Game POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_SOURCE_DIR}/external/SDL2_image-2.0.5/lib/${ARCH_PATH}/libwebp-7.dll $<TARGET_FILE_DIR:Game>)
-	add_custom_command(TARGET Game POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_SOURCE_DIR}/external/SDL2_image-2.0.5/lib/${ARCH_PATH}/zlib1.dll $<TARGET_FILE_DIR:Game>)
-	add_custom_command(TARGET Game POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_SOURCE_DIR}/external/SDL2_image-2.0.5/lib/${ARCH_PATH}/SDL2_image.dll $<TARGET_FILE_DIR:Game>)
+	add_custom_command(TARGET Game POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SDL2_PATH}/lib/${ARCH_PATH}/SDL2.dll $<TARGET_FILE_DIR:Game>)
+	add_custom_command(TARGET Game POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SDL2_IMAGE_PATH}/lib/${ARCH_PATH}/libjpeg-9.dll $<TARGET_FILE_DIR:Game>)
+	add_custom_command(TARGET Game POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SDL2_IMAGE_PATH}/lib/${ARCH_PATH}/libpng16-16.dll $<TARGET_FILE_DIR:Game>)
+	add_custom_command(TARGET Game POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SDL2_IMAGE_PATH}/lib/${ARCH_PATH}/libtiff-5.dll $<TARGET_FILE_DIR:Game>)
+	add_custom_command(TARGET Game POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SDL2_IMAGE_PATH}/lib/${ARCH_PATH}/libwebp-7.dll $<TARGET_FILE_DIR:Game>)
+	add_custom_command(TARGET Game POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SDL2_IMAGE_PATH}/lib/${ARCH_PATH}/zlib1.dll $<TARGET_FILE_DIR:Game>)
+	add_custom_command(TARGET Game POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SDL2_IMAGE_PATH}/lib/${ARCH_PATH}/SDL2_image.dll $<TARGET_FILE_DIR:Game>)
+	add_custom_command(TARGET Game POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory    ${CMAKE_SOURCE_DIR}/sprites $<TARGET_FILE_DIR:Game>/sprites)
 endif()
 
 # TestVector3

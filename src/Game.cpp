@@ -1,13 +1,16 @@
+#include <algorithm>
 #include <iostream>
 #include <SDL.h>
-#include <vector>
 #include <tuple>
+#include <vector>
 
-#include "Vector3.hpp"
-#include "Particle.hpp"
 #include "Frame.hpp"
-#include "Sprite.hpp"
 #include "GameSDL.hpp"
+#include "Particle.hpp"
+#include "ParticleContact.hpp"
+#include "ParticleContactResolver.hpp"
+#include "Vector3.hpp"
+#include "Sprite.hpp"
 
 using namespace TooGoodEngine;
 
@@ -25,9 +28,9 @@ void initParticles()
 
 	particules = { stone, bullet, rocket };
 
-	gameSDL.CreateSprite(&stone,  "../sprites/red_circle.png");
-	gameSDL.CreateSprite(&bullet, "../sprites/white_circle.png");
-	gameSDL.CreateSprite(&rocket, "../sprites/green_circle.png");
+	gameSDL.CreateSprite(&stone,  "red_circle.png");
+	gameSDL.CreateSprite(&bullet, "white_circle.png");
+	gameSDL.CreateSprite(&rocket, "green_circle.png");
 }
 
 
@@ -36,6 +39,7 @@ int main (int argc, char* argv[])
 	initParticles();
 
 	Frame f = Frame();
+	ParticleContactResolver contactResolver;
 	
 	////////////////
 	// EVENT LOOP //
@@ -44,6 +48,20 @@ int main (int argc, char* argv[])
 		// Mesure deltaTime since last frame
 		f.computeDeltaFrame();
 		
+		for (auto& p1 = particules.begin(); p1 < particules.end(); p1++)
+		{
+			for (auto& p2 = p1 + 1; p2 < particules.end(); p2++)
+			{
+				if ((p1->position - p2->position).Magnitude() <= std::min(p1->GetRadius(), p2->GetRadius()))
+				{
+					contactResolver.AddContact(ParticleContact(&(*p1), &(*p2), 0.95));
+				}
+			}
+		}
+
+		contactResolver.Resolve(f.getDeltaFrame());
+		contactResolver.Clear();
+
 		// Update each particle position
 		for (auto &i : particules)
 		{
@@ -54,7 +72,6 @@ int main (int argc, char* argv[])
 			break;
 
 		gameSDL.render();
-		std::cout << "fin de boucle" << std::endl;
 	}
 	// EVENT LOOP //
 	////////////////
