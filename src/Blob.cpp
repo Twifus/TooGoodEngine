@@ -7,9 +7,10 @@
 #define ELEMENT_RADIUS (PIXEL_UNIT * 13.)
 
 Blob::Blob(Vector3 pos) : assembled(true) {
-    // center
+    // Create all particles of the blob
+    // Center
     blobElements[0] = Particle(BLOB_COMPONENT_MASS, ELEMENT_RADIUS, pos);
-    // first circle
+    // First Circle
     blobElements[1]  = Particle(BLOB_COMPONENT_MASS, ELEMENT_RADIUS,
             Vector3(pos.x + INTER_PARTICLE_DIST,
                     pos.y,
@@ -34,7 +35,7 @@ Blob::Blob(Vector3 pos) : assembled(true) {
             Vector3(pos.x + (INTER_PARTICLE_DIST / 2.0),
                     pos.y - INTER_PARTICLE_DIST,
                     0.));
-    // second circle
+    // Second Circle
     blobElements[7]  = Particle(BLOB_COMPONENT_MASS, ELEMENT_RADIUS,
             Vector3(pos.x + (INTER_PARTICLE_DIST * 2.0),
                     pos.y,
@@ -84,6 +85,7 @@ Blob::Blob(Vector3 pos) : assembled(true) {
                     pos.y - INTER_PARTICLE_DIST,
                     0.));
 
+    // Create all Force generators
     initForces();
 }
 
