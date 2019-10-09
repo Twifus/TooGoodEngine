@@ -8,12 +8,12 @@ namespace TooGoodEngine
 	class StiffSpringForceGenerator : public ParticleForceGenerator
 	{
 	private:
-		Vector3& anchor;
+		Vector3 anchor;
 		double k;
 		double damping;
 
 	public:
-		StiffSpringForceGenerator(Vector3& anchor, double k, double damping);
+		StiffSpringForceGenerator(Vector3 anchor, double k, double damping);
 		void UpdateForce(Particle& particle, double time) const;
 	};
 }

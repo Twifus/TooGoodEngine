@@ -11,8 +11,8 @@ namespace TooGoodEngine
 	{
 	private:
 		Particle* particles[2];
-		float restitution; // elasticity coeficient
-		float interpenetration; // distance
+		double restitution; // elasticity coefficient
+		double interpenetration; // distance
 		Vector3 contactNormal;
 
         // Sub functions to compute contact resolution
@@ -20,11 +20,11 @@ namespace TooGoodEngine
         void ResolvePenetration();
 
 	public:
-        ParticleContact(Particle* a, float restitution);
-		ParticleContact(Particle* a, Particle* b, float restitution);
+        ParticleContact(Particle* a, double restitution);
+		ParticleContact(Particle* a, Particle* b, double restitution);
 
-        // Compute approch velocity value
-        double ApprochVelocity() const;
+        // Compute approach velocity value
+        double ApproachVelocity() const;
         // Resolve contact (penetration and impulsion)
 		void Resolve(double time);
 	};

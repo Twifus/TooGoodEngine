@@ -2,19 +2,19 @@
 
 namespace TooGoodEngine
 {
-    ParticleContact::ParticleContact(Particle* a, Particle* b, float r)
+    ParticleContact::ParticleContact(Particle* a, Particle* b, double r)
     {
         restitution = r;
         particles[0] = a;
         particles[1] = b;
         contactNormal = (b == nullptr) ? Vector3::up : (a->position - b->position).Normalized();
         interpenetration = (b == nullptr) ? 0 :
-                        b->GetRadius() + a->GetRadius() - (b->position - a->position).SquaredMagnitude();
+                        b->GetRadius() + a->GetRadius() - (b->position - a->position).Magnitude();
     }
 
-    ParticleContact::ParticleContact(Particle* a, float r) : ParticleContact(a,nullptr,r) {}
+    ParticleContact::ParticleContact(Particle* a, double r) : ParticleContact(a,nullptr,r) {}
 
-    double ParticleContact::ApprochVelocity() const
+    double ParticleContact::ApproachVelocity() const
     {
         Vector3 vB = (particles[1] == nullptr) ? Vector3::zero : particles[1]->GetVelocity();
         return Vector3::Dot((vB - particles[0]->GetVelocity()), contactNormal);
@@ -22,11 +22,11 @@ namespace TooGoodEngine
 
     void ParticleContact::ResolvePenetration()
     {
-        if (particles[1] == nullptr)
-        {
-            particles[0]->position += interpenetration * contactNormal;
-        }
-        else
+		if (particles[1] == nullptr)
+		{
+			particles[0]->position += interpenetration * contactNormal;
+		}
+		else
         {
             double mA = particles[0]->GetMass();
             double mB = particles[1]->GetMass();
@@ -50,7 +50,7 @@ namespace TooGoodEngine
             // Computing new ones
             double constant = (mA * uA + mB * uB) / (mA + mB);
             double vA = restitution * mB * (uB - uA) / (mA + mB) + constant;
-            double vB = restitution * mB * (uA - uB) / (mA + mB) + constant;
+            double vB = restitution * mA * (uA - uB) / (mA + mB) + constant;
             // Making impulses
             particles[0]->Impulsion(mA * (vA - uA) * contactNormal);
             particles[1]->Impulsion(mB * (vB - uB) * contactNormal);
@@ -59,15 +59,13 @@ namespace TooGoodEngine
         {
             double mA = particles[0]->GetMass();
             double uA = Vector3::Dot(particles[0]->GetVelocity(), contactNormal);
-            particles[0]->Impulsion(2 * mA * uA * contactNormal);
+            particles[0]->Impulsion((1 + restitution) * mA * -uA * contactNormal);
         }
-
-        
     }
 
     void ParticleContact::Resolve(double time)
     {
-        // ResolvePenetration();
+        ResolvePenetration();
         ResolveVelocity(time);
     }
 

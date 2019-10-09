@@ -21,8 +21,8 @@ namespace TooGoodEngine
 		int i = 0;
 		do
 		{
-			auto maxElement = std::max_element(contacts.begin() + i, contacts.end(), [](ParticleContact& c1, ParticleContact& c2) { return c1.ApprochVelocity() < c2.ApprochVelocity(); });
-			if (maxElement->ApprochVelocity() < 0)
+			auto maxElement = std::max_element(contacts.begin() + i, contacts.end(), [](ParticleContact& c1, ParticleContact& c2) { return c1.ApproachVelocity() < c2.ApproachVelocity(); });
+			if (maxElement->ApproachVelocity() < 0)
 				break;
 			maxElement->Resolve(time);
 			std::iter_swap(contacts.begin() + i, maxElement);

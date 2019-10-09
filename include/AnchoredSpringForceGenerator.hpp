@@ -14,7 +14,7 @@ namespace TooGoodEngine
 		double length;
 
 	public:
-		AnchoredSpringForceGenerator(Vector3& point, double k, double length);
+		AnchoredSpringForceGenerator(Vector3 point, double k, double length);
 		void UpdateForce(Particle &particle, double time) const;
 	};
 }

@@ -3,7 +3,7 @@
 namespace TooGoodEngine
 {
 
-	AnchoredSpringForceGenerator::AnchoredSpringForceGenerator(Vector3 &point, double k, double length) :
+	AnchoredSpringForceGenerator::AnchoredSpringForceGenerator(Vector3 point, double k, double length) :
 		anchor(point), k(k), length(length) {}
 
 	void AnchoredSpringForceGenerator::UpdateForce(Particle &particle, double time) const
