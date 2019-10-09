@@ -16,6 +16,14 @@ Il est aussi nécessaire d'avoir CMake (version 3.0 minimum) pour compiler le pr
 ## Windows
 Vous pouvez ouvrir le projet sous VisualStudio pour le compiler avec CMake, et exécuter / débogguer le programme.
 
+## Blob
+
+Un programme de test faisant figurer le blob est disponible en lançant 
+> ./BlobScene
+
+Le blob peut être séparé en cliquant sur la souris puis réassemblé en cliquant à nouveau.
+Les flèches directionnelles servent à se déplacer.
+
 # Utilisation
 Les arguments en ligne de commande n'ont pas pu étre implémentées à temps.
 Trois projectiles sont tirés :
