@@ -5,7 +5,7 @@
 
 namespace TooGoodEngine
 {
-	class DragForceGenerator : ParticleForceGenerator
+	class DragForceGenerator : public ParticleForceGenerator
 	{
 	private:
 		double k1, k2;

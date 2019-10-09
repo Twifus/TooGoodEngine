@@ -5,7 +5,7 @@
 
 namespace TooGoodEngine
 {
-	class BuoyancyForceGenerator : ParticleForceGenerator
+	class BuoyancyForceGenerator : public ParticleForceGenerator
 	{
 	private:
 		double maxDepth, volume, liquidHeight, density;

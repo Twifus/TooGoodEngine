@@ -5,7 +5,7 @@
 
 namespace TooGoodEngine
 {
-	class BungeeSpringForceGenerator : ParticleForceGenerator
+	class BungeeSpringForceGenerator : public ParticleForceGenerator
 	{
 	private:
 		Particle& extremeParticle;

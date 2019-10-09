@@ -6,7 +6,7 @@
 
 namespace TooGoodEngine
 {
-	class AnchoredSpringForceGenerator : ParticleForceGenerator
+	class AnchoredSpringForceGenerator : public ParticleForceGenerator
 	{
 	private:
 		Vector3 anchor;
