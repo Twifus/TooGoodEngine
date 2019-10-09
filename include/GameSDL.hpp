@@ -16,8 +16,6 @@ namespace TooGoodEngine
         SDL_Renderer* renderer;
         std::vector<Sprite> sprites;
 
-        SDL_Renderer* initRenderer();
-
     public:
         GameSDL();
         ~GameSDL();

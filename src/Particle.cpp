@@ -69,7 +69,6 @@ namespace TooGoodEngine
     void Particle::Update(double time)
     {
         acceleration = inverseMass * resultantForce;
-        //acceleration -= 10 * Vector3::up;
         // update velocity
         velocity = velocity + acceleration * time;
         //update position

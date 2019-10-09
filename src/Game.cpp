@@ -5,10 +5,13 @@
 #include <vector>
 
 #include "Frame.hpp"
+#include "ForcesRegistery.hpp"
 #include "GameSDL.hpp"
 #include "Particle.hpp"
 #include "ParticleContact.hpp"
 #include "ParticleContactResolver.hpp"
+#include "ParticleForceGenerator.hpp"
+#include "GravityForceGenerator.hpp"
 #include "Vector3.hpp"
 #include "Sprite.hpp"
 
@@ -22,15 +25,15 @@ GameSDL gameSDL = GameSDL();
 
 void initParticles()
 {
-	Particle stone = Particle(1, 0.1, Vector3(0, -2, 0));
-	Particle bullet = Particle(3, 0.3, Vector3(0, 3, 0));
-	Particle rocket = Particle(5, 0.2, Vector3(6, 3, 0));
+	Particle stone = Particle(1, 0.1, Vector3(-3, 0, 0), Vector3(10, 5, 0));
+	Particle bullet = Particle(3, 0.3, Vector3(0, 0, 0), Vector3( 0, 5, 0));
+	Particle rocket = Particle(5, 0.5, Vector3(3, 0, 0), Vector3( 0, 5, 0));
 
 	particules = { stone, bullet, rocket };
 
-	gameSDL.CreateSprite(&stone,  "sprites/red_circle.png");
-	gameSDL.CreateSprite(&bullet, "sprites/white_circle.png");
-	gameSDL.CreateSprite(&rocket, "sprites/green_circle.png");
+	gameSDL.CreateSprite(&particules[0], "sprites/red_circle.png");
+	gameSDL.CreateSprite(&particules[1], "sprites/white_circle.png");
+	gameSDL.CreateSprite(&particules[2], "sprites/green_circle.png");
 }
 
 
@@ -40,7 +43,9 @@ int main (int argc, char* argv[])
 
 	Frame f = Frame();
 	ParticleContactResolver contactResolver;
-	
+	ForcesRegistery registry;
+	GravityForceGenerator gravityGenerator;
+
 	////////////////
 	// EVENT LOOP //
 	while (1)
@@ -58,15 +63,23 @@ int main (int argc, char* argv[])
 				}
 			}
 		}
-
 		contactResolver.Resolve(f.getDeltaFrame());
 		contactResolver.Clear();
 
+		for (auto& i : particules)
+		{
+			registry.Add(i, gravityGenerator);
+		}
+		registry.UpdateForces(f.getDeltaFrame());
+		registry.Clear();
+		
 		// Update each particle position
 		for (auto &i : particules)
 		{
 			i.Update(f.getDeltaFrame());
+			i.ClearForces();
 		}
+		
 		int exit = gameSDL.HandleEvents();
 		if (exit == -1)
 			break;
