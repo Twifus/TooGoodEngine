@@ -3,7 +3,7 @@
 namespace TooGoodEngine
 {
 
-    ParticleContact::ParticleContact(Particle* a, Particle* b, float r)
+    ParticleContact::ParticleContact(Particle* a, Particle* b, double r)
     {
         isBplane = 0;
         restitution = r;
@@ -13,7 +13,7 @@ namespace TooGoodEngine
         interpenetration = b->GetRadius() + a->GetRadius() - (b->position - a->position).Magnitude();
     }
 
-    ParticleContact::ParticleContact(Particle* a, Vector3 planPoint, Vector3 planNormal, float r)
+    ParticleContact::ParticleContact(Particle* a, Vector3 planPoint, Vector3 planNormal, double r)
     {
         isBplane = 1;
         restitution = r;
@@ -24,7 +24,7 @@ namespace TooGoodEngine
     }
 
 
-    double ParticleContact::ApprochVelocity() const
+    double ParticleContact::ApproachVelocity() const
     {
         if (isBplane)
         {

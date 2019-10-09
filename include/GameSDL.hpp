@@ -11,7 +11,6 @@ namespace TooGoodEngine
     class GameSDL
     {
     private:
-        SDL_Event event;
         SDL_Window* window;
         SDL_Renderer* renderer;
         std::vector<Sprite> sprites;
