@@ -44,6 +44,7 @@ namespace TooGoodEngine
     // Event management
     int GameSDL::HandleEvents()
     {
+		SDL_Event event;
 		if (SDL_PollEvent(&event))
 		{
 			if (event.type == SDL_QUIT)

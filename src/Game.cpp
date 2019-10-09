@@ -58,7 +58,7 @@ void addCollisions1(ParticleContactResolver& resolver, std::vector<Particle>& pa
 			}
 		}
 		if (p1->position.y <= -3)
-			resolver.AddContact(ParticleContact(&(*p1), 0.9));
+			resolver.AddContact(ParticleContact(&(*p1), -3 * Vector3::up, Vector3::up, 0.9));
 	}
 }
 
@@ -164,7 +164,7 @@ int main (int argc, char* argv[])
 		f.computeDeltaFrame();
 		
 		AddCollisions(contactResolver, particles);
-		contactResolver.Resolve(f.getDeltaFrame());
+		contactResolver.Resolve();
 		contactResolver.Clear();
 
 		AddForces(registry, particles);
