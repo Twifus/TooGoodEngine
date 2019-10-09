@@ -10,7 +10,7 @@
 #include "GameSDL.hpp"
 
 #define BLOB_NB_COMPONENTS 19
-#define BLOB_COMPONENT_MASS 10
+#define BLOB_COMPONENT_MASS 1
 
 using namespace TooGoodEngine;
 
@@ -71,4 +71,6 @@ public:
     void applyForceOnAll(ForcesRegistery& registery, ParticleForceGenerator& generator);
 
     void updatePosition(double delta);
+
+    void moveImpulse(Vector3 direction, ForcesRegistery& registery);
 };

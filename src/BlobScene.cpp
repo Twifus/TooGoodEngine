@@ -44,7 +44,8 @@ int main (int argc, char* argv[])
     ForcesRegistery registry;
     GravityForceGenerator gravityGenerator;
 
-    bool up = true;
+    bool mouseUp = true;
+    bool upKeyUp = true;
 
     ////////////////
     // EVENT LOOP //
@@ -75,11 +76,35 @@ int main (int argc, char* argv[])
             }
             if ((event.type == SDL_MOUSEBUTTONDOWN) || (event.type == SDL_MOUSEBUTTONUP))
             {
-                up = handleMouse(&event, up, blob);
+                mouseUp = handleMouse(&event, mouseUp, blob);
+            }
+            if (event.type == SDL_KEYDOWN) {
+                /* Check the SDLKey values and move change the coords */
+                if (event.key.keysym.sym == SDLK_UP) {
+                    if (upKeyUp) {
+                        upKeyUp = !upKeyUp;
+                        blob.moveImpulse(Vector3(0.0,1.0,0.0) * 20, registry);
+                    }
+                }
+                if (event.key.keysym.sym == SDLK_LEFT) {
+                    blob.moveImpulse(Vector3(-1.0,0.0,0.0), registry);
+                }
+                if (event.key.keysym.sym == SDLK_RIGHT) {
+                    blob.moveImpulse(Vector3(1.0,0.0,0.0), registry);
+                }
+            }
+            if (event.type == SDL_KEYUP) {
+                if (event.key.keysym.sym == SDLK_UP) {
+                    if (!upKeyUp) {
+                        upKeyUp = !upKeyUp;
+                    }
+                }
             }
         }
 
         gameSDL.render();
+
+        SDL_Delay(10);
     }
     // EVENT LOOP //
     ////////////////

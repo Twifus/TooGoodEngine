@@ -5,8 +5,9 @@
 #include <iostream>
 
 #define INTER_PARTICLE_DIST (1.25)
-#define ELASTICITY 1.0
+#define ELASTICITY 150
 #define ELEMENT_RADIUS (0.5)
+#define MOVE_FORCE 100
 
 Blob::Blob(Vector3 pos) : assembled(true) {
     // Create all particles of the blob
@@ -250,7 +251,7 @@ void Blob::addInternalContacts(ParticleContactResolver& resolver) {
             }
         }
         if (blobElements[i].position.y <= -3.0 + ELEMENT_RADIUS)
-            resolver.AddContact(ParticleContact(&(blobElements[i]), Vector3(0,-3,0), Vector3::up, 0.0));
+            resolver.AddContact(ParticleContact(&(blobElements[i]), Vector3(0,-3,0), Vector3::up, 0.5));
     }
 }
 
@@ -266,4 +267,16 @@ void Blob::updatePosition(double delta) {
         i.Update(delta);
         i.ClearForces();
     }
+}
+
+void Blob::moveImpulse(Vector3 direction, ForcesRegistery &registery) {
+    if (!assembled)
+        direction = direction * 0.4;
+    blobElements[0].AddForce(direction * MOVE_FORCE);
+    blobElements[7].AddForce(direction * MOVE_FORCE);
+    blobElements[9].AddForce(direction * MOVE_FORCE);
+    blobElements[11].AddForce(direction * MOVE_FORCE);
+    blobElements[13].AddForce(direction * MOVE_FORCE);
+    blobElements[15].AddForce(direction * MOVE_FORCE);
+    blobElements[17].AddForce(direction * MOVE_FORCE);
 }
