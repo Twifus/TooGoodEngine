@@ -40,12 +40,29 @@ namespace TooGoodEngine
 
     void ParticleContact::ResolveVelocity(double time)
     {
-        double restitutionCoef = (1+restitution) * ApprochVelocity()/2;
-        particles[0]->Impulsion(particles[0]->GetMass() * restitutionCoef * contactNormal);
-        if (particles[1] != nullptr)
+        if (particles[1])
         {
-            particles[1]->Impulsion(- particles[1]->GetMass() * restitutionCoef * contactNormal);
+            // Getting actual values
+            double mA = particles[0]->GetMass();
+            double mB = particles[1]->GetMass();
+            double uA = Vector3::Dot(particles[0]->GetVelocity(), contactNormal);
+            double uB = Vector3::Dot(particles[1]->GetVelocity(), contactNormal);
+            // Computing new ones
+            double constant = (mA * uA + mB * uB) / (mA + mB);
+            double vA = restitution * mB * (uB - uA) / (mA + mB) + constant;
+            double vB = restitution * mB * (uA - uB) / (mA + mB) + constant;
+            // Making impulses
+            particles[0]->Impulsion(mA * (vA - uA) * contactNormal);
+            particles[1]->Impulsion(mB * (vB - uB) * contactNormal);
         }
+        else
+        {
+            double mA = particles[0]->GetMass();
+            double uA = Vector3::Dot(particles[0]->GetVelocity(), contactNormal);
+            particles[0]->Impulsion(2 * mA * uA * contactNormal);
+        }
+
+        
     }
 
     void ParticleContact::Resolve(double time)
