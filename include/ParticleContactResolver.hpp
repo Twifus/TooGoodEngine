@@ -12,7 +12,7 @@ namespace TooGoodEngine
 		std::vector<ParticleContact> contacts;
 
 	public:
-		void AddContact(ParticleContact& contact);
+		void AddContact(ParticleContact contact);
 		void Clear();
 		void Resolve(double time);
 	};

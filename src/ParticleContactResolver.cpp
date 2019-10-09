@@ -3,9 +3,9 @@
 
 namespace TooGoodEngine
 {
-	void ParticleContactResolver::AddContact(ParticleContact& contact)
+	void ParticleContactResolver::AddContact(ParticleContact contact)
 	{
-		contacts.push_back(contact);
+		contacts.push_back(std::move(contact));
 	}
 	
 	void ParticleContactResolver::Clear()
@@ -25,7 +25,7 @@ namespace TooGoodEngine
 			if (maxElement->ApprochVelocity() < 0)
 				break;
 			maxElement->Resolve(time);
-			std::swap(contacts.begin() + i, maxElement);
+			std::iter_swap(contacts.begin() + i, maxElement);
 			++i;
 		} while (contacts.begin() + i < contacts.end());
 	}

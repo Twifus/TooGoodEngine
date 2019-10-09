@@ -53,9 +53,9 @@ int main (int argc, char* argv[])
 		// Mesure deltaTime since last frame
 		f.computeDeltaFrame();
 		
-		for (auto& p1 = particules.begin(); p1 < particules.end(); p1++)
+		for (auto p1 = particules.begin(); p1 < particules.end(); p1++)
 		{
-			for (auto& p2 = p1 + 1; p2 < particules.end(); p2++)
+			for (auto p2 = p1 + 1; p2 < particules.end(); p2++)
 			{
 				if ((p1->position - p2->position).Magnitude() <= std::min(p1->GetRadius(), p2->GetRadius()))
 				{
