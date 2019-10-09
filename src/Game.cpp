@@ -130,15 +130,31 @@ int main (int argc, char* argv[])
 	std::cout << "Type a number + 'Enter' to select a mode:\n" <<
 		"\t1 - Basic collision. 3 spheres collide with each other.\n" <<
 		"\t2 - Spring showcase (AnchoredSpring, BungeeSpring, Buoyancy, Spring and StiffSpring)" << std::endl;
+
 	char c = std::cin.get();
 	if (c == '1')
 	{
+		std::cout << "\n" <<
+			"Red: mass 1kg, radius 0.1m, p0 (-3, 0, 0), v0 (10, 5, 0))\n" <<
+			"White: mass 3kg, radius 0.3m, p0 (0, 0, 0), v0 (0, 5, 0)\n" <<
+			"Green: mass 5kg, radius 0.5m, p0 (3, 0, 0), v0 ( 0, 5, 0)\n" <<
+			"\n" <<
+			"Only gravity is applied.  Collisions between particles (C = 0.95), and with floor at y = -2 (C = 0.90)." << std::endl;
 		InitParticles = initParticles1;
 		AddForces = addForces1;
 		AddCollisions = addCollisions1;
 	}
 	else if (c == '2')
 	{
+		std::cout << "\n" <<
+			"From left to right :\n" << 
+			"1st : AnchoredSpring + gravity + drag\n" <<
+			"2nd : BungeeSpring + gravity + drag (the top particle has infinite mass)\n" <<
+			"3rd : Buoyancy + gravity + drag\n" <<
+			"4th : Spring + drag\n" <<
+			"5th : StiffSpring\n" <<
+			"\n" <<
+			"Collisions are not resolved." << std::endl;
 		InitParticles = initParticles2;
 		AddForces = addForces2;
 	}
