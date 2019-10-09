@@ -8,7 +8,7 @@ namespace TooGoodEngine
 	{
 		if (CurrentLength() > maxLength)
 		{
-			contacts.push_back(ParticleContact(particles[0], particles[1], restitution));
+			contacts.push_back(ParticleContact(particles[0], particles[1], restitution)); // TOFIX
 		}
 	}
 }
