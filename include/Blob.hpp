@@ -1,8 +1,10 @@
 #pragma once
 
+#include <vector>
 #include <Vector3.hpp>
 #include <Particle.hpp>
 #include <Sprite.hpp>
+#include <SpringForceGenerator.hpp>
 #include "ForcesRegistery.hpp"
 
 #define BLOB_NB_COMPONENTS 19
@@ -28,9 +30,17 @@ private:
     Particle blobElements[BLOB_NB_COMPONENTS];
     bool assembled;
 
+    struct SpringSave {
+        Particle& origin;
+        SpringForceGenerator forceGenerator;
+    };
+
+    std::vector<SpringSave> internalForces;
+
+    void initForces();
+
 public:
     explicit Blob(Vector3 pos = Vector3());
-    void addForces(ForcesRegistery registery);
-    void separate();
-    void assemble();
+    void addForces(ForcesRegistery& registery);
+    void changeState();
 };
