@@ -28,7 +28,7 @@ namespace TooGoodEngine
     {
         if (isBplane)
         {
-            return Vector3::Dot((- particleA->GetVelocity()), contactNormal);
+            return Vector3::Dot((particleA->GetVelocity()), -contactNormal);
         }
         return Vector3::Dot((particleB->GetVelocity() - particleA->GetVelocity()), contactNormal);
     }
@@ -60,7 +60,7 @@ namespace TooGoodEngine
         {
             double mA = particleA->GetMass();
             double uA = Vector3::Dot(particleA->GetVelocity(), contactNormal);
-            particleA->Impulsion(2 * mA * uA * contactNormal); 
+            particleA->Impulsion(restitution * mA * (-2) * uA * contactNormal); 
         }
         else
         {
@@ -76,9 +76,7 @@ namespace TooGoodEngine
             // Making impulses
             particleA->Impulsion(mA * (vA - uA) * contactNormal);
             particleB->Impulsion(mB * (vB - uB) * contactNormal); 
-        }
-        
-               
+        }   
     }
 
 
