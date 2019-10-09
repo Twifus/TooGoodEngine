@@ -5,7 +5,7 @@
 
 namespace TooGoodEngine
 {
-	class GravityForceGenerator : ParticleForceGenerator
+	class GravityForceGenerator : public ParticleForceGenerator
 	{
 	private:
 		static Vector3 gravity;

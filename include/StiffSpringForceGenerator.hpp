@@ -5,7 +5,7 @@
 
 namespace TooGoodEngine
 {
-	class StiffSpringForceGenerator : ParticleForceGenerator
+	class StiffSpringForceGenerator : public ParticleForceGenerator
 	{
 	private:
 		Vector3& anchor;

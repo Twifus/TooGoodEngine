@@ -10,7 +10,7 @@
 
 namespace TooGoodEngine
 {
-	class LinkContactGenerator : ParticleContactGenerator
+	class LinkContactGenerator : public ParticleContactGenerator
 	{
 	protected:
 		std::array<Particle*, 2> particles;
