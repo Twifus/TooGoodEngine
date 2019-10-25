@@ -28,6 +28,7 @@ include_directories("include")
 # TooGoodEngine Library
 add_library(TooGoodEngineLib
 			   src/Vector3.cpp  include/Vector3.hpp
+			   src/Quaternion.cpp include/Quaternion.hpp
 			   src/Particle.cpp include/Particle.hpp
 			   src/ForcesRegistery.cpp include/ForcesRegistery.hpp
 			   include/ParticleForceGenerator.hpp
@@ -77,5 +78,6 @@ add_executable(BlobScene src/BlobScene.cpp)
 target_link_libraries(BlobScene TooGoodEngineLib)
 
 # TestVector3
-add_executable(TestVector3 tests/TestVector3.cpp src/Vector3.cpp include/Vector3.hpp)
+add_executable(TestVector3 tests/TestVector3.cpp)
+target_link_libraries(TestVector3 TooGoodEngineLib)
 add_test(Test_Vector3 TestVector3)
