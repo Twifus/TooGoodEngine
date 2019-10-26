@@ -123,26 +123,21 @@ namespace TooGoodEngine
 				q3(0, 0, 0, 1);
 
 			{
-				const Quaternion q = Quaternion::Log(q0);
-				assert(q.w == 0 && std::isnan(q.x) && std::isnan(q.y) && std::isnan(q.z));
-
+				assert(Quaternion::Log(q0) == Quaternion(0, 0, 0, 0));
 				assert(Quaternion::Log(q1) == Quaternion(0, M_PI_2, 0, 0));
 				assert(Quaternion::Log(q2) == Quaternion(0, 0, M_PI_2, 0));
 				assert(Quaternion::Log(q3) == Quaternion(0, 0, 0, M_PI_2));
 			}
 			
 			{
-				const Quaternion q = Quaternion::Exp(q0);
-				assert(q.w == std::exp(1) && std::isnan(q.x) && std::isnan(q.y) && std::isnan(q.z));
-
+				assert(Quaternion::Exp(q0) == Quaternion(std::exp(1), 0, 0, 0));
 				assert(Quaternion::Exp(q1) == Quaternion(std::cos(1), std::sin(1), 0, 0));
 				assert(Quaternion::Exp(q2) == Quaternion(std::cos(1), 0, std::sin(1), 0));
 				assert(Quaternion::Exp(q3) == Quaternion(std::cos(1), 0, 0, std::sin(1)));
 			}
 
 			{
-				const Quaternion q = q0.Pow(2);
-				assert(std::isnan(q.w) && std::isnan(q.x) && std::isnan(q.y) && std::isnan(q.z));
+				assert(q0.Pow(2) == q0);
 
 				const Quaternion
 					qr1 = q1.Pow(2),
@@ -151,6 +146,14 @@ namespace TooGoodEngine
 				assert(is_near(qr1.w, -1) && is_near(qr1.x, 0) && is_near(qr1.y, 0) && is_near(qr1.z, 0));
 				assert(is_near(qr2.w, -1) && is_near(qr2.x, 0) && is_near(qr2.y, 0) && is_near(qr2.z, 0));
 				assert(is_near(qr3.w, -1) && is_near(qr3.x, 0) && is_near(qr3.y, 0) && is_near(qr3.z, 0));
+			}
+
+			{
+				const Quaternion q(2, 0, 0, 0);
+				assert(q0.Pow(q) == q0.Pow(2));
+				assert(q1.Pow(q) == q1.Pow(2));
+				assert(q2.Pow(q) == q2.Pow(2));
+				assert(q3.Pow(q) == q3.Pow(2));
 			}
 		}
 

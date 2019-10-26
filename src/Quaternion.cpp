@@ -77,6 +77,9 @@ namespace TooGoodEngine
 
 	Quaternion Quaternion::Log(const Quaternion& q)
 	{
+		if (q.x == 0 && q.y == 0 && q.z == 0)
+			return Quaternion(std::log(q.w), 0, 0, 0);
+
 		double magnitudeQ = q.Magnitude();
 		double magnitudeV = std::sqrt(q.x * q.x + q.y * q.y + q.z * q.z);
 		double coef1 = std::exp(q.w);
@@ -86,6 +89,9 @@ namespace TooGoodEngine
 
 	Quaternion Quaternion::Exp(const Quaternion& q)
 	{
+		if (q.x == 0 && q.y == 0 && q.z == 0)
+			return Quaternion(std::exp(q.w), 0, 0, 0);
+
 		double magnitudeV = std::sqrt(q.x * q.x + q.y * q.y + q.z * q.z);
 		double coef = std::sin(magnitudeV) / magnitudeV;
 		return std::exp(q.w) * Quaternion(std::cos(magnitudeV), q.x * coef, q.y * coef, q.z * coef);
