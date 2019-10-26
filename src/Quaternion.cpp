@@ -37,6 +37,16 @@ namespace TooGoodEngine
 		return *this;
 	}
 
+	Quaternion Quaternion::operator+(const Quaternion& other) const
+	{
+		return Quaternion(w + other.w, x + other.x, y + other.y, z + other.z);
+	}
+
+	Quaternion Quaternion::operator-(const Quaternion& other) const
+	{
+		return Quaternion(w - other.w, x - other.x, y - other.y, z - other.z);
+	}
+
 	Quaternion Quaternion::operator*(const Quaternion& other) const
 	{
 		Quaternion result;
@@ -47,15 +57,63 @@ namespace TooGoodEngine
 		return result;
 	}
 
+	Quaternion& Quaternion::operator+=(const Quaternion& other)
+	{
+		(*this) = (*this) + other;
+		return *this;
+	}
+
+	Quaternion& Quaternion::operator-=(const Quaternion& other)
+	{
+		(*this) = (*this) - other;
+		return *this;
+	}
+
 	Quaternion& Quaternion::operator*=(const Quaternion& other)
 	{
 		(*this) = (*this) * other;
 		return *this;
 	}
 
+	Quaternion Quaternion::Log(const Quaternion& q)
+	{
+		double magnitudeQ = q.Magnitude();
+		double magnitudeV = std::sqrt(q.x * q.x + q.y * q.y + q.z * q.z);
+		double coef1 = std::exp(q.w);
+		double coef2 = coef1 * std::acos(q.w / magnitudeQ) / magnitudeV;
+		return Quaternion(coef1 * std::log(magnitudeQ), q.x * coef2, q.y * coef2, q.z * coef2);
+	}
+
+	Quaternion Quaternion::Exp(const Quaternion& q)
+	{
+		double magnitudeV = std::sqrt(q.x * q.x + q.y * q.y + q.z * q.z);
+		double coef = std::sin(magnitudeV) / magnitudeV;
+		return std::exp(q.w) * Quaternion(std::cos(magnitudeV), q.x * coef, q.y * coef, q.z * coef);
+	}
+
+	Quaternion Quaternion::Pow(double e) const
+	{
+		return Quaternion::Exp(Quaternion::Log(*this) * e);
+	}
+
+	Quaternion Quaternion::Pow(const Quaternion& q) const
+	{
+		return Quaternion::Exp(Quaternion::Log(*this) * q);
+	}
+
 	double Quaternion::Dot(const Quaternion& other) const
 	{
 		return w * other.w + x * other.x + y * other.y + z * other.z;
+	}
+
+	double Quaternion::Angle(const Quaternion& from, const Quaternion& to)
+	{
+		return 2 * std::acos(from.Dot(to));
+	}
+
+	Quaternion Quaternion::Delta(const Quaternion& from, const Quaternion& to)
+	{
+		return to * from.Inverse();
 	}
 
 	Quaternion Quaternion::Normalized() const
@@ -73,9 +131,14 @@ namespace TooGoodEngine
 		return w * w + x * x + y * y + z * z;
 	}
 
-	Quaternion Quaternion::Inverted() const
+	Quaternion Quaternion::Conjugate() const
 	{
-		return Quaternion(w, -x, -y, -z) / SquaredMagnitude();
+		return Quaternion(w, -x, -y, -z);
+	}
+
+	Quaternion Quaternion::Inverse() const
+	{
+		return Conjugate() / SquaredMagnitude();
 	}
 
 	Quaternion operator*(const Quaternion& q, double k)
@@ -106,7 +169,7 @@ namespace TooGoodEngine
 	Vector3 operator*(const Quaternion& q, const Vector3& v)
 	{
 		Quaternion p(0, v.x, v.y, v.z);
-		Quaternion result = q * p * q.Inverted();
+		Quaternion result = q * p * q.Inverse();
 		return Vector3(result.x, result.y, result.z);
 	}
 

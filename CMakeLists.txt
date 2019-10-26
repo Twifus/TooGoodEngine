@@ -81,3 +81,8 @@ target_link_libraries(BlobScene TooGoodEngineLib)
 add_executable(TestVector3 tests/TestVector3.cpp)
 target_link_libraries(TestVector3 TooGoodEngineLib)
 add_test(Test_Vector3 TestVector3)
+
+# TestQuaternion
+add_executable(TestQuaternion tests/TestQuaternion.cpp)
+target_link_libraries(TestQuaternion TooGoodEngineLib)
+add_test(Test_Quaternion TestQuaternion)

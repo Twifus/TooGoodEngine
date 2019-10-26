@@ -24,17 +24,30 @@ namespace TooGoodEngine
 		Quaternion operator-() const;
 		Quaternion operator+() const;
 
+		Quaternion operator+(const Quaternion& other) const;
+		Quaternion operator-(const Quaternion& other) const;
 		Quaternion operator*(const Quaternion& other) const;
 
+		Quaternion& operator+=(const Quaternion& other);
+		Quaternion& operator-=(const Quaternion& other);
 		Quaternion& operator*=(const Quaternion& other);
+		
+		static Quaternion Log(const Quaternion& q);
+		static Quaternion Exp(const Quaternion& q);
+		Quaternion Pow(double e) const;
+		Quaternion Pow(const Quaternion& q) const;
 
 		double Dot(const Quaternion& other) const;
+
+		static double Angle(const Quaternion& from, const Quaternion& to);
+		static Quaternion Delta(const Quaternion& from, const Quaternion& to);
 
 		Quaternion Normalized() const;
 		double Magnitude() const;
 		double SquaredMagnitude() const;
 
-		Quaternion Inverted() const;
+		Quaternion Conjugate() const;
+		Quaternion Inverse() const;
 	};
 
 	Quaternion operator*(const Quaternion& q, double k);
