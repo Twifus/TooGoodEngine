@@ -10,7 +10,7 @@ namespace TooGoodEngine
 	{
 		Vector3 position = (particle.position - anchor);
 		Vector3 direction = position.Normalized();
-		Vector3 projectedVelocity = Vector3::Dot(particle.GetVelocity(), direction) * direction;
+		Vector3 projectedVelocity = (particle.GetVelocity()).Dot(direction) * direction;
 		particle.AddForce(-k * position - damping * projectedVelocity);
 	}
 }

@@ -34,8 +34,8 @@ namespace TooGoodEngine
 		Vector3& operator*=(const Vector3& other);			// Multiplication by component
 		Vector3& operator/=(const Vector3& other);			// Division by component
 
-		static double Dot(const Vector3& lhs, const Vector3& rhs);		// Scalar product of two vectors
-		static Vector3 Cross(const Vector3& lhs, const Vector3& rhs);	// Mathematical cross product
+		double Dot(const Vector3& other) const;				// Scalar product of two vectors
+		Vector3 Cross(const Vector3& other) const;			// Mathematical cross product
 
 		Vector3 Normalized() const;							// Returns the vector of same direction and of norm 1
 		double Magnitude() const;							// Returns the norm of the vector

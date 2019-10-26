@@ -57,6 +57,7 @@ namespace TooGoodEngine
 			assert(v1 * v0 == Vector3(8, 16, 32));
 			assert(v1 / v0 == Vector3(2, 4, 8));
 
+			assert(+v0 == Vector3(2, 2, 2));
 			assert(-v0 == Vector3(-2, -2, -2));
 
 			Vector3 v = v1 / v2;
@@ -81,7 +82,6 @@ namespace TooGoodEngine
 				v0(4, 8, 16),
 				v1(2, 2, 2);
 			Vector3 v2(4, 8, 16);
-			Vector3* p = &v2;
 
 			assert((v2 = v1) == v1);
 
@@ -104,7 +104,7 @@ namespace TooGoodEngine
 				v0(1, 2, 3),
 				v1(4, 5, 6);
 
-			assert(Vector3::Dot(v0, v1) == 32);
+			assert(v0.Dot(v1) == 32);
 		}
 
 		static void TestCross()
@@ -114,9 +114,9 @@ namespace TooGoodEngine
 				v1(0, 1, 0),
 				v2(0, 0, 1);
 
-			assert(Vector3::Cross(v0, v1) == v2);
-			assert(Vector3::Cross(v1, v2) == v0);
-			assert(Vector3::Cross(v2, v0) == v1);
+			assert(v0.Cross(v1) == v2);
+			assert(v1.Cross(v2) == v0);
+			assert(v2.Cross(v0) == v1);
 		}
 
 		static void TestMagnitude()

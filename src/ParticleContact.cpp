@@ -20,7 +20,7 @@ namespace TooGoodEngine
         particleA = a;
         particleB = nullptr;
         contactNormal = planNormal.Normalized();
-        interpenetration = a->GetRadius() - Vector3::Dot(a->position - planPoint, contactNormal);
+        interpenetration = a->GetRadius() - (a->position - planPoint).Dot(contactNormal);
     }
 
 
@@ -28,9 +28,9 @@ namespace TooGoodEngine
     {
         if (isBplane)
         {
-            return Vector3::Dot((particleA->GetVelocity()), -contactNormal);
+            return (particleA->GetVelocity()).Dot(-contactNormal);
         }
-        return Vector3::Dot((particleB->GetVelocity() - particleA->GetVelocity()), contactNormal);
+        return (particleB->GetVelocity() - particleA->GetVelocity()).Dot(contactNormal);
     }
 
 
@@ -59,7 +59,7 @@ namespace TooGoodEngine
         if (isBplane)
         {
             double mA = particleA->GetMass();
-            double uA = Vector3::Dot(particleA->GetVelocity(), -contactNormal);
+            double uA = (particleA->GetVelocity()).Dot(-contactNormal);
             if (uA < 0) uA = -uA;
             particleA->Impulsion(restitution * mA * 2 * uA * contactNormal);
         }
@@ -68,8 +68,8 @@ namespace TooGoodEngine
             // Getting actual values
             double mA = particleA->GetMass();
             double mB = particleB->GetMass();
-            double uA = Vector3::Dot(particleA->GetVelocity(), contactNormal);
-            double uB = Vector3::Dot(particleB->GetVelocity(), contactNormal);
+            double uA = (particleA->GetVelocity()).Dot(contactNormal);
+            double uB = (particleB->GetVelocity()).Dot(contactNormal);
             // Computing new ones
             double constant = (mA * uA + mB * uB) / (mA + mB);
             double vA = restitution * mB * (uB - uA) / (mA + mB) + constant;

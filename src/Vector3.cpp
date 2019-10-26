@@ -86,14 +86,14 @@ namespace TooGoodEngine
 		return *this;
 	}
 
-	double Vector3::Dot(const Vector3& lhs, const Vector3& rhs)
+	double Vector3::Dot(const Vector3& other) const
 	{
-		return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
+		return x * other.x + y * other.y + z * other.z;
 	}
 
-	Vector3 Vector3::Cross(const Vector3& lhs, const Vector3& rhs)
+	Vector3 Vector3::Cross(const Vector3& other) const
 	{
-		return Vector3(lhs.y * rhs.z - lhs.z * rhs.y, lhs.z * rhs.x - lhs.x * rhs.z, lhs.x * rhs.y - lhs.y * rhs.x);
+		return Vector3(y * other.z - z * other.y, z * other.x - x * other.z, x * other.y - y * other.x);
 	}
 
 	Vector3 Vector3::Normalized() const
