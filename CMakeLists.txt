@@ -48,7 +48,8 @@ add_library(TooGoodEngineLib
 			   src/GameSDL.cpp  include/GameSDL.hpp
 			   src/Frame.cpp    include/Frame.hpp
 			   src/Sprite.cpp   include/Sprite.hpp
-		       src/Blob.cpp 	include/Blob.hpp)
+		       src/Blob.cpp 	include/Blob.hpp
+			   src/Matrix3.cpp	include/Matrix3.hpp)
 
 target_link_libraries(TooGoodEngineLib PUBLIC ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY})
 
