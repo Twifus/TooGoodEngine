@@ -28,16 +28,16 @@ namespace TooGoodEngine {
 		bool operator==(const Matrix3 &matrix) const;
 		bool operator!=(const Matrix3 &matrix) const;
 
-		Matrix3& operator+=(const Matrix3 &matrix) const;
-		Matrix3& operator*=(const Matrix3 &matrix) const;
-		Matrix3& operator*=(const double k) const;
-		Matrix3& operator/=(const double k) const;
+		Matrix3& operator+=(const Matrix3 &matrix);
+		Matrix3& operator*=(const Matrix3 &matrix);
+		Matrix3& operator*=(const double k);
+		Matrix3& operator/=(const double k);
 
 		double ComputeDet() const;
 		bool IsInversible() const;
 		Matrix3 Inverse() const;
 		Matrix3 Transpose() const;
-		Matrix3 SetOrientation(Quaternion &q);
+		Matrix3 SetOrientation(Quaternion &q) const;
 		Matrix3 BaseChange(Vector3 &base);
 
 
