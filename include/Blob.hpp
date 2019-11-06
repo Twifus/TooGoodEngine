@@ -6,7 +6,7 @@
 #include "Sprite.hpp"
 #include "Forces/Registery.hpp"
 #include "Forces/Generators/Spring.hpp"
-#include "Contacts/ParticleContactResolver.hpp"
+#include "Contacts/Resolver.hpp"
 #include "GameSDL.hpp"
 
 #define BLOB_NB_COMPONENTS 19
@@ -66,7 +66,7 @@ public:
      */
     void changeState();
 
-    void addInternalContacts(ParticleContactResolver& resolver);
+    void addInternalContacts(Contacts::Resolver& resolver);
 
     void applyForceOnAll(Forces::Registery& registery, Forces::IForceGenerator& generator);
 

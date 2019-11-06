@@ -240,18 +240,18 @@ void Blob::changeState() {
     std::cout << "change !" << std::endl;
 }
 
-void Blob::addInternalContacts(ParticleContactResolver& resolver) {
+void Blob::addInternalContacts(Contacts::Resolver& resolver) {
     for (int i = 0; i < BLOB_NB_COMPONENTS; ++i)
     {
         for (auto j = i + 1; j < BLOB_NB_COMPONENTS; ++j)
         {
             if ((blobElements[i].position - blobElements[j].position).Magnitude() <= blobElements[i].GetRadius() + blobElements[j].GetRadius())
             {
-                resolver.AddContact(ParticleContact(&(blobElements[i]), &(blobElements[j]), 0.7));
+				resolver.AddContact(Contacts::Contact(&(blobElements[i]), &(blobElements[j]), 0.7));
             }
         }
         if (blobElements[i].position.y <= -3.0 + ELEMENT_RADIUS)
-            resolver.AddContact(ParticleContact(&(blobElements[i]), Vector3(0,-3,0), Vector3::up, 0.5));
+            resolver.AddContact(Contacts::Contact(&(blobElements[i]), Vector3(0,-3,0), Vector3::up, 0.5));
     }
 }
 

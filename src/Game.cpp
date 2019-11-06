@@ -10,8 +10,8 @@
 #include "Frame.hpp"
 #include "GameSDL.hpp"
 #include "Particle.hpp"
-#include "Contacts/ParticleContact.hpp"
-#include "Contacts/ParticleContactResolver.hpp"
+#include "Contacts/Contact.hpp"
+#include "Contacts/Resolver.hpp"
 #include "Sprite.hpp"
 #include "Vector3.hpp"
 
@@ -39,7 +39,7 @@ void addForces1(Forces::Registery& registry, std::vector<Particle>& particles)
 	}
 }
 
-void addCollisions1(ParticleContactResolver& resolver, std::vector<Particle>& particles)
+void addCollisions1(Contacts::Resolver& resolver, std::vector<Particle>& particles)
 {
 	for (auto p1 = particles.begin(); p1 < particles.end(); p1++)
 	{
@@ -47,11 +47,11 @@ void addCollisions1(ParticleContactResolver& resolver, std::vector<Particle>& pa
 		{
 			if ((p1->position - p2->position).Magnitude() <= p1->GetRadius() + p2->GetRadius())
 			{
-				resolver.AddContact(ParticleContact(&(*p1), &(*p2), 0.95));
+				resolver.AddContact(Contacts::Contact(&(*p1), &(*p2), 0.95));
 			}
 		}
 		if (p1->position.y <= -3)
-			resolver.AddContact(ParticleContact(&(*p1), -3 * Vector3::up, Vector3::up, 0.9));
+			resolver.AddContact(Contacts::Contact(&(*p1), -3 * Vector3::up, Vector3::up, 0.9));
 	}
 }
 
@@ -118,7 +118,7 @@ int main (int argc, char* argv[])
 {
 	std::function<void(GameSDL&, std::vector<Particle>&)> InitParticles = [](auto&, auto&) {};
 	std::function<void(Forces::Registery&, std::vector<Particle>&)> AddForces = [](auto&, auto&) {};
-	std::function<void(ParticleContactResolver&, std::vector<Particle>&)> AddCollisions = [](auto&, auto&) {};
+	std::function<void(Contacts::Resolver&, std::vector<Particle>&)> AddCollisions = [](auto&, auto&) {};
 	
 	std::cout << "Type a number + 'Enter' to select a mode:\n" <<
 		"\t1 - Basic collision. 3 spheres collide with each other.\n" <<
@@ -158,7 +158,7 @@ int main (int argc, char* argv[])
 	InitParticles(gameSDL, particles);
 
 	Frame f = Frame();
-	ParticleContactResolver contactResolver;
+	Contacts::Resolver contactResolver;
 	Forces::Registery registry;
 
 	////////////////

@@ -8,8 +8,8 @@
 #include "Forces/Registery.hpp"
 #include "GameSDL.hpp"
 #include "Particle.hpp"
-#include "Contacts/ParticleContact.hpp"
-#include "Contacts/ParticleContactResolver.hpp"
+#include "Contacts/Contact.hpp"
+#include "Contacts/Resolver.hpp"
 #include "Forces/Generators/Gravity.hpp"
 #include "Vector3.hpp"
 #include "Sprite.hpp"
@@ -39,7 +39,7 @@ int main (int argc, char* argv[])
     blob.initDisplay(gameSDL);
 
     Frame f = Frame();
-    ParticleContactResolver contactResolver;
+    Contacts::Resolver contactResolver;
     Forces::Registery registry;
     Forces::Generators::Gravity gravityGenerator;
 

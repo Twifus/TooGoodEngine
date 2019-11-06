@@ -71,12 +71,11 @@ add_library(TooGoodEngineLib
 			   src/Particle.cpp include/Particle.hpp
 			   ${FORCES_INCLUDES}
 			   ${FORCES_SOURCES}
-			   src/Contacts/ParticleContact.cpp include/Contacts/ParticleContact.hpp
-			   src/Contacts/ParticleContactResolver.cpp include/Contacts/ParticleContactResolver.hpp
-			   include/Contacts/Generators/ParticleContactGenerator.hpp
-			   include/Contacts/Generators/ParticleContactGenerator.hpp
-			   src/Contacts/Generators/LinkContactGenerator.cpp include/Contacts/Generators/LinkContactGenerator.hpp
-			   src/Contacts/Generators/CableContactGenerator.cpp include/Contacts/Generators/CableContactGenerator.hpp
+			   src/Contacts/Contact.cpp include/Contacts/Contact.hpp
+			   src/Contacts/Resolver.cpp include/Contacts/Resolver.hpp
+			   include/Contacts/IContactGenerator.hpp
+			   src/Contacts/Generators/Link.cpp include/Contacts/Generators/Link.hpp
+			   src/Contacts/Generators/Cable.cpp include/Contacts/Generators/Cable.hpp
 			   include/CommonSDL.hpp
 			   src/GameSDL.cpp  include/GameSDL.hpp
 			   src/Frame.cpp    include/Frame.hpp
