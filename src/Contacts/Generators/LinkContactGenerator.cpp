@@ -1,4 +1,4 @@
-#include "LinkContactGenerator.hpp"
+#include "Contacts/Generators/LinkContactGenerator.hpp"
 
 namespace TooGoodEngine
 {

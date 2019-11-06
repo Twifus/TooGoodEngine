@@ -5,16 +5,15 @@
 #include <vector>
 
 #include "Frame.hpp"
-#include "ForcesRegistery.hpp"
+#include "Forces/Registery.hpp"
 #include "GameSDL.hpp"
 #include "Particle.hpp"
-#include "ParticleContact.hpp"
-#include "ParticleContactResolver.hpp"
-#include "ParticleForceGenerator.hpp"
-#include "GravityForceGenerator.hpp"
+#include "Contacts/ParticleContact.hpp"
+#include "Contacts/ParticleContactResolver.hpp"
+#include "Forces/Generators/Gravity.hpp"
 #include "Vector3.hpp"
 #include "Sprite.hpp"
-#include <Blob.hpp>
+#include "Blob.hpp"
 
 using namespace TooGoodEngine;
 
@@ -41,8 +40,8 @@ int main (int argc, char* argv[])
 
     Frame f = Frame();
     ParticleContactResolver contactResolver;
-    ForcesRegistery registry;
-    GravityForceGenerator gravityGenerator;
+    Forces::Registery registry;
+    Forces::Generators::Gravity gravityGenerator;
 
     bool mouseUp = true;
     bool upKeyUp = true;

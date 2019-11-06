@@ -5,8 +5,8 @@
 #include <vector>
 
 #include "Particle.hpp"
-#include "ParticleContact.hpp"
-#include "ParticleContactGenerator.hpp"
+#include "Contacts/ParticleContact.hpp"
+#include "Contacts/Generators/ParticleContactGenerator.hpp"
 
 namespace TooGoodEngine
 {

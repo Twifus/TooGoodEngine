@@ -1,6 +1,6 @@
-#include <Blob.hpp>
-#include <ForcesRegistery.hpp>
-#include <SpringForceGenerator.hpp>
+#include "Blob.hpp"
+#include "Forces/Registery.hpp"
+#include "Forces/Generators/Spring.hpp"
 #include <algorithm>
 #include <iostream>
 
@@ -94,131 +94,131 @@ Blob::Blob(Vector3 pos) : assembled(true) {
 
 void Blob::initForces() {
     // 0 - 1
-    internalForces.push_back(SpringSave{blobElements[0], SpringForceGenerator(blobElements[1], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[1], SpringForceGenerator(blobElements[0], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[0], Forces::Generators::Spring(blobElements[1], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[1], Forces::Generators::Spring(blobElements[0], ELASTICITY, INTER_PARTICLE_DIST)});
     // 0 - 2
-    internalForces.push_back(SpringSave{blobElements[0], SpringForceGenerator(blobElements[2], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[2], SpringForceGenerator(blobElements[0], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[0], Forces::Generators::Spring(blobElements[2], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[2], Forces::Generators::Spring(blobElements[0], ELASTICITY, INTER_PARTICLE_DIST)});
     // 0 - 3
-    internalForces.push_back(SpringSave{blobElements[0], SpringForceGenerator(blobElements[3], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[3], SpringForceGenerator(blobElements[0], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[0], Forces::Generators::Spring(blobElements[3], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[3], Forces::Generators::Spring(blobElements[0], ELASTICITY, INTER_PARTICLE_DIST)});
     // 0 - 4
-    internalForces.push_back(SpringSave{blobElements[0], SpringForceGenerator(blobElements[4], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[4], SpringForceGenerator(blobElements[0], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[0], Forces::Generators::Spring(blobElements[4], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[4], Forces::Generators::Spring(blobElements[0], ELASTICITY, INTER_PARTICLE_DIST)});
     // 0 - 5
-    internalForces.push_back(SpringSave{blobElements[0], SpringForceGenerator(blobElements[5], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[5], SpringForceGenerator(blobElements[0], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[0], Forces::Generators::Spring(blobElements[5], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[5], Forces::Generators::Spring(blobElements[0], ELASTICITY, INTER_PARTICLE_DIST)});
     // 0 - 6
-    internalForces.push_back(SpringSave{blobElements[0], SpringForceGenerator(blobElements[6], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[6], SpringForceGenerator(blobElements[0], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[0], Forces::Generators::Spring(blobElements[6], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[6], Forces::Generators::Spring(blobElements[0], ELASTICITY, INTER_PARTICLE_DIST)});
     // 1 - 2
-    internalForces.push_back(SpringSave{blobElements[1], SpringForceGenerator(blobElements[2], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[2], SpringForceGenerator(blobElements[1], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[1], Forces::Generators::Spring(blobElements[2], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[2], Forces::Generators::Spring(blobElements[1], ELASTICITY, INTER_PARTICLE_DIST)});
     // 2 - 3
-    internalForces.push_back(SpringSave{blobElements[2], SpringForceGenerator(blobElements[3], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[3], SpringForceGenerator(blobElements[2], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[2], Forces::Generators::Spring(blobElements[3], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[3], Forces::Generators::Spring(blobElements[2], ELASTICITY, INTER_PARTICLE_DIST)});
     // 3 - 4
-    internalForces.push_back(SpringSave{blobElements[3], SpringForceGenerator(blobElements[4], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[4], SpringForceGenerator(blobElements[3], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[3], Forces::Generators::Spring(blobElements[4], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[4], Forces::Generators::Spring(blobElements[3], ELASTICITY, INTER_PARTICLE_DIST)});
     // 4 - 5
-    internalForces.push_back(SpringSave{blobElements[4], SpringForceGenerator(blobElements[5], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[5], SpringForceGenerator(blobElements[4], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[4], Forces::Generators::Spring(blobElements[5], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[5], Forces::Generators::Spring(blobElements[4], ELASTICITY, INTER_PARTICLE_DIST)});
     // 5 - 6
-    internalForces.push_back(SpringSave{blobElements[5], SpringForceGenerator(blobElements[6], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[6], SpringForceGenerator(blobElements[5], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[5], Forces::Generators::Spring(blobElements[6], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[6], Forces::Generators::Spring(blobElements[5], ELASTICITY, INTER_PARTICLE_DIST)});
     // 6 - 1
-    internalForces.push_back(SpringSave{blobElements[6], SpringForceGenerator(blobElements[1], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[1], SpringForceGenerator(blobElements[6], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[6], Forces::Generators::Spring(blobElements[1], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[1], Forces::Generators::Spring(blobElements[6], ELASTICITY, INTER_PARTICLE_DIST)});
     // 1 - 18
-    internalForces.push_back(SpringSave{blobElements[1], SpringForceGenerator(blobElements[18], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[18], SpringForceGenerator(blobElements[1], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[1], Forces::Generators::Spring(blobElements[18], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[18], Forces::Generators::Spring(blobElements[1], ELASTICITY, INTER_PARTICLE_DIST)});
     // 1 - 7
-    internalForces.push_back(SpringSave{blobElements[1], SpringForceGenerator(blobElements[7], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[7], SpringForceGenerator(blobElements[1], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[1], Forces::Generators::Spring(blobElements[7], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[7], Forces::Generators::Spring(blobElements[1], ELASTICITY, INTER_PARTICLE_DIST)});
     // 1 - 8
-    internalForces.push_back(SpringSave{blobElements[1], SpringForceGenerator(blobElements[8], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[8], SpringForceGenerator(blobElements[1], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[1], Forces::Generators::Spring(blobElements[8], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[8], Forces::Generators::Spring(blobElements[1], ELASTICITY, INTER_PARTICLE_DIST)});
     // 2 - 8
-    internalForces.push_back(SpringSave{blobElements[2], SpringForceGenerator(blobElements[8], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[8], SpringForceGenerator(blobElements[2], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[2], Forces::Generators::Spring(blobElements[8], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[8], Forces::Generators::Spring(blobElements[2], ELASTICITY, INTER_PARTICLE_DIST)});
     // 2 - 9
-    internalForces.push_back(SpringSave{blobElements[2], SpringForceGenerator(blobElements[9], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[9], SpringForceGenerator(blobElements[2], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[2], Forces::Generators::Spring(blobElements[9], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[9], Forces::Generators::Spring(blobElements[2], ELASTICITY, INTER_PARTICLE_DIST)});
     // 2 - 10
-    internalForces.push_back(SpringSave{blobElements[2], SpringForceGenerator(blobElements[10], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[10], SpringForceGenerator(blobElements[2], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[2], Forces::Generators::Spring(blobElements[10], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[10], Forces::Generators::Spring(blobElements[2], ELASTICITY, INTER_PARTICLE_DIST)});
     // 3 - 10
-    internalForces.push_back(SpringSave{blobElements[3], SpringForceGenerator(blobElements[10], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[10], SpringForceGenerator(blobElements[3], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[3], Forces::Generators::Spring(blobElements[10], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[10], Forces::Generators::Spring(blobElements[3], ELASTICITY, INTER_PARTICLE_DIST)});
     // 3 - 11
-    internalForces.push_back(SpringSave{blobElements[3], SpringForceGenerator(blobElements[11], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[11], SpringForceGenerator(blobElements[3], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[3], Forces::Generators::Spring(blobElements[11], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[11], Forces::Generators::Spring(blobElements[3], ELASTICITY, INTER_PARTICLE_DIST)});
     // 3 - 12
-    internalForces.push_back(SpringSave{blobElements[3], SpringForceGenerator(blobElements[12], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[12], SpringForceGenerator(blobElements[3], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[3], Forces::Generators::Spring(blobElements[12], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[12], Forces::Generators::Spring(blobElements[3], ELASTICITY, INTER_PARTICLE_DIST)});
     // 4 - 12
-    internalForces.push_back(SpringSave{blobElements[4], SpringForceGenerator(blobElements[12], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[12], SpringForceGenerator(blobElements[4], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[4], Forces::Generators::Spring(blobElements[12], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[12], Forces::Generators::Spring(blobElements[4], ELASTICITY, INTER_PARTICLE_DIST)});
     // 4 - 13
-    internalForces.push_back(SpringSave{blobElements[4], SpringForceGenerator(blobElements[13], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[13], SpringForceGenerator(blobElements[4], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[4], Forces::Generators::Spring(blobElements[13], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[13], Forces::Generators::Spring(blobElements[4], ELASTICITY, INTER_PARTICLE_DIST)});
     // 4 - 14
-    internalForces.push_back(SpringSave{blobElements[4], SpringForceGenerator(blobElements[14], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[14], SpringForceGenerator(blobElements[4], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[4], Forces::Generators::Spring(blobElements[14], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[14], Forces::Generators::Spring(blobElements[4], ELASTICITY, INTER_PARTICLE_DIST)});
     // 5 - 14
-    internalForces.push_back(SpringSave{blobElements[5], SpringForceGenerator(blobElements[14], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[14], SpringForceGenerator(blobElements[5], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[5], Forces::Generators::Spring(blobElements[14], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[14], Forces::Generators::Spring(blobElements[5], ELASTICITY, INTER_PARTICLE_DIST)});
     // 5 - 15
-    internalForces.push_back(SpringSave{blobElements[5], SpringForceGenerator(blobElements[15], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[15], SpringForceGenerator(blobElements[5], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[5], Forces::Generators::Spring(blobElements[15], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[15], Forces::Generators::Spring(blobElements[5], ELASTICITY, INTER_PARTICLE_DIST)});
     // 5 - 16
-    internalForces.push_back(SpringSave{blobElements[5], SpringForceGenerator(blobElements[16], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[16], SpringForceGenerator(blobElements[5], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[5], Forces::Generators::Spring(blobElements[16], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[16], Forces::Generators::Spring(blobElements[5], ELASTICITY, INTER_PARTICLE_DIST)});
     // 6 - 16
-    internalForces.push_back(SpringSave{blobElements[6], SpringForceGenerator(blobElements[16], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[16], SpringForceGenerator(blobElements[6], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[6], Forces::Generators::Spring(blobElements[16], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[16], Forces::Generators::Spring(blobElements[6], ELASTICITY, INTER_PARTICLE_DIST)});
     // 6 - 17
-    internalForces.push_back(SpringSave{blobElements[6], SpringForceGenerator(blobElements[17], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[17], SpringForceGenerator(blobElements[6], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[6], Forces::Generators::Spring(blobElements[17], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[17], Forces::Generators::Spring(blobElements[6], ELASTICITY, INTER_PARTICLE_DIST)});
     // 6 - 18
-    internalForces.push_back(SpringSave{blobElements[6], SpringForceGenerator(blobElements[18], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[18], SpringForceGenerator(blobElements[6], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[6], Forces::Generators::Spring(blobElements[18], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[18], Forces::Generators::Spring(blobElements[6], ELASTICITY, INTER_PARTICLE_DIST)});
     // 7 - 8
-    internalForces.push_back(SpringSave{blobElements[7], SpringForceGenerator(blobElements[8], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[8], SpringForceGenerator(blobElements[7], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[7], Forces::Generators::Spring(blobElements[8], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[8], Forces::Generators::Spring(blobElements[7], ELASTICITY, INTER_PARTICLE_DIST)});
     // 8 - 9
-    internalForces.push_back(SpringSave{blobElements[8], SpringForceGenerator(blobElements[9], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[9], SpringForceGenerator(blobElements[8], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[8], Forces::Generators::Spring(blobElements[9], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[9], Forces::Generators::Spring(blobElements[8], ELASTICITY, INTER_PARTICLE_DIST)});
     // 9 - 10
-    internalForces.push_back(SpringSave{blobElements[9], SpringForceGenerator(blobElements[10], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[10], SpringForceGenerator(blobElements[9], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[9], Forces::Generators::Spring(blobElements[10], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[10], Forces::Generators::Spring(blobElements[9], ELASTICITY, INTER_PARTICLE_DIST)});
     // 10 - 11
-    internalForces.push_back(SpringSave{blobElements[10], SpringForceGenerator(blobElements[11], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[11], SpringForceGenerator(blobElements[10], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[10], Forces::Generators::Spring(blobElements[11], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[11], Forces::Generators::Spring(blobElements[10], ELASTICITY, INTER_PARTICLE_DIST)});
     // 11 - 12
-    internalForces.push_back(SpringSave{blobElements[11], SpringForceGenerator(blobElements[12], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[12], SpringForceGenerator(blobElements[11], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[11], Forces::Generators::Spring(blobElements[12], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[12], Forces::Generators::Spring(blobElements[11], ELASTICITY, INTER_PARTICLE_DIST)});
     // 12 - 13
-    internalForces.push_back(SpringSave{blobElements[12], SpringForceGenerator(blobElements[13], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[13], SpringForceGenerator(blobElements[12], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[12], Forces::Generators::Spring(blobElements[13], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[13], Forces::Generators::Spring(blobElements[12], ELASTICITY, INTER_PARTICLE_DIST)});
     // 13 - 14
-    internalForces.push_back(SpringSave{blobElements[13], SpringForceGenerator(blobElements[14], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[14], SpringForceGenerator(blobElements[13], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[13], Forces::Generators::Spring(blobElements[14], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[14], Forces::Generators::Spring(blobElements[13], ELASTICITY, INTER_PARTICLE_DIST)});
     // 14 - 15
-    internalForces.push_back(SpringSave{blobElements[14], SpringForceGenerator(blobElements[15], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[15], SpringForceGenerator(blobElements[14], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[14], Forces::Generators::Spring(blobElements[15], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[15], Forces::Generators::Spring(blobElements[14], ELASTICITY, INTER_PARTICLE_DIST)});
     // 15 - 16
-    internalForces.push_back(SpringSave{blobElements[15], SpringForceGenerator(blobElements[16], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[16], SpringForceGenerator(blobElements[15], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[15], Forces::Generators::Spring(blobElements[16], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[16], Forces::Generators::Spring(blobElements[15], ELASTICITY, INTER_PARTICLE_DIST)});
     // 16 - 17
-    internalForces.push_back(SpringSave{blobElements[16], SpringForceGenerator(blobElements[17], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[17], SpringForceGenerator(blobElements[16], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[16], Forces::Generators::Spring(blobElements[17], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[17], Forces::Generators::Spring(blobElements[16], ELASTICITY, INTER_PARTICLE_DIST)});
     // 17 - 18
-    internalForces.push_back(SpringSave{blobElements[17], SpringForceGenerator(blobElements[18], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[18], SpringForceGenerator(blobElements[17], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[17], Forces::Generators::Spring(blobElements[18], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[18], Forces::Generators::Spring(blobElements[17], ELASTICITY, INTER_PARTICLE_DIST)});
     // 18 - 7
-    internalForces.push_back(SpringSave{blobElements[18], SpringForceGenerator(blobElements[7], ELASTICITY, INTER_PARTICLE_DIST)});
-    internalForces.push_back(SpringSave{blobElements[7], SpringForceGenerator(blobElements[18], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[18], Forces::Generators::Spring(blobElements[7], ELASTICITY, INTER_PARTICLE_DIST)});
+    internalForces.push_back(SpringSave{blobElements[7], Forces::Generators::Spring(blobElements[18], ELASTICITY, INTER_PARTICLE_DIST)});
 }
 
 void Blob::initDisplay(GameSDL& gameSdl) {
@@ -227,7 +227,7 @@ void Blob::initDisplay(GameSDL& gameSdl) {
     }
 }
 
-void Blob::addForces(ForcesRegistery &registery) {
+void Blob::addForces(Forces::Registery &registery) {
     if (assembled) {
         for (auto i = internalForces.begin(); i != internalForces.end(); ++i) {
             registery.Add(i->origin, i->forceGenerator);
@@ -255,7 +255,7 @@ void Blob::addInternalContacts(ParticleContactResolver& resolver) {
     }
 }
 
-void Blob::applyForceOnAll(ForcesRegistery& registery, ParticleForceGenerator& generator) {
+void Blob::applyForceOnAll(Forces::Registery& registery, Forces::IForceGenerator& generator) {
     for (auto &blobElement : blobElements) {
         registery.Add(blobElement, generator);
     }
@@ -269,7 +269,7 @@ void Blob::updatePosition(double delta) {
     }
 }
 
-void Blob::moveImpulse(Vector3 direction, ForcesRegistery &registery) {
+void Blob::moveImpulse(Vector3 direction, Forces::Registery &registery) {
     if (!assembled) {
         direction = direction * 0.4;
         for (int i = 0; i < BLOB_NB_COMPONENTS; ++i)

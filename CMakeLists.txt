@@ -25,25 +25,58 @@ include_directories(${SDL2_IMAGE_INCLUDE_DIR})
 include(CTest)
 include_directories("include")
 
+###########################
+#                         #
+#         FORCES          #
+#                         #
+###########################
+
+set(FORCES_GENERATORS_INCLUDE
+	include/Forces/Generators.hpp
+	include/Forces/IForceGenerator.hpp
+	include/Forces/Generators/ForceGenerator.hpp
+	include/Forces/Generators/Drag.hpp
+	include/Forces/Generators/Spring.hpp
+	include/Forces/Generators/BungeeSpring.hpp
+	include/Forces/Generators/AnchoredSpring.hpp
+	include/Forces/Generators/Buoyancy.hpp
+	include/Forces/Generators/StiffSpring.hpp
+	include/Forces/Generators/Gravity.hpp
+)
+
+set(FORCES_GENERATORS_SOURCES
+	src/Forces/Generators/Gravity.cpp
+	src/Forces/Generators/Drag.cpp
+	src/Forces/Generators/Spring.cpp
+	src/Forces/Generators/BungeeSpring.cpp
+	src/Forces/Generators/AnchoredSpring.cpp
+	src/Forces/Generators/Buoyancy.cpp
+	src/Forces/Generators/StiffSpring.cpp
+)
+
+set(FORCES_INCLUDES
+	include/Forces/Registery.hpp
+	${FORCE_GENERATORS_INCLUDES}
+)
+
+set(FORCES_SOURCES
+	src/Forces/Registery.cpp
+	${FORCES_GENERATORS_SOURCES}
+)
+
 # TooGoodEngine Library
 add_library(TooGoodEngineLib
 			   src/Vector3.cpp  include/Vector3.hpp
 			   src/Quaternion.cpp include/Quaternion.hpp
 			   src/Particle.cpp include/Particle.hpp
-			   src/ForcesRegistery.cpp include/ForcesRegistery.hpp
-			   include/ParticleForceGenerator.hpp
-			   src/GravityForceGenerator.cpp include/GravityForceGenerator.hpp
-			   src/DragForceGenerator.cpp include/DragForceGenerator.hpp
-			   src/SpringForceGenerator.cpp include/SpringForceGenerator.hpp
-			   src/BungeeSpringForceGenerator.cpp include/BungeeSpringForceGenerator.hpp
-			   src/AnchoredSpringForceGenerator.cpp include/AnchoredSpringForceGenerator.hpp
-			   src/BuoyancyForceGenerator.cpp include/BuoyancyForceGenerator.hpp
-			   src/StiffSpringForceGenerator.cpp include/StiffSpringForceGenerator.hpp
-			   src/ParticleContact.cpp include/ParticleContact.hpp
-			   src/ParticleContactResolver.cpp include/ParticleContactResolver.hpp
-			   include/ParticleContactGenerator.hpp
-			   src/LinkContactGenerator.cpp include/LinkContactGenerator.hpp
-			   src/CableContactGenerator.cpp include/CableContactGenerator.hpp
+			   ${FORCES_INCLUDES}
+			   ${FORCES_SOURCES}
+			   src/Contacts/ParticleContact.cpp include/Contacts/ParticleContact.hpp
+			   src/Contacts/ParticleContactResolver.cpp include/Contacts/ParticleContactResolver.hpp
+			   include/Contacts/Generators/ParticleContactGenerator.hpp
+			   include/Contacts/Generators/ParticleContactGenerator.hpp
+			   src/Contacts/Generators/LinkContactGenerator.cpp include/Contacts/Generators/LinkContactGenerator.hpp
+			   src/Contacts/Generators/CableContactGenerator.cpp include/Contacts/Generators/CableContactGenerator.hpp
 			   include/CommonSDL.hpp
 			   src/GameSDL.cpp  include/GameSDL.hpp
 			   src/Frame.cpp    include/Frame.hpp

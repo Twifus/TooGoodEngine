@@ -5,21 +5,14 @@
 #include <tuple>
 #include <vector>
 
-#include "AnchoredSpringForceGenerator.hpp"
-#include "BungeeSpringForceGenerator.hpp"
-#include "BuoyancyForceGenerator.hpp"
-#include "DragForceGenerator.hpp"
+#include "Forces/Registery.hpp"
+#include "Forces/Generators.hpp"
 #include "Frame.hpp"
-#include "ForcesRegistery.hpp"
 #include "GameSDL.hpp"
-#include "GravityForceGenerator.hpp"
 #include "Particle.hpp"
-#include "ParticleContact.hpp"
-#include "ParticleContactResolver.hpp"
-#include "ParticleForceGenerator.hpp"
-#include "SpringForceGenerator.hpp"
+#include "Contacts/ParticleContact.hpp"
+#include "Contacts/ParticleContactResolver.hpp"
 #include "Sprite.hpp"
-#include "StiffSpringForceGenerator.hpp"
 #include "Vector3.hpp"
 
 using namespace TooGoodEngine;
@@ -37,9 +30,9 @@ void initParticles1(GameSDL& sdl, std::vector<Particle>& particles)
 	sdl.CreateSprite(&particles[2], "sprites/green_circle.png");
 }
 
-void addForces1(ForcesRegistery& registry, std::vector<Particle>& particles)
+void addForces1(Forces::Registery& registry, std::vector<Particle>& particles)
 {
-	static GravityForceGenerator gravityGenerator;
+	static Forces::Generators::Gravity gravityGenerator;
 	for (auto& i : particles)
 	{
 		registry.Add(i, gravityGenerator);
@@ -87,17 +80,17 @@ void initParticles2(GameSDL& sdl, std::vector<Particle>& particles)
 	}
 }
 
-void addForces2(ForcesRegistery& registry, std::vector<Particle>& particles)
+void addForces2(Forces::Registery& registry, std::vector<Particle>& particles)
 {
-	static GravityForceGenerator gravGen;
-	static DragForceGenerator dragGen(0.01, 0.1);
-	static AnchoredSpringForceGenerator anchoredGen(Vector3(-5, 3, 0), 10, 3);
-	static BungeeSpringForceGenerator bungeeGen1(particles[2], 10, 4.5);
-	static BungeeSpringForceGenerator bungeeGen2(particles[1], 10, 4.5);
-	static BuoyancyForceGenerator buyoGen(0.4, 0.033, 0, 1000);
-	static SpringForceGenerator springGen1(particles[5], 10, 4.5);
-	static SpringForceGenerator springGen2(particles[4], 10, 4.5);
-	static StiffSpringForceGenerator stiffGen(Vector3(5, 0, 0), 10, 0.99);
+	static Forces::Generators::Gravity gravGen;
+	static Forces::Generators::Drag dragGen(0.01, 0.1);
+	static Forces::Generators::AnchoredSpring anchoredGen(Vector3(-5, 3, 0), 10, 3);
+	static Forces::Generators::BungeeSpring bungeeGen1(particles[2], 10, 4.5);
+	static Forces::Generators::BungeeSpring bungeeGen2(particles[1], 10, 4.5);
+	static Forces::Generators::Buoyancy buyoGen(0.4, 0.033, 0, 1000);
+	static Forces::Generators::Spring springGen1(particles[5], 10, 4.5);
+	static Forces::Generators::Spring springGen2(particles[4], 10, 4.5);
+	static Forces::Generators::StiffSpring stiffGen(Vector3(5, 0, 0), 10, 0.99);
 	
 	registry.Add(particles[0], anchoredGen);
 	registry.Add(particles[0], gravGen);
@@ -124,7 +117,7 @@ void addForces2(ForcesRegistery& registry, std::vector<Particle>& particles)
 int main (int argc, char* argv[])
 {
 	std::function<void(GameSDL&, std::vector<Particle>&)> InitParticles = [](auto&, auto&) {};
-	std::function<void(ForcesRegistery&, std::vector<Particle>&)> AddForces = [](auto&, auto&) {};
+	std::function<void(Forces::Registery&, std::vector<Particle>&)> AddForces = [](auto&, auto&) {};
 	std::function<void(ParticleContactResolver&, std::vector<Particle>&)> AddCollisions = [](auto&, auto&) {};
 	
 	std::cout << "Type a number + 'Enter' to select a mode:\n" <<
@@ -166,7 +159,7 @@ int main (int argc, char* argv[])
 
 	Frame f = Frame();
 	ParticleContactResolver contactResolver;
-	ForcesRegistery registry;
+	Forces::Registery registry;
 
 	////////////////
 	// EVENT LOOP //

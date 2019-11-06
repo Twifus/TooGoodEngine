@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "ParticleContact.hpp"
+#include "Contacts/ParticleContact.hpp"
 
 namespace TooGoodEngine
 {

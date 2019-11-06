@@ -2,8 +2,8 @@
 
 #include <vector>
 
-#include "LinkContactGenerator.hpp"
-#include "ParticleContact.hpp"
+#include "Contacts/ParticleContact.hpp"
+#include "Contacts/Generators/LinkContactGenerator.hpp"
 
 namespace TooGoodEngine
 {

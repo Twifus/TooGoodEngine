@@ -1,12 +1,12 @@
 #pragma once
 
 #include <vector>
-#include <Vector3.hpp>
-#include <Particle.hpp>
-#include <Sprite.hpp>
-#include <SpringForceGenerator.hpp>
-#include "ForcesRegistery.hpp"
-#include "ParticleContactResolver.hpp"
+#include "Vector3.hpp"
+#include "Particle.hpp"
+#include "Sprite.hpp"
+#include "Forces/Registery.hpp"
+#include "Forces/Generators/Spring.hpp"
+#include "Contacts/ParticleContactResolver.hpp"
 #include "GameSDL.hpp"
 
 #define BLOB_NB_COMPONENTS 19
@@ -39,7 +39,7 @@ private:
      */
     struct SpringSave {
         Particle& origin;                       /// Particle to which the spring is fixed
-        SpringForceGenerator forceGenerator;    /// Force generator of the spring
+        Forces::Generators::Spring forceGenerator;    /// Force generator of the spring
     };
 
     std::vector<SpringSave> internalForces;     /// Vector to save all internal interactions due to springs
@@ -59,7 +59,7 @@ public:
      * Add all internal forces to the registery if they are active
      * @param registery the force registery of the game
      */
-    void addForces(ForcesRegistery& registery);
+    void addForces(Forces::Registery& registery);
 
     /**
      * Switch the activation of the internal springs
@@ -68,9 +68,9 @@ public:
 
     void addInternalContacts(ParticleContactResolver& resolver);
 
-    void applyForceOnAll(ForcesRegistery& registery, ParticleForceGenerator& generator);
+    void applyForceOnAll(Forces::Registery& registery, Forces::IForceGenerator& generator);
 
     void updatePosition(double delta);
 
-    void moveImpulse(Vector3 direction, ForcesRegistery& registery);
+    void moveImpulse(Vector3 direction, Forces::Registery& registery);
 };

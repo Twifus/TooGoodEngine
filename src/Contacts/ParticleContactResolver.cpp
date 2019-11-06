@@ -1,4 +1,4 @@
-#include "ParticleContactResolver.hpp"
+#include "Contacts/ParticleContactResolver.hpp"
 #include <algorithm>
 
 namespace TooGoodEngine

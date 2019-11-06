@@ -1,4 +1,4 @@
-#include "CableContactGenerator.hpp"
+#include "Contacts/Generators/CableContactGenerator.hpp"
 
 namespace TooGoodEngine
 {
