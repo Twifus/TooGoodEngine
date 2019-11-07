@@ -123,7 +123,7 @@ namespace TooGoodEngine {
 			(*this)[3] * (*this)[1] * (*this)[8]);
 	}
 
-	bool Matrix3::IsInversible() const {
+	bool Matrix3::IsInvertible() const {
 		return (this->ComputeDet() != 0);
 	}
 
@@ -141,22 +141,21 @@ namespace TooGoodEngine {
 			((*this)[0] * (*this)[4] - (*this)[1] * (*this)[3]) / det };
 
 		Matrix3 inverse = Matrix3(tmp);
-		return (inverse / inverse.ComputeDet());
+		return inverse;
 	}
 
 	Matrix3 Matrix3::Transpose() const {
 		Matrix3 transpose = Matrix3();
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				transpose[i * 3 + j] = (*this)[j * 3 + i];
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				transpose[i * SIZE + j] = (*this)[j * SIZE + i];
 			}
 		}
-
 		return transpose;
 	}
 
-	Matrix3 Matrix3::SetOrientation(Quaternion &q) const{
-		return Matrix3(q);
+	void Matrix3::SetOrientation(Quaternion &q) {
+		(*this) = Matrix3(q);
 	}
 
 	Matrix3 Matrix3::BaseChange(Vector3 &base) {
