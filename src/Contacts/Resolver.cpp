@@ -17,19 +17,15 @@ namespace TooGoodEngine
 
 		void Resolver::Resolve()
 		{
-			if (contacts.empty())
-				return;
-
 			int i = 0;
-			do
+			while (i < 2 * contacts.size())
 			{
-				auto maxElement = std::max_element(contacts.begin() + i, contacts.end(), [](Contact& c1, Contact& c2) { return c1.ApproachVelocity() < c2.ApproachVelocity(); });
-				if (maxElement->ApproachVelocity() < 0)
+				auto maxElement = std::max_element(contacts.begin(), contacts.end(), [](Contact& c1, Contact& c2) { return c1.ApproachVelocity() < c2.ApproachVelocity(); });
+				if (maxElement->ApproachVelocity() <= 0)
 					break;
 				maxElement->Resolve();
-				std::iter_swap(contacts.begin() + i, maxElement);
 				++i;
-			} while (contacts.begin() + i < contacts.end());
+			}
 		}
 	}
 }

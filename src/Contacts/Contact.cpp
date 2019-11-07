@@ -59,25 +59,16 @@ namespace TooGoodEngine
 		{
 			if (isBplane)
 			{
-				double mA = particleA->GetMass();
-				double uA = (particleA->GetVelocity()).Dot(-contactNormal);
-				if (uA < 0) uA = -uA;
-				particleA->Impulsion(restitution * mA * 2 * uA * contactNormal);
+				double vAB = (-particleA->GetVelocity()).Dot(contactNormal);
+				Vector3 impulsion = -(1 + restitution) * particleA->GetMass() * vAB * contactNormal;
+				particleA->AddImpulsion(-impulsion);
 			}
 			else
 			{
-				// Getting actual values
-				double mA = particleA->GetMass();
-				double mB = particleB->GetMass();
-				double uA = (particleA->GetVelocity()).Dot(contactNormal);
-				double uB = (particleB->GetVelocity()).Dot(contactNormal);
-				// Computing new ones
-				double constant = (mA * uA + mB * uB) / (mA + mB);
-				double vA = restitution * mB * (uB - uA) / (mA + mB) + constant;
-				double vB = restitution * mA * (uA - uB) / (mA + mB) + constant;
-				// Making impulses
-				particleA->Impulsion(mA * (vA - uA) * contactNormal);
-				particleB->Impulsion(mB * (vB - uB) * contactNormal);
+				double vAB = ApproachVelocity();
+				Vector3 impulsion = -(1 + restitution) * vAB / (particleA->GetInverseMass() + particleB->GetInverseMass()) * contactNormal;
+				particleA->AddImpulsion(-impulsion);
+				particleB->AddImpulsion(impulsion);
 			}
 		}
 

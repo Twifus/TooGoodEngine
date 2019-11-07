@@ -30,8 +30,10 @@ namespace TooGoodEngine
 		// Mass accessors
 		void SetMass(double m);
 		double GetMass() const;
+
 		// Radius getter
 		double GetRadius() const;
+
 		// Velocity getter
 		Vector3 GetVelocity() const;
 
@@ -42,7 +44,7 @@ namespace TooGoodEngine
 		void AddForce(Vector3 newForce);
 
 		// Make an impulsion on the velocity (result of a collision)
-		void Impulsion(Vector3 newImpulsion);
+		void AddImpulsion(Vector3 newImpulsion);
 
 		// Clear the resultant force
 		void ClearForces();

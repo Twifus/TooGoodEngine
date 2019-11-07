@@ -56,7 +56,7 @@ namespace TooGoodEngine
 		resultantForce += newForce;
 	}
 
-    void Particle::Impulsion(Vector3 newImpulsion)
+    void Particle::AddImpulsion(Vector3 newImpulsion)
     {
         velocity += inverseMass * newImpulsion;
     }
