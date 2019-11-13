@@ -39,6 +39,6 @@ namespace TooGoodEngine {
 		Matrix4 BaseChange(Vector3 &base);					// Base changement of this								return a new matrix
 
 	private:
-		double data[DATA_LENGTH];
+		double data[DATA_LENGTH];							// Array of 12 elements
 	};
 }
