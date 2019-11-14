@@ -3,6 +3,7 @@
 #include "Vector3.hpp"
 #include "Quaternion.hpp"
 #include "Matrix3.hpp"
+#include "Matrix4.hpp"
 
 #include <ostream>
 
@@ -16,13 +17,14 @@ namespace TooGoodEngine
         double angularDumping;
 
         Vector3 position;
-		Vector3 velocity;
-		Vector3 acceleration;
-
         Quaternion orientation;
+
+		Vector3 velocity;
         Vector3 rotation;
 
-        Matrix3 transformMatrix;
+		Vector3 acceleration;
+
+        Matrix4 transformMatrix;
 
         Matrix3 inverseInertiaTensor;
 
@@ -31,6 +33,8 @@ namespace TooGoodEngine
 
         Vector3 massCenter;
 		// Vector3 resultantForce;
+
+        void UpdateTransformMatrix();
 
     public:
         RigidBody();

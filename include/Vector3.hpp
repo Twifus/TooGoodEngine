@@ -43,6 +43,8 @@ namespace TooGoodEngine
 		Vector3 Normalized() const;							// Returns the vector of same direction and of norm 1
 		double Magnitude() const;							// Returns the norm of the vector
 		double SquaredMagnitude() const;					// Returns the square of the norm of the vector
+	
+		double operator[](int i) const;
 	};
 
 	Vector3 operator*(const Vector3& v, double k);			// Multiplication of each component by a scalar

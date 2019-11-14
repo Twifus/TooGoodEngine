@@ -1,5 +1,7 @@
 #pragma once
 #include "Vector3.hpp"
+#include "Quaternion.hpp"
+#include "Matrix3.hpp"
 #include <cmath>
 
 #define DATA_LENGTH 12 
@@ -11,6 +13,8 @@ namespace TooGoodEngine {
 	public:
 		Matrix4();											// Construct a null matrix (0,0,0,0,0,0,0,0,0)
 		Matrix4(Vector3& vector);							// Construct a matrix from a Vector (x,y,z)
+		Matrix4(const Matrix3 &m, const Vector3 &v);
+		Matrix4(const Quaternion &q, const Vector3 &v);							// Construct a matrix from a Vector (x,y,z)
 		Matrix4(double matrix[DATA_LENGTH]);				// Construct a matrix from an array of 9 double
 
 		Matrix4 operator+(const Matrix4& matrix) const;	// Addition two matrix component by component,			return a new one
@@ -39,6 +43,6 @@ namespace TooGoodEngine {
 		Matrix4 BaseChange(Vector3& base);					// Base changement of this								return a new matrix
 
 	private:
-		double m_data[DATA_LENGTH];
+		double data[DATA_LENGTH];
 	};
 }

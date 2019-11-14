@@ -8,6 +8,7 @@ namespace TooGoodEngine {
 	Matrix4::Matrix4(double matrix[DATA_LENGTH]) {
 		for (int i = 0; i < DATA_LENGTH; i++) m_data[i] = matrix[i];
 	}
+
 	Matrix4::Matrix4(Vector3 &vector) {
 		for (int i = 0; i < DATA_LENGTH; i++) {
 			m_data[i] = 0;
@@ -15,6 +16,24 @@ namespace TooGoodEngine {
 			if (i == SIZE * 2 - 1) m_data[i] = vector.y;
 			if (i == SIZE * 3 - 1) m_data[i] = vector.z;
 		}
+		data[SIZE-1] = 1;
+	}
+
+	Matrix4::Matrix4(const Matrix3 &m, const Vector3 &v) {
+		Matrix4(v); // mise à 0
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+					data[i*SIZE+j] = m[i*3+j];
+			}
+		}
+	}
+
+	Matrix4::Matrix4(const Quaternion &q, const Vector3 &v) {
+		Matrix3 m3(q);
+		Matrix4(m3);
+		for (int i=0; i < 3; i++) {
+			data[SIZE*i - 1] = v[i];
+		}	
 	}
 
 	Matrix4 Matrix4::operator+(const Matrix4 &matrix) const {

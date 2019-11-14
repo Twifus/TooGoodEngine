@@ -1,6 +1,8 @@
 #pragma once
 #include "Vector3.hpp"
 #include "Quaternion.hpp"
+#include "Matrix3.hpp"
+#include "Matrix4.hpp"
 #include <cmath>
 #include <array>
 
