@@ -45,6 +45,6 @@ namespace TooGoodEngine {
 
 
 	private:
-		double data[DATA_LENGTH];
+		double data[DATA_LENGTH];							// Array of 9 elements
 	};
 }
