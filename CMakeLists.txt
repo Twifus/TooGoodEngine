@@ -81,7 +81,8 @@ add_library(TooGoodEngineLib
 			   src/Frame.cpp    include/Frame.hpp
 			   src/Sprite.cpp   include/Sprite.hpp
 		       src/Blob.cpp 	include/Blob.hpp
-			   src/Matrix3.cpp	include/Matrix3.hpp)
+			   src/Matrix3.cpp	include/Matrix3.hpp
+			   src/Matrix4.cpp	include/Matrix4.hpp)
 
 target_link_libraries(TooGoodEngineLib PUBLIC ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY})
 
@@ -119,3 +120,8 @@ add_test(Test_Vector3 TestVector3)
 add_executable(TestQuaternion tests/TestQuaternion.cpp)
 target_link_libraries(TestQuaternion TooGoodEngineLib)
 add_test(Test_Quaternion TestQuaternion)
+
+# TestQuaternion
+add_executable(TestMatrix3 tests/TestMatrix3.cpp)
+target_link_libraries(TestMatrix3 TooGoodEngineLib)
+add_test(Test_Quaternion TestMatrix3)

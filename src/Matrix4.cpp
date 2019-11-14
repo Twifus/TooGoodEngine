@@ -2,18 +2,18 @@
 
 namespace TooGoodEngine {
 	Matrix4::Matrix4() {
-		for (int i = 0; i < DATA_LENGTH; i++) data[i] = 0;
+		for (int i = 0; i < DATA_LENGTH; i++) m_data[i] = 0;
 	}
 
 	Matrix4::Matrix4(double matrix[DATA_LENGTH]) {
-		for (int i = 0; i < DATA_LENGTH; i++) data[i] = matrix[i];
+		for (int i = 0; i < DATA_LENGTH; i++) m_data[i] = matrix[i];
 	}
 	Matrix4::Matrix4(Vector3 &vector) {
 		for (int i = 0; i < DATA_LENGTH; i++) {
-			data[i] = 0;
-			if (i == SIZE - 1)	   data[i] = vector.x;
-			if (i == SIZE * 2 - 1) data[i] = vector.y;
-			if (i == SIZE * 3 - 1) data[i] = vector.z;
+			m_data[i] = 0;
+			if (i == SIZE - 1)	   m_data[i] = vector.x;
+			if (i == SIZE * 2 - 1) m_data[i] = vector.y;
+			if (i == SIZE * 3 - 1) m_data[i] = vector.z;
 		}
 	}
 
@@ -65,11 +65,11 @@ namespace TooGoodEngine {
 	}
 
 	double Matrix4::operator[](const int index) const {
-		return this->data[index];
+		return this->m_data[index];
 	}
 
 	double& Matrix4::operator[](const int index) {
-		return this->data[index];
+		return this->m_data[index];
 	}
 
 	bool Matrix4::operator==(const Matrix4 &matrix) const {
