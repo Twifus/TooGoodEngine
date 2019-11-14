@@ -2,16 +2,36 @@
 
 namespace TooGoodEngine
 {
-    void RigidBody::UpdateTransformMatrix()
+
+    void RigidBody::SetInertiaTensorLocal(Matrix3 &inertiaTensor)
     {
+        inertiaTensorLocal = inertiaTensor;
+    }
+
+    void RigidBody::UpdateDerivedData()
+    {
+        // Transform Martix
         Matrix3 m = Matrix3(orientation).Inverse();
         transformMatrix = Matrix4(m, -position);
+
+        // World inertia tensor
+        Matrix3 orientationMatrix(orientation);
+        inverseInertiaTensor = orientationMatrix * inertiaTensorLocal * orientationMatrix.Inverse();
+
     }
 
 
     RigidBody::RigidBody()
     {
 
+    }
+
+    RigidBody::RigidBody(double masse)
+    {
+        double defaultDumping = 0.95;
+        inverseMass = (masse == 0) ? 99999 : 1/masse;
+        linearDumping = defaultDumping;
+        angularDumping = defaultDumping;
     }
 
     void RigidBody::addForceAtPoint(Vector3 force, Vector3 point)

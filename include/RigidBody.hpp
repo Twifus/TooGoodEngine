@@ -26,6 +26,7 @@ namespace TooGoodEngine
 
         Matrix4 transformMatrix;
 
+        Matrix3 inertiaTensorLocal;
         Matrix3 inverseInertiaTensor;
 
         Vector3 forceAcum;
@@ -34,17 +35,21 @@ namespace TooGoodEngine
         Vector3 massCenter;
 		// Vector3 resultantForce;
 
-        void UpdateTransformMatrix();
+    protected:
+       void SetInertiaTensorLocal(Matrix3 &inertiaTensor);
 
     public:
         RigidBody();
+        RigidBody(double m);
 
-        void CalculTransformMatrix(); 
+        void UpdateDerivedData(); 
 
         // Apply F on a precise (world) point of the object
         void addForceAtPoint(Vector3 force, Vector3 point);
         // Apply F on a precise (object) point of the object
         void addForceAtBodyPoint(Vector3 force, Vector3 point);
+
+        void ClearAccumulation();
 
         void Update(double time);
     };
