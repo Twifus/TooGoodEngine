@@ -16,7 +16,7 @@ namespace TooGoodEngine {
 			if (i == 6) data[i] = vector.z;
 		}
 	}
-	Matrix3::Matrix3(Quaternion &q) {
+	Matrix3::Matrix3(const Quaternion &q) {
 		double tmp[DATA_LENGTH] = { 1 - (2 * q.y * q.y + 2 * q.z * q.z),
 											2 * q.x * q.y + 2 * q.z * q.w,
 											2 * q.x * q.z - 2 * q.y * q.w,

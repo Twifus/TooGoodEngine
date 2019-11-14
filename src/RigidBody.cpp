@@ -2,6 +2,13 @@
 
 namespace TooGoodEngine
 {
+    void RigidBody::UpdateTransformMatrix()
+    {
+        Matrix3 m = Matrix3(orientation).Inverse();
+        transformMatrix = Matrix4(m, -position);
+    }
+
+
     RigidBody::RigidBody()
     {
 
@@ -9,7 +16,8 @@ namespace TooGoodEngine
 
     void RigidBody::addForceAtPoint(Vector3 force, Vector3 point)
     {
-        // this conversion of "point" is wrong because the body could be rotated
+        // not sure about conversion
+        Vector3 local_point = transformMatrix * point;
         addForceAtBodyPoint(force, point - massCenter);
     }
 

@@ -1,6 +1,8 @@
 #pragma once
 #include "Vector3.hpp"
 #include "Quaternion.hpp"
+#include "Matrix3.hpp"
+#include "Matrix4.hpp"
 #include <cmath>
 
 #define DATA_LENGTH 9 
@@ -11,7 +13,7 @@ namespace TooGoodEngine {
 	{
 	public:
 		Matrix3();											// Construct a null matrix (0,0,0,0,0,0,0,0,0)
-		Matrix3(Quaternion &q);								// Construct a matrix from a Quaternion 
+		Matrix3(const Quaternion &q);								// Construct a matrix from a Quaternion 
 		Matrix3(Vector3 &vector);							// Construct a matrix from a Vector (x,y,z)
 		Matrix3(double matrix[DATA_LENGTH]);				// Construct a matrix from an array of 9 double
 
