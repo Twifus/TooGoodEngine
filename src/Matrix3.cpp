@@ -178,9 +178,4 @@ namespace TooGoodEngine
 	void Matrix3::SetOrientation(Quaternion& q) {
 		*this = Matrix3(q);
 	}
-
-	Matrix3 Matrix3::BaseChange(Vector3& base) {
-		Matrix3 baseMatrix(base);
-		return baseMatrix * (*this) * baseMatrix.Inverse();
-	}
 }
