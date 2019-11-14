@@ -2,20 +2,24 @@
 #include "Vector3.hpp"
 #include "Quaternion.hpp"
 #include "Matrix3.hpp"
+#include "Matrix4.hpp"
 #include <cmath>
-
-#define DATA_LENGTH 12 
-#define SIZE 4
 
 namespace TooGoodEngine {
 	class Matrix4
 	{
 	public:
+		static constexpr int size = 4;
+		static constexpr int data_length = 12;
+
 		Matrix4();											// Construct a null matrix (0,0,0,0,0,0,0,0,0)
-		Matrix4(Vector3& vector);							// Construct a matrix from a Vector (x,y,z)
-		Matrix4(const Matrix3 &m, const Vector3 &v);
-		Matrix4(const Quaternion &q, const Vector3 &v);							// Construct a matrix from a Vector (x,y,z)
-		Matrix4(double matrix[DATA_LENGTH]);				// Construct a matrix from an array of 9 double
+		Matrix4(std::array<double, Matrix4::data_length> matrix);	// Construct a matrix from an array of 9 double
+		Matrix4(double matrix[Matrix4::data_length]);		// Construct a matrix from an array of 9 double
+		Matrix4(const Vector3& vector);						// Construct a matrix from a Vector
+		Matrix4(const Matrix3 &m, const Vector3 &v);		// Construct a matrix from a Matrix3 and a Vector
+		Matrix4(const Quaternion &q, const Vector3 &v);		// Construct a matrix from a Quaternion and a Vector
+
+		const std::array<double, Matrix4::data_length> data() const; // Return the content of the matrix
 
 		Matrix4 operator+(const Matrix4& matrix) const;	// Addition two matrix component by component,			return a new one
 
@@ -43,6 +47,6 @@ namespace TooGoodEngine {
 		Matrix4 BaseChange(Vector3& base);					// Base changement of this								return a new matrix
 
 	private:
-		double data[DATA_LENGTH];
+		std::array<double, Matrix4::data_length> m_data;
 	};
 }

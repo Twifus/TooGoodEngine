@@ -79,7 +79,7 @@ namespace TooGoodEngine
 	}
 
 	Matrix3 Matrix3::operator*(const Matrix3& matrix) const {
-		double tmp[data_length] = { 
+		return Matrix3({
 			m_data[0] * matrix[0] + m_data[1] * matrix[3] + m_data[2] * matrix[6],
 			m_data[0] * matrix[1] + m_data[1] * matrix[4] + m_data[2] * matrix[7],
 			m_data[0] * matrix[2] + m_data[1] * matrix[5] + m_data[2] * matrix[8],
@@ -89,9 +89,7 @@ namespace TooGoodEngine
 			m_data[6] * matrix[0] + m_data[7] * matrix[3] + m_data[8] * matrix[6],
 			m_data[6] * matrix[1] + m_data[7] * matrix[4] + m_data[8] * matrix[7],
 			m_data[6] * matrix[2] + m_data[7] * matrix[5] + m_data[8] * matrix[8]
-		};
-
-		return Matrix3(tmp);
+			});
 	}
 
 	Matrix3 Matrix3::operator*(const double k) const {
@@ -152,7 +150,7 @@ namespace TooGoodEngine
 	Matrix3 Matrix3::Inverse() const {
 		double det = ComputeDet();
 
-		return Matrix3 ({
+		return Matrix3({
 			(m_data[4] * m_data[8] - m_data[5] * m_data[7]) / det,
 			(m_data[2] * m_data[7] - m_data[1] * m_data[8]) / det,
 			(m_data[1] * m_data[5] - m_data[2] * m_data[4]) / det,
@@ -161,15 +159,15 @@ namespace TooGoodEngine
 			(m_data[2] * m_data[3] - m_data[0] * m_data[5]) / det,
 			(m_data[3] * m_data[7] - m_data[4] * m_data[6]) / det,
 			(m_data[1] * m_data[6] - m_data[0] * m_data[7]) / det,
-			(m_data[0] * m_data[4] - m_data[1] * m_data[3]) / det 
-		});
+			(m_data[0] * m_data[4] - m_data[1] * m_data[3]) / det
+			});
 	}
 
 	Matrix3 Matrix3::Transpose() const {
 		Matrix3 transpose = Matrix3();
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
-				transpose[i * size + j] = m_data[static_cast<uint64_t>(j) * size + i];
+				transpose[i * size + j] = m_data[static_cast<uint64_t>(j)* size + i];
 			}
 		}
 		return transpose;
