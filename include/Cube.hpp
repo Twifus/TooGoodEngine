@@ -10,7 +10,7 @@
 // Include Mac
 
 #elif __APPLE__
-#define GL3_PROTOTYPES 1
+#define GL_SILENCE_DEPRECATION
 #include <OpenGL/gl3.h>
 
 
@@ -24,8 +24,8 @@
 
 #include <glm/glm.hpp>
 #include <cstddef>
-#include <Vector3.hpp>
-#include <Quaternion.hpp>
+#include "Vector3.hpp"
+#include "Quaternion.hpp"
 #include "Shader.hpp"
 
 using namespace TooGoodEngine;

@@ -5,13 +5,13 @@
 // Include Windows
 
 #ifdef WIN32
+#define GL_SILENCE_DEPRECATION
 #include <GL/glew.h>
 
 
 // Include Mac
 
 #elif __APPLE__
-#define GL3_PROTOTYPES 1
 #include <OpenGL/gl3.h>
 
 
