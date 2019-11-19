@@ -12,12 +12,10 @@ namespace TooGoodEngine
 	class RigidBody
 	{
     private:
+        double mass;
         double inverseMass;
 		double linearDamping;
         double angularDamping;
-
-        Vector3 position;
-        Quaternion orientation;
 
 		Vector3 velocity;
         Vector3 rotation;
@@ -40,18 +38,25 @@ namespace TooGoodEngine
        void SetInertiaTensorLocal(Matrix3 &inertiaTensor);
 
     public:
+        // public attributes
+        Vector3 position;
+        Quaternion orientation;
+
+        // Constructor
         RigidBody(double m);
 
         void UpdateDerivedData(); 
 
-        void addForce(const Vector3 &force);
+        void AddForce(const Vector3 &force);
         // Apply F on a precise (world) point of the object
-        void addForceAtPoint(const Vector3 &force, const Vector3 &point);
+        void AddForceAtPoint(const Vector3 &force, const Vector3 &point);
         // Apply F on a precise (object) point of the object
-        void addForceAtBodyPoint(const Vector3 &force, const Vector3 &point);
+        void AddForceAtBodyPoint(const Vector3 &force, const Vector3 &point);
 
         void ClearAccumulation();
 
         void Update(double time);
+
+        double GetMass() const;
     };
 }

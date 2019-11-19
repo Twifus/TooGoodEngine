@@ -3,10 +3,11 @@
 namespace TooGoodEngine
 {
     // Basic constructor
-    RigidBody::RigidBody(double masse)
+    RigidBody::RigidBody(double m)
     {
         double defaultDumping = 0.95;
-        inverseMass = (masse == 0) ? 99999 : 1/masse;
+        mass = m;
+        inverseMass = (m == 0) ? 99999 : 1/m;
         linearDamping = defaultDumping;
         angularDamping = defaultDumping;
         orientation = Quaternion::identity;
@@ -21,22 +22,22 @@ namespace TooGoodEngine
 
 
     // Apply a force at center of mass
-    void RigidBody::addForce(const Vector3 &force)
+    void RigidBody::AddForce(const Vector3 &force)
     {
-        addForceAtBodyPoint(force, Vector3::zero);
+        AddForceAtBodyPoint(force, Vector3::zero);
     }
 
 
     // Apply a force at a point in world space
-    void RigidBody::addForceAtPoint(const Vector3 &force, const Vector3 &point)
+    void RigidBody::AddForceAtPoint(const Vector3 &force, const Vector3 &point)
     {
         Vector3 local_point = transformMatrix * point;
-        addForceAtBodyPoint(force, local_point);
+        AddForceAtBodyPoint(force, local_point);
     }
 
 
     // Apply a force at a point relative to center of mass
-    void RigidBody::addForceAtBodyPoint(const Vector3 &force, const Vector3 &point)
+    void RigidBody::AddForceAtBodyPoint(const Vector3 &force, const Vector3 &point)
     {
         forceAcum += force;
         torqueAcum += point.Cross(force);
@@ -90,5 +91,10 @@ namespace TooGoodEngine
         UpdateDerivedData();
         ClearAccumulation();
 
+    }
+
+    double GetMass() const
+    {
+        return mass;
     }
 } // namespace TooGoodEngine
