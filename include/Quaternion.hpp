@@ -15,6 +15,7 @@ namespace TooGoodEngine
 
 		Quaternion();
 		Quaternion(double w, double x, double y, double z);
+		Quaternion(const Vector3& v);
 
 		static Quaternion AxisAngle(const Vector3& axis, double angle);
 

@@ -10,6 +10,8 @@ namespace TooGoodEngine
 
 	Quaternion::Quaternion(double w, double x, double y, double z) : w(w), x(x), y(y), z(z) {}
 
+	Quaternion::Quaternion(const Vector3& v) : w(0), x(v.x), y(v.y), z(v.z) {}
+
 	Quaternion Quaternion::AxisAngle(const Vector3& axis, double angle)
 	{
 		Vector3 n = axis.Normalized();
@@ -174,7 +176,7 @@ namespace TooGoodEngine
 
 	Vector3 operator*(const Quaternion& q, const Vector3& v)
 	{
-		Quaternion p(0, v.x, v.y, v.z);
+		Quaternion p(v);
 		Quaternion result = q * p * q.Inverse();
 		return Vector3(result.x, result.y, result.z);
 	}
