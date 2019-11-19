@@ -89,9 +89,10 @@ add_library(TooGoodEngineLib
 			   src/GameSDL.cpp  include/GameSDL.hpp
 			   src/Frame.cpp    include/Frame.hpp
 			   src/Sprite.cpp   include/Sprite.hpp
-		       src/Blob.cpp 	include/Blob.hpp
+		       #src/Blob.cpp 	include/Blob.hpp
 			   src/Matrix3.cpp	include/Matrix3.hpp
 			   src/Matrix4.cpp	include/Matrix4.hpp
+			   src/RigidBody.cpp include/RigidBody.hpp
 			   #src/Cube.cpp include/Cube.hpp
 			   #src/OpenGLScene.cpp include/OpenGLScene.hpp
 			   #src/Shader.cpp   include/Shader.hpp 
@@ -119,13 +120,13 @@ endif()
 add_custom_command(TARGET TooGoodEngineLib POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/sprites $<TARGET_FILE_DIR:TooGoodEngineLib>/sprites)
 add_custom_command(TARGET TooGoodEngineLib POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/src/Shaders $<TARGET_FILE_DIR:TooGoodEngineLib>/Shaders)
 
-# Game demo executable
-add_executable(Game src/Game.cpp)
-target_link_libraries(Game TooGoodEngineLib)
+## Game demo executable
+#add_executable(Game src/Game.cpp)
+#target_link_libraries(Game TooGoodEngineLib)
 
-# Blob demo executable
-add_executable(BlobScene src/BlobScene.cpp)
-target_link_libraries(BlobScene TooGoodEngineLib)
+## Blob demo executable
+#add_executable(BlobScene src/BlobScene.cpp)
+#target_link_libraries(BlobScene TooGoodEngineLib)
 
 # TestVector3
 add_executable(TestVector3 tests/TestVector3.cpp)
@@ -147,6 +148,6 @@ add_executable(TestMatrix4 tests/TestMatrix4.cpp)
 target_link_libraries(TestMatrix4 TooGoodEngineLib)
 add_test(Test_Quaternion TestMatrix4)
 
-# Test 3D
-add_executable(Test3D tests/Test3D.cpp)
-target_link_libraries(Test3D TooGoodEngineLib)
+## Test 3D
+#add_executable(Test3D tests/Test3D.cpp)
+#target_link_libraries(Test3D TooGoodEngineLib)
