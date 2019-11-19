@@ -37,7 +37,7 @@ namespace TooGoodEngine {
 		Matrix3 operator/(const double k) const;			// Division of all components of the matrix by k		return a new matrix
 
 		Matrix3& operator+=(const Matrix3& matrix);			// Addition of a matrix to this							return modified matrix
-		Matrix3& operator-=(const Matrix3& matrix);			// Addition of a matrix to this							return modified matrix
+		Matrix3& operator-=(const Matrix3& matrix);			// Subtraction of a matrix to this						return modified matrix
 		Matrix3& operator*=(const Matrix3& matrix);			// Multiplication of this with another matrix			return modified matrix
 		Matrix3& operator*=(const double k);				// Multiplication of this with constant k				return modified matrix
 		Matrix3& operator/=(const double k);				// Division of this with constant k						return modified matrix

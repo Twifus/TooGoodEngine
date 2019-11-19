@@ -121,7 +121,12 @@ add_executable(TestQuaternion tests/TestQuaternion.cpp)
 target_link_libraries(TestQuaternion TooGoodEngineLib)
 add_test(Test_Quaternion TestQuaternion)
 
-# TestQuaternion
+# TestMatrix3
 add_executable(TestMatrix3 tests/TestMatrix3.cpp)
 target_link_libraries(TestMatrix3 TooGoodEngineLib)
 add_test(Test_Quaternion TestMatrix3)
+
+# TestMatrix4
+add_executable(TestMatrix4 tests/TestMatrix4.cpp)
+target_link_libraries(TestMatrix4 TooGoodEngineLib)
+add_test(Test_Quaternion TestMatrix4)

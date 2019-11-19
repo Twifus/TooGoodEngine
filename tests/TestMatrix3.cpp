@@ -78,14 +78,13 @@ namespace TooGoodEngine
 			assert(m1 == m0);
 			assert(!(m1 != m0));
 
-			std::array<Matrix3, Matrix3::data_length> ms;
-			for (int i = 0; i < 9; ++i)
+			for (int i = 0; i < Matrix3::data_length; ++i)
 			{
 				std::array<double, Matrix3::data_length> a(a0);
 				a[i] = 0;
-				ms[i] = Matrix3(a);
-				assert(ms[i] != m0);
-				assert(!(ms[i] == m0));
+				Matrix3 m(a);
+				assert(m != m0);
+				assert(!(m == m0));
 			}
 		}
 

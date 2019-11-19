@@ -1,11 +1,14 @@
 #include "Matrix4.hpp"
 
-namespace TooGoodEngine {
+namespace TooGoodEngine
+{
+	const Matrix4 Matrix4::identity({ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0 });
+	
 	Matrix4::Matrix4() : m_data() {}
 
-	Matrix4::Matrix4(std::array<double, Matrix4::data_length> matrix) : m_data(matrix) {}
+	Matrix4::Matrix4(const std::array<double, Matrix4::data_length> matrix) : m_data(matrix) {}
 
-	Matrix4::Matrix4(double matrix[data_length]) : m_data() {
+	Matrix4::Matrix4(const double matrix[Matrix4::data_length]) : m_data() {
 		for (int i = 0; i < data_length; i++) m_data[i] = matrix[i];
 	}
 
@@ -30,10 +33,37 @@ namespace TooGoodEngine {
 		return m_data;
 	}
 
+	bool Matrix4::operator==(const Matrix4& matrix) const {
+		for (int i = 0; i < data_length; i++) {
+			if (m_data[i] != matrix[i]) return false;
+		}
+		return true;
+	}
+
+	bool Matrix4::operator!=(const Matrix4& matrix) const {
+		return !((*this) == matrix);
+	}
+
+	double Matrix4::operator[](const int index) const {
+		return m_data[index];
+	}
+
+	double& Matrix4::operator[](const int index) {
+		return m_data[index];
+	}
+
 	Matrix4 Matrix4::operator+(const Matrix4& matrix) const {
 		Matrix4 result;
 		for (int i = 0; i < data_length; i++) {
 			result[i] = m_data[i] + matrix[i];
+		}
+		return result;
+	}
+
+	Matrix4 Matrix4::operator-(const Matrix4& matrix) const {
+		Matrix4 result;
+		for (int i = 0; i < data_length; i++) {
+			result[i] = m_data[i] - matrix[i];
 		}
 		return result;
 	}
@@ -79,27 +109,13 @@ namespace TooGoodEngine {
 		return result;
 	}
 
-	double Matrix4::operator[](const int index) const {
-		return m_data[index];
-	}
-
-	double& Matrix4::operator[](const int index) {
-		return m_data[index];
-	}
-
-	bool Matrix4::operator==(const Matrix4& matrix) const {
-		for (int i = 0; i < data_length; i++) {
-			if (m_data[i] != matrix[i]) return false;
-		}
-		return true;
-	}
-
-	bool Matrix4::operator!=(const Matrix4& matrix) const {
-		return !((*this) == matrix);
-	}
-
 	Matrix4& Matrix4::operator+=(const Matrix4& matrix) {
-		for (int i = 0; i < data_length; i++) (*this)[i] += matrix[i];
+		for (int i = 0; i < data_length; i++) m_data[i] += matrix[i];
+		return *this;
+	}
+
+	Matrix4& Matrix4::operator-=(const Matrix4& matrix) {
+		for (int i = 0; i < data_length; i++) m_data[i] -= matrix[i];
 		return *this;
 	}
 
@@ -108,23 +124,23 @@ namespace TooGoodEngine {
 	}
 
 	Matrix4& Matrix4::operator*=(const double k) {
-		for (int i = 0; i < data_length; i++) (*this)[i] *= k;
+		for (int i = 0; i < data_length; i++) m_data[i] *= k;
 		return *this;
 	}
 
 	Matrix4& Matrix4::operator/=(const double k) {
-		for (int i = 0; i < data_length; i++) (*this)[i] /= k;
+		for (int i = 0; i < data_length; i++) m_data[i] /= k;
 		return *this;
 	}
 
 	double Matrix4::ComputeDet() const {
 		return (
-			(*this)[8] * (*this)[5] * (*this)[2] +
-			(*this)[4] * (*this)[9] * (*this)[2] +
-			(*this)[8] * (*this)[1] * (*this)[6] -
-			(*this)[0] * (*this)[9] * (*this)[6] -
-			(*this)[4] * (*this)[1] * (*this)[10] -
-			(*this)[0] * (*this)[5] * (*this)[10]
+			m_data[0] * m_data[5] * m_data[10]
+			+ m_data[2] * m_data[4] * m_data[9]
+			+ m_data[1] * m_data[6] * m_data[8]
+			- m_data[0] * m_data[6] * m_data[9]
+			- m_data[2] * m_data[5] * m_data[8]
+			- m_data[1] * m_data[4] * m_data[10]
 			);
 	}
 
@@ -137,53 +153,56 @@ namespace TooGoodEngine {
 
 		// Compute values at index 3, 7 and 11
 		double index3 = (
-			(*this)[9] * (*this)[6] * (*this)[3] +
-			(*this)[1] * (*this)[10] * (*this)[7] +
-			(*this)[5] * (*this)[2] * (*this)[11] -
-			(*this)[5] * (*this)[10] * (*this)[3] -
-			(*this)[9] * (*this)[2] * (*this)[7] -
-			(*this)[1] * (*this)[6] * (*this)[11]) / det;
+			m_data[9] * m_data[6] * m_data[3] +
+			m_data[1] * m_data[10] * m_data[7] +
+			m_data[5] * m_data[2] * m_data[11] -
+			m_data[5] * m_data[10] * m_data[3] -
+			m_data[9] * m_data[2] * m_data[7] -
+			m_data[1] * m_data[6] * m_data[11]) / det;
 
 		double index7 = (
-			(*this)[4] * (*this)[10] * (*this)[3] +
-			(*this)[8] * (*this)[2] * (*this)[7] +
-			(*this)[0] * (*this)[6] * (*this)[11] -
-			(*this)[8] * (*this)[6] * (*this)[3] -
-			(*this)[0] * (*this)[10] * (*this)[7] -
-			(*this)[4] * (*this)[2] * (*this)[11]) / det;
+			m_data[4] * m_data[10] * m_data[3] +
+			m_data[8] * m_data[2] * m_data[7] +
+			m_data[0] * m_data[6] * m_data[11] -
+			m_data[8] * m_data[6] * m_data[3] -
+			m_data[0] * m_data[10] * m_data[7] -
+			m_data[4] * m_data[2] * m_data[11]) / det;
 
 		double index11 = (
-			(*this)[8] * (*this)[5] * (*this)[3] +
-			(*this)[0] * (*this)[9] * (*this)[7] +
-			(*this)[4] * (*this)[1] * (*this)[11] -
-			(*this)[0] * (*this)[5] * (*this)[11] -
-			(*this)[4] * (*this)[9] * (*this)[3] -
-			(*this)[8] * (*this)[1] * (*this)[7]) / det;
+			m_data[8] * m_data[5] * m_data[3] +
+			m_data[0] * m_data[9] * m_data[7] +
+			m_data[4] * m_data[1] * m_data[11] -
+			m_data[0] * m_data[5] * m_data[11] -
+			m_data[4] * m_data[9] * m_data[3] -
+			m_data[8] * m_data[1] * m_data[7]) / det;
 
 		// Creates an array of the component of the inverse matrix
-		return Matrix4({ 
-			((*this)[5] * (*this)[10] - (*this)[9] * (*this)[6]) / det,
-			((*this)[2] * (*this)[9] - (*this)[1] * (*this)[10]) / det,
-			((*this)[1] * (*this)[6] - (*this)[2] * (*this)[5]) / det,
+		return Matrix4({
+			(m_data[5] * m_data[10] - m_data[9] * m_data[6]) / det,
+			(m_data[2] * m_data[9] - m_data[1] * m_data[10]) / det,
+			(m_data[1] * m_data[6] - m_data[2] * m_data[5]) / det,
 			index3,
-			((*this)[8] * (*this)[6] - (*this)[4] * (*this)[10]) / det,
-			((*this)[0] * (*this)[10] - (*this)[2] * (*this)[8]) / det,
-			((*this)[2] * (*this)[4] - (*this)[0] * (*this)[6]) / det,
+			(m_data[8] * m_data[6] - m_data[4] * m_data[10]) / det,
+			(m_data[0] * m_data[10] - m_data[2] * m_data[8]) / det,
+			(m_data[2] * m_data[4] - m_data[0] * m_data[6]) / det,
 			index7,
-			((*this)[4] * (*this)[9] - (*this)[5] * (*this)[8]) / det,
-			((*this)[1] * (*this)[8] - (*this)[0] * (*this)[9]) / det,
-			((*this)[0] * (*this)[5] - (*this)[1] * (*this)[4]) / det,
-			index11 
+			(m_data[4] * m_data[9] - m_data[5] * m_data[8]) / det,
+			(m_data[1] * m_data[8] - m_data[0] * m_data[9]) / det,
+			(m_data[0] * m_data[5] - m_data[1] * m_data[4]) / det,
+			index11
 			});
 	}
 
 	Matrix4 Matrix4::Transpose() const {
 		Matrix4 transpose;
-		for (int i = 0; i < size - 1; i++) {
-			for (int j = 0; j < size; j++) {
-				transpose[i * size + j] = m_data[static_cast<uint64_t>(j) * size + i];
+		for (int i = 0; i < Matrix3::size; i++) {
+			for (int j = 0; j < Matrix3::size; j++) {
+				transpose[i * Matrix4::size + j] = m_data[static_cast<uint64_t>(j)* Matrix4::size + i];
 			}
 		}
+		transpose[3] = -m_data[3];
+		transpose[7] = -m_data[7];
+		transpose[11] = -m_data[11];
 		return transpose;
 	}
 }
