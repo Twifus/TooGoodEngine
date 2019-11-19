@@ -9,12 +9,12 @@ namespace TooGoodEngine
 			StiffSpring::StiffSpring(Vector3 anchor, double k, double damping) :
 				anchor(anchor), k(k), damping(damping) {}
 
-			void StiffSpring::UpdateForce(Particle& particle, double time) const
+			void StiffSpring::UpdateForce(RigidBody& rb, double time) const
 			{
-				Vector3 position = (particle.position - anchor);
+				Vector3 position = (rb.position - anchor);
 				Vector3 direction = position.Normalized();
-				Vector3 projectedVelocity = (particle.GetVelocity()).Dot(direction) * direction;
-				particle.AddForce(-k * position - damping * projectedVelocity);
+				Vector3 projectedVelocity = (rb.GetVelocity()).Dot(direction) * direction;
+				rb.AddForce(-k * position - damping * projectedVelocity);
 			}
 		}
 	}

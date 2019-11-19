@@ -17,7 +17,7 @@ namespace TooGoodEngine
 
 			public:
 				Buoyancy(double maxDepth, double volume, double liquidHeight, double density);
-				virtual void UpdateForce(Particle& particle, double time) const;
+				virtual void UpdateForce(RigidBody& rb, double time) const;
 			};
 		}
 	}

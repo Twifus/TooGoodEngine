@@ -19,7 +19,7 @@ namespace TooGoodEngine
 
 			public:
 				AnchoredSpring(Vector3 point, double k, double length);
-				void UpdateForce(Particle& particle, double time) const;
+				void UpdateForce(RigidBody& rb, double time) const;
 			};
 		}
 	}

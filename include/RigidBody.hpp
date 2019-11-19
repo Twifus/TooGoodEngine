@@ -58,5 +58,7 @@ namespace TooGoodEngine
         void Update(double time);
 
         double GetMass() const;
+
+		Vector3 GetVelocity() const;
     };
 }

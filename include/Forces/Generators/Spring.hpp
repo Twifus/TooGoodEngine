@@ -12,13 +12,15 @@ namespace TooGoodEngine
 			class Spring : public IForceGenerator
 			{
 			private:
-				Particle& extremeParticle;
+				Vector3 pos1;
+				RigidBody& other;
+				Vector3 pos2;
 				double k;
 				double length;
 
 			public:
-				Spring(Particle& particle, double k, double length);
-				void UpdateForce(Particle& particle, double time) const;
+				Spring(Vector3& pos1, RigidBody& other, Vector3& pos2, double k, double length);
+				void UpdateForce(RigidBody& rb, double time) const;
 			};
 		}
 	}

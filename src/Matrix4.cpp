@@ -70,9 +70,9 @@ namespace TooGoodEngine
 
 	Vector3 Matrix4::operator*(const Vector3& vector) const {
 		return Vector3(
-			m_data[0] * vector.x + m_data[1] * vector.y + m_data[2] * vector.z,
-			m_data[4] * vector.x + m_data[5] * vector.y + m_data[6] * vector.z,
-			m_data[8] * vector.x + m_data[9] * vector.y + m_data[10] * vector.z
+			m_data[0] * vector.x + m_data[1] * vector.y + m_data[2] * vector.z + m_data[3],
+			m_data[4] * vector.x + m_data[5] * vector.y + m_data[6] * vector.z + m_data[7],
+			m_data[8] * vector.x + m_data[9] * vector.y + m_data[10] * vector.z + m_data[11]
 		);
 	}
 

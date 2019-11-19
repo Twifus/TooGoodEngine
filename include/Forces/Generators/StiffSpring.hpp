@@ -18,7 +18,7 @@ namespace TooGoodEngine
 
 			public:
 				StiffSpring(Vector3 anchor, double k, double damping);
-				void UpdateForce(Particle& particle, double time) const;
+				void UpdateForce(RigidBody& rb, double time) const;
 			};
 		}
 	}

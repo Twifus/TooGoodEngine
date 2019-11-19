@@ -13,16 +13,16 @@ namespace TooGoodEngine
 		private:
 			struct RegistryEntry
 			{
-				Particle& particle;
+				RigidBody& particle;
 				IForceGenerator& generator;
 
-				RegistryEntry(Particle& particle, IForceGenerator& generator);
+				RegistryEntry(RigidBody& particle, IForceGenerator& generator);
 			};
 
 			std::vector<RegistryEntry> registry;
 
 		public:
-			void Add(Particle& particle, IForceGenerator& generator);
+			void Add(RigidBody& particle, IForceGenerator& generator);
 			void UpdateForces(double time);
 			void Clear();
 		};

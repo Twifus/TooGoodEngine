@@ -9,10 +9,10 @@ namespace TooGoodEngine
 			AnchoredSpring::AnchoredSpring(Vector3 point, double k, double length) :
 				anchor(point), k(k), length(length) {}
 
-			void AnchoredSpring::UpdateForce(Particle& particle, double time) const
+			void AnchoredSpring::UpdateForce(RigidBody& rb, double time) const
 			{
-				Vector3 direction = (particle.position - anchor);
-				particle.AddForce(-k * (direction.Magnitude() - length) * direction.Normalized());
+				Vector3 direction = (rb.position - anchor);
+				rb.AddForce(-k * (direction.Magnitude() - length) * direction.Normalized());
 			}
 		}
 	}

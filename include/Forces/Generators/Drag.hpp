@@ -16,7 +16,7 @@ namespace TooGoodEngine
 
 			public:
 				Drag(double k1, double k2);
-				void UpdateForce(Particle& particle, double time) const;
+				void UpdateForce(RigidBody& rb, double time) const;
 			};
 		}
 	}

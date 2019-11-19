@@ -12,13 +12,13 @@ namespace TooGoodEngine
 			class BungeeSpring : public IForceGenerator
 			{
 			private:
-				Particle& extremeParticle;
+				RigidBody& other;
 				double k;
 				double length;
 
 			public:
-				BungeeSpring(Particle& particle, double k, double length);
-				void UpdateForce(Particle& particle, double time) const;
+				BungeeSpring(RigidBody& other, double k, double length);
+				void UpdateForce(RigidBody& rb, double time) const;
 			};
 		}
 	}

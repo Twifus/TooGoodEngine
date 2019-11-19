@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Particle.hpp"
+#include "RigidBody.hpp"
 
 namespace TooGoodEngine
 {
@@ -10,7 +10,7 @@ namespace TooGoodEngine
 		{
 		public:
 			virtual ~IForceGenerator() = default;
-			virtual void UpdateForce(Particle& particle, double time) const = 0;
+			virtual void UpdateForce(RigidBody& particle, double time) const = 0;
 		};
 	}
 }

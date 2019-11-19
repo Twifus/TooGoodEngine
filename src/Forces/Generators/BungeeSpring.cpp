@@ -6,15 +6,15 @@ namespace TooGoodEngine
 	{
 		namespace Generators
 		{
-			BungeeSpring::BungeeSpring(Particle& particle, double k, double length) :
-				extremeParticle(particle), k(k), length(length) {}
+			BungeeSpring::BungeeSpring(RigidBody& other, double k, double length) :
+				other(other), k(k), length(length) {}
 
-			void BungeeSpring::UpdateForce(Particle& particle, double time) const
+			void BungeeSpring::UpdateForce(RigidBody& rb, double time) const
 			{
-				Vector3 direction = (particle.position - extremeParticle.position);
+				Vector3 direction = (rb.position - other.position);
 				double appliedLength = direction.Magnitude();
 				if (appliedLength > length)
-					particle.AddForce(-k * (appliedLength - length) * direction.Normalized());
+					rb.AddForce(-k * (appliedLength - length) * direction.Normalized());
 			}
 		}
 	}

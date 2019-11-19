@@ -16,7 +16,7 @@ namespace TooGoodEngine
 
 			public:
 				Gravity() = default;
-				void UpdateForce(Particle& particle, double time) const;
+				void UpdateForce(RigidBody& rb, double time) const;
 			};
 		}
 	}
