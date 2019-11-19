@@ -1,5 +1,3 @@
-#include <Shader.hpp>
-#include "../external/glew-2.1.0/include/GL/glew.h"
 #include "Shader.hpp"
 
 Shader::Shader() : m_vertexID(0), m_fragmentID(0), m_programID(0), m_vertexSource(), m_fragmentSource()
