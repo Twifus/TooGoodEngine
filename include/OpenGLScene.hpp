@@ -17,7 +17,7 @@
 #include <SDL.h>
 #undef main
 #include <iostream>
-#include <Cube.hpp>
+#include <Element.hpp>
 #include <vector>
 
 class OpenGLScene {
@@ -29,10 +29,10 @@ public:
     bool initGL();
     void mainLoop();
 
-    void addElement(Cube& cube);
+    void addElement(Element& cube);
 
 private:
-    std::vector<Cube> elements;
+    std::vector<Element> elements;
 
     std::string windowTitle;
     int windowWidth;

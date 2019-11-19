@@ -16,9 +16,8 @@ int main()
         return EXIT_FAILURE;
     }
 
-    Cube cube = Cube(2.0, "Shaders/couleur3D.vert", "Shaders/couleur3D.frag");
-
-    scene.addElement(cube);
+    Element testElement = Element(10,1, Vector3());
+    scene.addElement(testElement);
 
     scene.mainLoop();
 

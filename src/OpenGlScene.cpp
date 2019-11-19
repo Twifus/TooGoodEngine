@@ -116,20 +116,19 @@ void OpenGLScene::mainLoop() {
         if(events.window.event == SDL_WINDOWEVENT_CLOSE)
             close = true;
 
-        modelView = lookAt(glm::vec3(6,6,6),
-                           glm::vec3(3,0,0),
+        modelView = lookAt(glm::vec3(-6,-6,-6),
+                           glm::vec3(0,0,0),
                            glm::vec3(0,1,0));
 
         mat4 modelViewSave = modelView;
 
-        for (Cube cube : elements) {
+        for (Element element : elements) {
             modelView = modelViewSave;
 
             // todo : change modelview to fit the position of the object
             modelViewSave = modelView;
 
-            modelView = translate(modelView, vec3(5, 0, 0));
-            cube.display(projection, modelView);
+            element.cube.display(projection, modelView);
 
             modelView = modelViewSave;
         }
@@ -144,6 +143,6 @@ void OpenGLScene::mainLoop() {
     }
 }
 
-void OpenGLScene::addElement(Cube& cube) {
-    elements.push_back(cube);
+void OpenGLScene::addElement(Element& element) {
+    elements.push_back(element);
 }

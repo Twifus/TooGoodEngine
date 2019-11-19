@@ -88,7 +88,7 @@ add_library(TooGoodEngineLib
 		       src/Blob.cpp 	include/Blob.hpp
 			   src/Matrix3.cpp	include/Matrix3.hpp
 			   src/Matrix4.cpp	include/Matrix4.hpp src/Cube.cpp include/Cube.hpp src/OpenGLScene.cpp include/OpenGLScene.hpp
-			   src/Shader.cpp   include/Shader.hpp)
+			   src/Shader.cpp   include/Shader.hpp include/Element.hpp src/Element.cpp)
 
 target_link_libraries(TooGoodEngineLib PUBLIC ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${GLEW_LIBRARY} opengl32)
 
