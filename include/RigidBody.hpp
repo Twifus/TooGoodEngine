@@ -13,8 +13,8 @@ namespace TooGoodEngine
 	{
     private:
         double inverseMass;
-		double linearDumping;
-        double angularDumping;
+		double linearDamping;
+        double angularDamping;
 
         Vector3 position;
         Quaternion orientation;
@@ -23,6 +23,7 @@ namespace TooGoodEngine
         Vector3 rotation;
 
 		Vector3 acceleration;
+        Vector3 angularAccel;
 
         Matrix4 transformMatrix;
 
@@ -39,15 +40,15 @@ namespace TooGoodEngine
        void SetInertiaTensorLocal(Matrix3 &inertiaTensor);
 
     public:
-        RigidBody();
         RigidBody(double m);
 
         void UpdateDerivedData(); 
 
+        void addForce(const Vector3 &force);
         // Apply F on a precise (world) point of the object
-        void addForceAtPoint(Vector3 force, Vector3 point);
+        void addForceAtPoint(const Vector3 &force, const Vector3 &point);
         // Apply F on a precise (object) point of the object
-        void addForceAtBodyPoint(Vector3 force, Vector3 point);
+        void addForceAtBodyPoint(const Vector3 &force, const Vector3 &point);
 
         void ClearAccumulation();
 
