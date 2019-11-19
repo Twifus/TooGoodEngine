@@ -12,9 +12,10 @@ if(WIN32) # On Windows systems, search for SDL2 in `external` directory
 	set(SDL2_PATH "${CMAKE_SOURCE_DIR}/external/SDL2-2.0.10")
 	set(SDL2_IMAGE_PATH "${CMAKE_SOURCE_DIR}/external/SDL2_image-2.0.5")
 	set(GLEW_PATH "${CMAKE_SOURCE_DIR}/external/glew-2.1.0")
+	set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${GLEW_PATH})
 endif()
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
@@ -22,9 +23,12 @@ include_directories(${SDL2_INCLUDE_DIR})
 find_package(SDL2_image REQUIRED)
 include_directories(${SDL2_IMAGE_INCLUDE_DIR})
 
-set(CMAKE_LIBRARY_PATH "${GLEW_PATH}/lib/Release")
-find_library(GLEW_LIBRARY NAMES GLEW glew32 glew glew32s PATH_SUFFIXES lib64)
-include_directories("${GLEW_PATH}/include")
+find_package(GLEW REQUIRED)
+include_directories(${GLEW_INCLUDE_DIR})
+
+#set(CMAKE_LIBRARY_PATH "${GLEW_PATH}/lib/Release")
+#find_library(GLEW_LIBRARY NAMES GLEW glew32 glew glew32s PATH_SUFFIXES lib64)
+#include_directories("${GLEW_PATH}/include")
 ##
 
 include(CTest)
