@@ -93,8 +93,13 @@ namespace TooGoodEngine
 
     }
 
-    double GetMass() const
+    double RigidBody::GetMass() const
     {
         return mass;
+    }
+
+    Vector3 RigidBody::GetVelocity() const
+    {
+        return velocity;
     }
 } // namespace TooGoodEngine
