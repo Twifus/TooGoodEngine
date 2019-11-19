@@ -1,28 +1,24 @@
 #ifndef DEF_SHADER
 #define DEF_SHADER
 
-
 // Include Windows
 
 #ifdef WIN32
-#define GL_SILENCE_DEPRECATION
 #include <GL/glew.h>
 
 
 // Include Mac
 
 #elif __APPLE__
-#include <OpenGL/gl3.h>
+#include <OpenGL/gl.h>
 
 
 // Include UNIX/Linux
 
 #else
 #define GL3_PROTOTYPES 1
-#include <GLES3/gl3.h>
-
+#include <GL/gl.h>
 #endif
-
 
 #include <iostream>
 #include <string>
