@@ -1,16 +1,17 @@
 #include "RigidBody.hpp"
 
+
+
 namespace TooGoodEngine
 {
+    static constexpr double defaultDamping = 0.95;
+
     // Basic constructor
-    RigidBody::RigidBody(double m)
+    RigidBody::RigidBody(double m, const Vector3 &pos, const Quaternion &ori) :
+        mass(m), position(pos), orientation(ori),
+        linearDamping(defaultDamping), angularDamping(defaultDamping)
     {
-        double defaultDumping = 0.95;
-        mass = m;
         inverseMass = (m == 0) ? 99999 : 1/m;
-        linearDamping = defaultDumping;
-        angularDamping = defaultDumping;
-        orientation = Quaternion::identity;
     }
 
 
@@ -31,8 +32,17 @@ namespace TooGoodEngine
     // Apply a force at a point in world space
     void RigidBody::AddForceAtPoint(const Vector3 &force, const Vector3 &point)
     {
-        Vector3 local_point = transformMatrix * point;
-        AddForceAtBodyPoint(force, local_point);
+        AddForceAtBodyPoint(force, WorldToBody(point));
+    }
+
+    Vector3 RigidBody::WorldToBody(const Vector3 &v) const
+    {
+        return transformMatrix * v;
+    }
+
+    Vector3 RigidBody::BodyToWorld(const Vector3 &v) const
+    {
+        return transformMatrix.Inverse() * v;
     }
 
 

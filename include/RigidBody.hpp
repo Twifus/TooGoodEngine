@@ -43,7 +43,7 @@ namespace TooGoodEngine
         Quaternion orientation;
 
         // Constructor
-        RigidBody(double m);
+        RigidBody(double m, const Vector3 &pos = Vector3::zero, const Quaternion &ori = Quaternion::identity);
 
         void UpdateDerivedData(); 
 
@@ -59,6 +59,9 @@ namespace TooGoodEngine
 
         double GetMass() const;
 
-		Vector3 GetVelocity() const;
+        Vector3 GetVelocity() const;
+
+        Vector3 BodyToWorld(const Vector3 &v) const;
+        Vector3 WorldToBody(const Vector3 &v) const;
     };
 }
