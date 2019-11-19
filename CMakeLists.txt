@@ -26,6 +26,9 @@ include_directories(${SDL2_IMAGE_INCLUDE_DIR})
 find_package(GLEW REQUIRED)
 include_directories(${GLEW_INCLUDE_DIR})
 
+find_package(OPENGL REQUIRED)
+include_directories(${OPENGL_INCLUDE_DIR})
+
 #set(CMAKE_LIBRARY_PATH "${GLEW_PATH}/lib/Release")
 #find_library(GLEW_LIBRARY NAMES GLEW glew32 glew glew32s PATH_SUFFIXES lib64)
 #include_directories("${GLEW_PATH}/include")
@@ -93,15 +96,16 @@ add_library(TooGoodEngineLib
 			   src/Matrix3.cpp	include/Matrix3.hpp
 			   src/Matrix4.cpp	include/Matrix4.hpp
 			   src/RigidBody.cpp include/RigidBody.hpp
-			   #src/Cube.cpp include/Cube.hpp
-			   #src/OpenGLScene.cpp include/OpenGLScene.hpp
-			   #src/Shader.cpp   include/Shader.hpp 
-			   #include/Element.hpp src/Element.cpp
+			   src/BoxRigidBody.cpp include/BoxRigidBody.hpp
+			   src/Cube.cpp include/Cube.hpp
+			   src/OpenGLScene.cpp include/OpenGLScene.hpp
+			   src/Shader.cpp   include/Shader.hpp 
+			   src/Element.cpp include/Element.hpp
 			   )
 
-target_link_libraries(TooGoodEngineLib PUBLIC ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${GLEW_LIBRARY} opengl32)
+target_link_libraries(TooGoodEngineLib PUBLIC ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${GLEW_LIBRARIES} ${OPENGL_LIBRARIES})
 
-if(WIN32) # On Windows systems, copy SDL2.dll to build directory
+if(WIN32) # On Windows systems, copy .dll to build directory
 	if(CMAKE_SIZEOF_VOID_P EQUAL 8)
 		SET(ARCH_PATH "x64")
 	else()
@@ -148,6 +152,6 @@ add_executable(TestMatrix4 tests/TestMatrix4.cpp)
 target_link_libraries(TestMatrix4 TooGoodEngineLib)
 add_test(Test_Quaternion TestMatrix4)
 
-## Test 3D
-#add_executable(Test3D tests/Test3D.cpp)
-#target_link_libraries(Test3D TooGoodEngineLib)
+# Test 3D
+add_executable(Test3D tests/Test3D.cpp)
+target_link_libraries(Test3D TooGoodEngineLib)
