@@ -11,6 +11,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 if(WIN32) # On Windows systems, search for SDL2 in `external` directory
 	set(SDL2_PATH "${CMAKE_SOURCE_DIR}/external/SDL2-2.0.10")
 	set(SDL2_IMAGE_PATH "${CMAKE_SOURCE_DIR}/external/SDL2_image-2.0.5")
+	set(GLEW_PATH "${CMAKE_SOURCE_DIR}/external/glew-2.1.0")
 endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
@@ -20,6 +21,10 @@ include_directories(${SDL2_INCLUDE_DIR})
 
 find_package(SDL2_image REQUIRED)
 include_directories(${SDL2_IMAGE_INCLUDE_DIR})
+
+set(CMAKE_LIBRARY_PATH "${GLEW_PATH}/lib/Release")
+find_library(GLEW_LIBRARY NAMES GLEW glew32 glew glew32s PATH_SUFFIXES lib64)
+include_directories("${GLEW_PATH}/include")
 ##
 
 include(CTest)
@@ -82,9 +87,10 @@ add_library(TooGoodEngineLib
 			   src/Sprite.cpp   include/Sprite.hpp
 		       src/Blob.cpp 	include/Blob.hpp
 			   src/Matrix3.cpp	include/Matrix3.hpp
-			   src/Matrix4.cpp	include/Matrix4.hpp)
+			   src/Matrix4.cpp	include/Matrix4.hpp src/Cube.cpp include/Cube.hpp src/OpenGLScene.cpp include/OpenGLScene.hpp
+			   src/Shader.cpp   include/Shader.hpp include/Element.hpp src/Element.cpp)
 
-target_link_libraries(TooGoodEngineLib PUBLIC ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY})
+target_link_libraries(TooGoodEngineLib PUBLIC ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${GLEW_LIBRARY} opengl32)
 
 if(WIN32) # On Windows systems, copy SDL2.dll to build directory
 	if(CMAKE_SIZEOF_VOID_P EQUAL 8)
@@ -99,9 +105,11 @@ if(WIN32) # On Windows systems, copy SDL2.dll to build directory
 	add_custom_command(TARGET TooGoodEngineLib POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SDL2_IMAGE_PATH}/lib/${ARCH_PATH}/libwebp-7.dll $<TARGET_FILE_DIR:TooGoodEngineLib>)
 	add_custom_command(TARGET TooGoodEngineLib POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SDL2_IMAGE_PATH}/lib/${ARCH_PATH}/zlib1.dll $<TARGET_FILE_DIR:TooGoodEngineLib>)
 	add_custom_command(TARGET TooGoodEngineLib POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SDL2_IMAGE_PATH}/lib/${ARCH_PATH}/SDL2_image.dll $<TARGET_FILE_DIR:TooGoodEngineLib>)
+	add_custom_command(TARGET TooGoodEngineLib POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${GLEW_PATH}/bin/Release/${ARCH_PATH}/glew32.dll $<TARGET_FILE_DIR:TooGoodEngineLib>)
 endif()
 
 add_custom_command(TARGET TooGoodEngineLib POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/sprites $<TARGET_FILE_DIR:TooGoodEngineLib>/sprites)
+add_custom_command(TARGET TooGoodEngineLib POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/src/Shaders $<TARGET_FILE_DIR:TooGoodEngineLib>/Shaders)
 
 # Game demo executable
 add_executable(Game src/Game.cpp)
@@ -130,3 +138,7 @@ add_test(Test_Quaternion TestMatrix3)
 add_executable(TestMatrix4 tests/TestMatrix4.cpp)
 target_link_libraries(TestMatrix4 TooGoodEngineLib)
 add_test(Test_Quaternion TestMatrix4)
+
+# Test 3D
+add_executable(Test3D tests/Test3D.cpp)
+target_link_libraries(Test3D TooGoodEngineLib)
