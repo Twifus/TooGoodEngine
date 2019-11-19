@@ -26,6 +26,7 @@ include_directories(${SDL2_IMAGE_INCLUDE_DIR})
 find_package(GLEW REQUIRED)
 include_directories(${GLEW_INCLUDE_DIR})
 
+set(OpenGL_GL_PREFERENCE LEGACY)
 find_package(OPENGL REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIR})
 
