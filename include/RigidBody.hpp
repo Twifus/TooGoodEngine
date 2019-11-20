@@ -47,8 +47,6 @@ namespace TooGoodEngine
 
         Vector3 getPosition();
 
-        Vector3 getPosition();
-
         void UpdateDerivedData(); 
 
         void AddForce(const Vector3 &force);

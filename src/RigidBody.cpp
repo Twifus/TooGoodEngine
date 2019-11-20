@@ -148,8 +148,4 @@ namespace TooGoodEngine
     Vector3 RigidBody::getPosition() {
         return position;
     }
-
-    Vector3 RigidBody::getPosition() {
-        return position;
-    }
 } // namespace TooGoodEngine

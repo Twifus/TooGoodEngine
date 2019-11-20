@@ -13,7 +13,7 @@ namespace TooGoodEngine {
         //BoxRigidBody rigidBody;
         Cube cube;
 
-        void display();
+        void display(glm::mat4& projection, glm::mat4& modelview);
     };
 }
 
