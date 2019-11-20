@@ -17,7 +17,7 @@
 
 #else
 #define GL3_PROTOTYPES 1
-#include <GL/gl.h>
+#include <GLES3/gl3.h>
 #endif
 
 #include <iostream>
