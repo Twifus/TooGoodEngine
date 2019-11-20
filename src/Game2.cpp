@@ -1,3 +1,5 @@
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include <vector>
 #include <iostream>
 
@@ -19,7 +21,7 @@ void CreateBody()
     // Voiture 2 vers la gauche (sur l'axe x)
     BoxRigidBody car2(10, 4,2,2);
     car2.SetPosition(Vector3::right * 10);
-    car2.SetOrientation(Quaternion(0,0,1,0)); // 180 degree autour de y
+    car2.SetOrientation(Quaternion::AxisAngle(Vector3::up, M_PI)); // 180 degree autour de y
     objects.push_back(car2);
 	
     // Cube en l'air (en haut à droite dans le plan xy)
@@ -30,11 +32,11 @@ void CreateBody()
 
 void AddForces()
 {
-    // Force vers la droite au centre de masse
+    // Force vers l'avant (en coordonnées locales) appliquée au centre de masse
     objects[0].AddForceAtBodyPoint(Vector3(5,0,0), Vector3::zero);
-    // Force vers la gauche au centre de masse
-    objects[1].AddForceAtBodyPoint(Vector3(-5,0,0), Vector3::zero);
-    // Forces pour le faire tourner sur place
+    // Force vers l'avant (en coordonnées locales) appliquée au centre de masse
+    objects[1].AddForceAtBodyPoint(Vector3(5,0,0), Vector3::zero);
+    // Forces opposées en coordonnées locales pour faire tourner l'objet sur lui même sur place
     objects[2].AddForceAtBodyPoint(Vector3(0, 1,0), Vector3( 1,0,0));
     objects[2].AddForceAtBodyPoint(Vector3(0,-1,0), Vector3(-1,0,0));
 }
@@ -43,13 +45,9 @@ void AddForces()
 void Display(const RigidBody &body, const char* name)
 {
     Vector3 corner_pos = body.BodyToWorld(Vector3(1,1,1));
-    std::cout << name;
-    std::cout << " :  center" << body.GetPosition();
-    std::cout << " \t corner" << corner_pos;
-    std::cout << std::endl;
-    std::cout << "vitesse" << body.GetVelocity();
-    std::cout << "  rotation" << body.GetAngularVelocity();
-    std::cout << std::endl;
+	std::cout << "[ " << name << " ]" << std::endl;
+    std::cout << "center" << body.GetPosition() << "\t\tcorner" << corner_pos << std::endl;
+    std::cout << "vitesse lin." << body.GetVelocity() << "\t\tvitesse ang." << body.GetAngularVelocity() << std::endl;
 }
 
 
@@ -65,7 +63,7 @@ int main ()
     Frame f = Frame();
 
     // Boucle de jeu
-    while (no_stop)
+    while (true)
     {
         AddForces();
 
@@ -82,19 +80,17 @@ int main ()
         display_time += f.getDeltaFrame();
         if (display_time >= 0.1)
         {
-            /*Display(objects[0], "car1");
-			std::cout << "--" << std::endl;
-			Display(objects[1], "car2");
-			std::cout << "--" << std::endl;*/
-            Display(objects[2], "fly");
+			std::cout << "=====" << std::endl;
+            Display(objects[0], "Car 1");
+			std::cout << "---" << std::endl;
+			Display(objects[1], "Car 2");
+			std::cout << "----" << std::endl;
+            Display(objects[2], "Flying cube");
             std::cout << std::endl;
             display_time = 0;
         }
 
         time += f.getDeltaFrame();
-        if (time > 5)
-            no_stop = false;
-
     }
     
     return 0;
