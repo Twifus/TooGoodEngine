@@ -10,7 +10,8 @@
 // Include Mac
 
 #elif __APPLE__
-#include <OpenGL/gl.h>
+#define GL_SILENCE_DEPRECATION
+#include <OpenGL/gl3.h>
 
 
 // Include UNIX/Linux
