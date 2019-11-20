@@ -37,9 +37,9 @@ public:
 
         while (!close) {
             // Physics
-            AddForces();
-
             f.computeDeltaFrame();
+
+            AddForces(f.getDeltaFrame());
 
             // Maj de tous les objets
             for (auto &i : objects)
@@ -73,7 +73,7 @@ public:
             if(events.window.event == SDL_WINDOWEVENT_CLOSE)
                 close = true;
 
-            modelView = lookAt(glm::vec3(3,3,2),
+            modelView = lookAt(glm::vec3(0,10,1),
                                glm::vec3(0,0,0),
                                glm::vec3(0,1,0));
 
@@ -99,19 +99,19 @@ public:
         }
     }
 
-    void AddForces()
+    void AddForces(double time)
     {
         // Force vers l'avant (en coordonnées locales) appliquée au centre de masse
-        objects[0].AddForceAtBodyPoint(Vector3(5, 0, 0), Vector3::zero);
+        objects[0].AddForceAtBodyPoint(Vector3(5 * time, 0, 0), Vector3::zero);
 
         // Force vers l'avant (en coordonnées locales) appliquée au centre de masse
-        objects[1].AddForceAtBodyPoint(Vector3(5, 0, 0), Vector3::zero);
+        objects[1].AddForceAtBodyPoint(Vector3(5 * time, 0, 0), Vector3::zero);
 
         if (!impact && std::abs(objects[0].GetPosition().x - objects[1].GetPosition().x) < 4)
         {
             std::cout << "==================\n===== IMPACT =====\n==================" << std::endl;
             impact = true;
-            objects[1].AddForceAtBodyPoint(Vector3(-1000000, 0, 0), Vector3(2, 1, 1));
+            objects[1].AddForceAtBodyPoint(Vector3(-10000 * time, 0, 0), Vector3(2, 1, 1));
         }
 
         // Forces opposées en coordonnées locales pour faire tourner l'objet sur lui même sur place
@@ -130,7 +130,7 @@ public:
 };
 
 // Crée les boites de test
-void CreateBody(CrashScene scene) {
+void CreateBody(CrashScene& scene) {
     // Voiture 1 vers la droite (sur l'axe x)
     BoxRigidBody car1(10, 2, 2, 2);
     car1.SetPosition(Vector3::zero);
@@ -170,8 +170,6 @@ int main ()
         return -1;
 
     CreateBody(scene);
-
-    Frame f = Frame();
 
     // Boucle de jeu
     scene.mainLoop();
