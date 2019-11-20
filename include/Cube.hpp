@@ -30,51 +30,54 @@ using namespace TooGoodEngine;
 
 class Cube {
 private:
-    GLfloat m_vertices[72] = {
-            .5f, .5f, .5f, -.5f, .5f, .5f, -.5f, -.5f, .5f, .5f, -.5f, .5f, // v0,v1,v2,v3 (front)
-            .5f, .5f, .5f, .5f, -.5f, .5f, .5f, -.5f, -.5f, .5f, .5f, -.5f, // v0,v3,v4,v5 (right)
-            .5f, .5f, .5f, .5f, .5f, -.5f, -.5f, .5f, -.5f, -.5f, .5f, .5f, // v0,v5,v6,v1 (top)
-            -.5f, .5f, .5f, -.5f, .5f, -.5f, -.5f, -.5f, -.5f, -.5f, -.5f, .5f, // v1,v6,v7,v2 (left)
-            -.5f, -.5f, -.5f, .5f, -.5f, -.5f, .5f, -.5f, .5f, -.5f, -.5f, .5f, // v7,v4,v3,v2 (bottom)
-            .5f, -.5f, -.5f, -.5f, -.5f, -.5f, -.5f, .5f, -.5f, .5f, .5f, -.5f  // v4,v7,v6,v5 (back)
+    GLfloat m_vertices[48] = {
+            .5f, .5f, .5f,      1.f, 1.f, 1.f,
+            .5f, .5f, -.5f,     1.f, 1.f, 0.f,
+            .5f, -.5f, .5f,     1.f, 0.f, 1.f,
+            .5f, -.5f, -.5f,    1.f, 0.f, 0.f,
+            -.5f, .5f, .5f,     0.f, 1.f, 1.f,
+            .5f, .5f, -.5f,     0.f, 1.f, 0.f,
+            -.5f, -.5f, .5f,    0.f, 0.f, 1.f,
+            -.5f, -.5f, -.5f,   1.f, 1.f, 0.f,
     };
 
-    GLfloat vertices[72] = {
-            .5f, .5f, .5f, -.5f, .5f, .5f, -.5f, -.5f, .5f, .5f, -.5f, .5f, // v0,v1,v2,v3 (front)
-            .5f, .5f, .5f, .5f, -.5f, .5f, .5f, -.5f, -.5f, .5f, .5f, -.5f, // v0,v3,v4,v5 (right)
-            .5f, .5f, .5f, .5f, .5f, -.5f, -.5f, .5f, -.5f, -.5f, .5f, .5f, // v0,v5,v6,v1 (top)
-            -.5f, .5f, .5f, -.5f, .5f, -.5f, -.5f, -.5f, -.5f, -.5f, -.5f, .5f, // v1,v6,v7,v2 (left)
-            -.5f, -.5f, -.5f, .5f, -.5f, -.5f, .5f, -.5f, .5f, -.5f, -.5f, .5f, // v7,v4,v3,v2 (bottom)
-            .5f, -.5f, -.5f, -.5f, -.5f, -.5f, -.5f, .5f, -.5f, .5f, .5f, -.5f  // v4,v7,v6,v5 (back)
+    GLfloat vertices[48] = {
+            .5f, .5f, .5f,      1.f, 1.f, 1.f,
+            .5f, .5f, -.5f,     1.f, 1.f, 0.f,
+            .5f, -.5f, .5f,     1.f, 0.f, 1.f,
+            .5f, -.5f, -.5f,    1.f, 0.f, 0.f,
+            -.5f, .5f, .5f,     0.f, 1.f, 1.f,
+            -.5f, .5f, -.5f,    0.f, 1.f, 0.f,
+            -.5f, -.5f, .5f,    0.f, 0.f, 1.f,
+            -.5f, -.5f, -.5f,   0.f, 0.f, 0.f,
     };
 
     // colour array
-    GLfloat m_colors[72] = {
-            1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1,  // v0,v1,v2,v3 (front)
-            1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1,  // v0,v3,v4,v5 (right)
-            1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0,  // v0,v5,v6,v1 (top)
-            1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0,  // v1,v6,v7,v2 (left)
-            0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0,  // v7,v4,v3,v2 (bottom)
-            0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1   // v4,v7,v6,v5 (back)
-    };
+    /*GLfloat m_colors[24] = {
+            1.f, 0.f, 0.f,      1.f, 0.f, 0.f,
+            1.f, 0.f, 0.f,      1.f, 0.f, 0.f,
+            1.f, 0.f, 0.f,      1.f, 0.f, 0.f,
+            1.f, 0.f, 0.f,      1.f, 0.f, 0.f
+    };*/
 
     // index array for glDrawElements()
     // A cube requires 36 indices = 6 sides * 2 tris * 3 verts
     GLuint m_indices[36] = {
-            0, 1, 2, 2, 3, 0,    // v0-v1-v2, v2-v3-v0 (front)
-            4, 5, 6, 6, 7, 4,    // v0-v3-v4, v4-v5-v0 (right)
-            8, 9, 10, 10, 11, 8,    // v0-v5-v6, v6-v1-v0 (top)
-            12, 13, 14, 14, 15, 12,    // v1-v6-v7, v7-v2-v1 (left)
-            16, 17, 18, 18, 19, 16,    // v7-v4-v3, v3-v2-v7 (bottom)
-            20, 21, 22, 22, 23, 20     // v4-v7-v6, v6-v5-v4 (back)
+            0, 1, 2, 1, 2, 3,
+            4, 5, 6, 5, 6, 7,
+            0, 1, 4, 1, 4, 5,
+            2, 3, 6, 3, 6, 7,
+            0, 2, 4, 2, 4, 6,
+            1, 3, 5, 3, 5, 7
     };
 
-    size_t vertices_size = 72;
-    size_t colors_size = 72;
-    size_t indices_size = 36;
+    size_t vertices_size = 48 * sizeof(GLfloat);
+    //size_t colors_size = 24 * sizeof(GLfloat);
+    size_t indices_size = 36 * sizeof(GLuint);
 
     GLuint vboID = 0;
     GLuint iboID = 0;
+    GLuint vaoID = 0;
 
     Shader shader;
 
