@@ -59,9 +59,11 @@ namespace TooGoodEngine
 
         double GetMass() const;
 
-        Vector3 GetVelocity() const;
+        const Vector3 GetVelocity() const;
+        const Vector3 GetRotation() const;
 
         Vector3 BodyToWorld(const Vector3 &v) const;
         Vector3 WorldToBody(const Vector3 &v) const;
+
     };
 }

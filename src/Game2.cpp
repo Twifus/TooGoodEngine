@@ -14,31 +14,36 @@ std::vector<BoxRigidBody> objects;
 // Crée les boites de test
 void CreateBody()
 {
+// /*
     // Voiture 1 vers la droite (sur l'axe x)
     BoxRigidBody car1(10, 4, 2, 2);
     car1.position = Vector3::zero;
-    // Force vers la droite au centre de masse
-    car1.AddForceAtBodyPoint(Vector3(5,0,0), Vector3::zero);
     objects.push_back(car1);
 
     // Voiture 2 vers la gauche (sur l'axe x)
     BoxRigidBody car2(10, 4,2,2);
     car2.position = Vector3::right * 10;
     car2.orientation = Quaternion(0,0,1,0); // 180 degree autour de y
-    // Force vers la gauche au centre de masse
-    car2.AddForceAtBodyPoint(Vector3(-5,0,0), Vector3::zero);
     objects.push_back(car2);
-
+// */
     // Cube en l'air (en haut à droite dans le plan xy)
     BoxRigidBody fly(2, 2,2,2);
-    fly.position = 10 * (Vector3::up + Vector3::right);
-    // Forces pour le faire tourner sur place
-    fly.AddForceAtBodyPoint(Vector3(0, 5,0), Vector3( 1, 1,0));
-    // fly.AddForceAtBodyPoint(Vector3(0,-5,0), Vector3(-1,-1,0));
+    fly.position = 10 * (Vector3::right + Vector3::up);
     objects.push_back(fly);
 
     // objects = {car1, car2, fly};
 
+}
+
+void AddForces()
+{
+    // Force vers la droite au centre de masse
+    objects[0].AddForceAtBodyPoint(Vector3(5,0,0), Vector3::zero);
+    // Force vers la gauche au centre de masse
+    objects[1].AddForceAtBodyPoint(Vector3(-5,0,0), Vector3::zero);
+    // Forces pour le faire tourner sur place
+    objects[2].AddForceAtBodyPoint(Vector3(0, 10,0), Vector3( 1,0,0));
+    objects[2].AddForceAtBodyPoint(Vector3(0,-10,0), Vector3(-1,0,0));
 }
 
 // Affichage des objets
@@ -48,6 +53,9 @@ void Display(const RigidBody &body, const char* name)
     std::cout << name;
     std::cout << " :  center" << body.position;
     std::cout << " \t corner" << corner_pos;
+    std::cout << std::endl;
+    std::cout << "vitesse" << body.GetVelocity();
+    std::cout << "  rotation" << body.GetRotation();
     std::cout << std::endl;
 }
 
@@ -66,6 +74,8 @@ int main ()
     // Boucle de jeu
     while (no_stop)
     {
+        AddForces();
+
         f.computeDeltaFrame();
 
         // Maj de tous les objets

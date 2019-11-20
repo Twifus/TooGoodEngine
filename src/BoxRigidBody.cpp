@@ -9,5 +9,6 @@ namespace TooGoodEngine
                             0, 0, m*(dx*dx + dy*dy) / 12};
         Matrix3 matrix = Matrix3(matrixData);
         SetInertiaTensorLocal(matrix);
+        UpdateDerivedData();
     }
 }
