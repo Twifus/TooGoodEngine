@@ -9,6 +9,7 @@
 using namespace TooGoodEngine;
 
 std::vector<BoxRigidBody> objects;
+bool impact = false;
 
 // Crée les boites de test
 void CreateBody()
@@ -32,13 +33,22 @@ void CreateBody()
 
 void AddForces()
 {
-    // Force vers l'avant (en coordonnées locales) appliquée au centre de masse
-    objects[0].AddForceAtBodyPoint(Vector3(5,0,0), Vector3::zero);
-    // Force vers l'avant (en coordonnées locales) appliquée au centre de masse
-    objects[1].AddForceAtBodyPoint(Vector3(5,0,0), Vector3::zero);
-    // Forces opposées en coordonnées locales pour faire tourner l'objet sur lui même sur place
-    objects[2].AddForceAtBodyPoint(Vector3(0, 1,0), Vector3( 1,0,0));
-    objects[2].AddForceAtBodyPoint(Vector3(0,-1,0), Vector3(-1,0,0));
+	// Force vers l'avant (en coordonnées locales) appliquée au centre de masse
+	objects[0].AddForceAtBodyPoint(Vector3(5, 0, 0), Vector3::zero);
+
+	// Force vers l'avant (en coordonnées locales) appliquée au centre de masse
+	objects[1].AddForceAtBodyPoint(Vector3(5, 0, 0), Vector3::zero);
+
+	if (!impact && std::abs(objects[0].GetPosition().x - objects[1].GetPosition().x) < 4)
+	{
+		std::cout << "==================\n===== IMPACT =====\n==================" << std::endl;
+		impact = true;
+		objects[1].AddForceAtBodyPoint(Vector3(-1000000, 0, 0), Vector3(2, 1, 1));
+	}
+
+	// Forces opposées en coordonnées locales pour faire tourner l'objet sur lui même sur place
+	objects[2].AddForceAtBodyPoint(Vector3(0, 1, 0), Vector3(1, 0, 0));
+	objects[2].AddForceAtBodyPoint(Vector3(0, -1, 0), Vector3(-1, 0, 0));
 }
 
 // Affichage des objets
