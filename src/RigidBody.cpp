@@ -35,6 +35,8 @@ namespace TooGoodEngine
         AddForceAtBodyPoint(force, WorldToBody(point));
     }
 
+
+    // Conversion for a point position in world<->body 
     Vector3 RigidBody::WorldToBody(const Vector3 &v) const
     {
         return transformMatrix * v;
@@ -77,7 +79,8 @@ namespace TooGoodEngine
 
     }
 
-    // Fonction appelée à chaque nouvelle itération du moteur
+
+    // Called at every iteration of the engine
     void RigidBody::Update(double time)
     {
         // Compute linear acceleration
@@ -103,13 +106,16 @@ namespace TooGoodEngine
 
     }
 
+
     double RigidBody::GetMass() const
     {
         return mass;
     }
 
+
     Vector3 RigidBody::GetVelocity() const
     {
         return velocity;
     }
+
 } // namespace TooGoodEngine
