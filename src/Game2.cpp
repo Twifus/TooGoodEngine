@@ -102,12 +102,21 @@ public:
     void AddForces()
     {
         // Force vers l'avant (en coordonnées locales) appliquée au centre de masse
-        objects[0].AddForceAtBodyPoint(Vector3(5,0,0), Vector3::zero);
+        objects[0].AddForceAtBodyPoint(Vector3(5, 0, 0), Vector3::zero);
+
         // Force vers l'avant (en coordonnées locales) appliquée au centre de masse
-        objects[1].AddForceAtBodyPoint(Vector3(5,0,0), Vector3::zero);
+        objects[1].AddForceAtBodyPoint(Vector3(5, 0, 0), Vector3::zero);
+
+        if (!impact && std::abs(objects[0].GetPosition().x - objects[1].GetPosition().x) < 4)
+        {
+            std::cout << "==================\n===== IMPACT =====\n==================" << std::endl;
+            impact = true;
+            objects[1].AddForceAtBodyPoint(Vector3(-1000000, 0, 0), Vector3(2, 1, 1));
+        }
+
         // Forces opposées en coordonnées locales pour faire tourner l'objet sur lui même sur place
-        objects[2].AddForceAtBodyPoint(Vector3(0, 1,0), Vector3( 1,0,0));
-        objects[2].AddForceAtBodyPoint(Vector3(0,-1,0), Vector3(-1,0,0));
+        objects[2].AddForceAtBodyPoint(Vector3(0, 1, 0), Vector3(1, 0, 0));
+        objects[2].AddForceAtBodyPoint(Vector3(0, -1, 0), Vector3(-1, 0, 0));
     }
 
 // Affichage des objets
@@ -121,8 +130,7 @@ public:
 };
 
 // Crée les boites de test
-void CreateBody(CrashScene scene)
-{
+void CreateBody(CrashScene scene) {
     // Voiture 1 vers la droite (sur l'axe x)
     BoxRigidBody car1(10, 2, 2, 2);
     car1.SetPosition(Vector3::zero);
@@ -132,7 +140,7 @@ void CreateBody(CrashScene scene)
     scene.addElement(carElement1);
 
     // Voiture 2 vers la gauche (sur l'axe x)
-    BoxRigidBody car2(10, 2,2,2);
+    BoxRigidBody car2(10, 2, 2, 2);
     car2.SetPosition(Vector3::right * 10);
     car2.SetOrientation(Quaternion::AxisAngle(Vector3::up, M_PI)); // 180 degree autour de y
     objects.push_back(car2);
@@ -141,34 +149,13 @@ void CreateBody(CrashScene scene)
     scene.addElement(carElement2);
 
     // Cube en l'air (en haut à droite dans le plan xy)
-    BoxRigidBody fly(2, 2,2,2);
+    BoxRigidBody fly(2, 2, 2, 2);
     fly.SetPosition(10 * (Vector3::right + Vector3::up));
     objects.push_back(fly);
 
     Element flyingElement = Element(objects[2], 2);
     scene.addElement(flyingElement);
-void AddForces()
-{
-	// Force vers l'avant (en coordonnées locales) appliquée au centre de masse
-	objects[0].AddForceAtBodyPoint(Vector3(5, 0, 0), Vector3::zero);
-
-	// Force vers l'avant (en coordonnées locales) appliquée au centre de masse
-	objects[1].AddForceAtBodyPoint(Vector3(5, 0, 0), Vector3::zero);
-
-	if (!impact && std::abs(objects[0].GetPosition().x - objects[1].GetPosition().x) < 4)
-	{
-		std::cout << "==================\n===== IMPACT =====\n==================" << std::endl;
-		impact = true;
-		objects[1].AddForceAtBodyPoint(Vector3(-1000000, 0, 0), Vector3(2, 1, 1));
-	}
-
-	// Forces opposées en coordonnées locales pour faire tourner l'objet sur lui même sur place
-	objects[2].AddForceAtBodyPoint(Vector3(0, 1, 0), Vector3(1, 0, 0));
-	objects[2].AddForceAtBodyPoint(Vector3(0, -1, 0), Vector3(-1, 0, 0));
 }
-
-
-
 
 // Main
 int main ()
