@@ -35,11 +35,11 @@ public:
 
     bool windowInit();
     bool initGL();
-    void mainLoop();
+    virtual void mainLoop();
 
     void addElement(Element& cube);
 
-private:
+protected:
     std::vector<Element> elements;
 
     std::string windowTitle;

@@ -37,7 +37,7 @@ private:
             .5f, -.5f, .5f,     1.f, 0.f, 1.f,
             .5f, -.5f, -.5f,    1.f, 0.f, 0.f,
             -.5f, .5f, .5f,     0.f, 1.f, 1.f,
-            .5f, .5f, -.5f,     0.f, 1.f, 0.f,
+            -.5f, .5f, -.5f,     0.f, 1.f, 0.f,
             -.5f, -.5f, .5f,    0.f, 0.f, 1.f,
             -.5f, -.5f, -.5f,   1.f, 1.f, 0.f,
     };
@@ -73,7 +73,6 @@ private:
     };
 
     size_t vertices_size = 48 * sizeof(GLfloat);
-    //size_t colors_size = 24 * sizeof(GLfloat);
     size_t indices_size = 36 * sizeof(GLuint);
 
     GLuint vboID = 0;

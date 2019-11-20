@@ -126,10 +126,9 @@ void OpenGLScene::mainLoop() {
         for (Element element : elements) {
             modelView = modelViewSave;
 
-            // todo : change modelview to fit the position of the object
             modelViewSave = modelView;
 
-            element.cube.display(projection, modelView);
+            element.display(projection, modelView);
 
             modelView = modelViewSave;
         }

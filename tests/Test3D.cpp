@@ -16,7 +16,8 @@ int main()
         return EXIT_FAILURE;
     }
 
-    Element testElement = Element(10,1, Vector3());
+    BoxRigidBody rigidBody = BoxRigidBody(10, 2,2,2);
+    Element testElement = Element(rigidBody, 2);
     scene.addElement(testElement);
 
     scene.mainLoop();

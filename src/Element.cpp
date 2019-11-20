@@ -1,9 +1,10 @@
 #include <Element.hpp>
 
-Element::Element(float mass, float size, Vector3 position) : cube(size, "Shaders/couleur3D.vert", "Shaders/couleur3D.frag")/*, rigidBody(mass, size, size, size)*/ {
+Element::Element(BoxRigidBody& boxRigidBody, float size) : cube(size, "Shaders/couleur3D.vert", "Shaders/couleur3D.frag"), rigidBody(boxRigidBody) {
 
 }
 
 void Element::display(glm::mat4& projection, glm::mat4& modelview) {
+    cube.prepare(rigidBody.GetPosition(), rigidBody.GetOrientation());
     cube.display(projection, modelview);
 }

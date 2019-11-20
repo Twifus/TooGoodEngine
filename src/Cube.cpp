@@ -18,7 +18,18 @@ Cube::Cube(float size, std::string vert, std::string frag) {
 }
 
 void Cube::prepare(Vector3 position, Quaternion orientation) {
-
+    // reinitializing cube
+    for (size_t i = 0; i < 48; ++i) {
+        vertices[i] = m_vertices[i];
+    }
+    // set orientation of vertices and translate to position
+    for (size_t i = 0; i < 8; ++i) {
+        Vector3 vertex = Vector3((double) vertices[(6*i)+0], (double) vertices[(6*i)+1], (double) vertices[(6*i)+2]);
+        vertex = orientation * vertex;
+        vertices[(6*i)+0] = (GLfloat) (vertex.x + position.x);
+        vertices[(6*i)+1] = (GLfloat) (vertex.y + position.y);
+        vertices[(6*i)+2] = (GLfloat) (vertex.z + position.z);
+    }
 }
 
 void Cube::display(glm::mat4& projection, glm::mat4& modelview) {

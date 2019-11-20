@@ -8,9 +8,9 @@ namespace TooGoodEngine {
 
     class Element {
     public:
-        Element(float mass, float size, Vector3 position);
+        Element(BoxRigidBody& boxRigidBody, float size);
 
-        //BoxRigidBody rigidBody;
+        BoxRigidBody& rigidBody;
         Cube cube;
 
         void display(glm::mat4& projection, glm::mat4& modelview);

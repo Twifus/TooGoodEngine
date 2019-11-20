@@ -135,9 +135,4 @@ namespace TooGoodEngine
 	{
 		return angularVelocity;
 	}
-
-
-    Vector3 RigidBody::getPosition() {
-        return position;
-    }
 } // namespace TooGoodEngine
