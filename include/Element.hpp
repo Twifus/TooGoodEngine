@@ -10,8 +10,10 @@ namespace TooGoodEngine {
     public:
         Element(float mass, float size, Vector3 position);
 
-        BoxRigidBody rigidBody;
+        //BoxRigidBody rigidBody;
         Cube cube;
+
+        void display();
     };
 }
 

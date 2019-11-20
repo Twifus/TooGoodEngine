@@ -45,6 +45,8 @@ namespace TooGoodEngine
         // Constructor
         RigidBody(double m, const Vector3 &pos = Vector3::zero, const Quaternion &ori = Quaternion::identity);
 
+        Vector3 getPosition();
+
         void UpdateDerivedData(); 
 
         void AddForce(const Vector3 &force);

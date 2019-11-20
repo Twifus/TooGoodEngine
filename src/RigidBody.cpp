@@ -144,4 +144,8 @@ namespace TooGoodEngine
         return rotation;
     }
 
+
+    Vector3 RigidBody::getPosition() {
+        return position;
+    }
 } // namespace TooGoodEngine
