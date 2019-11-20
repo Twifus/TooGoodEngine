@@ -10,8 +10,7 @@
 // Include Mac
 
 #elif __APPLE__
-#define GL3_PROTOTYPES 1
-#include <OpenGL/gl3.h>
+#include <OpenGL/gl.h>
 
 
 // Include UNIX/Linux
@@ -19,13 +18,12 @@
 #else
 #define GL3_PROTOTYPES 1
 #include <GL/gl.h>
-//#include <GLES3/gl3.h>
 #endif
 
 #include <glm/glm.hpp>
 #include <cstddef>
-#include <Vector3.hpp>
-#include <Quaternion.hpp>
+#include "Vector3.hpp"
+#include "Quaternion.hpp"
 #include "Shader.hpp"
 
 using namespace TooGoodEngine;
