@@ -1,7 +1,7 @@
 #pragma once
+
 #include "Vector3.hpp"
 #include "Quaternion.hpp"
-#include "Matrix3.hpp"
 #include <array>
 
 namespace TooGoodEngine {

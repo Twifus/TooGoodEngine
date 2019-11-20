@@ -133,10 +133,6 @@ add_custom_command(TARGET TooGoodEngineLib POST_BUILD COMMAND ${CMAKE_COMMAND} -
 add_executable(Game2 src/Game2.cpp)
 target_link_libraries(Game2 TooGoodEngineLib)
 
-# Test transformation (little)
-add_executable(Transf src/testTransformation.cpp)
-target_link_libraries(Transf TooGoodEngineLib)
-
 ## Blob demo executable
 #add_executable(BlobScene src/BlobScene.cpp)
 #target_link_libraries(BlobScene TooGoodEngineLib)
@@ -160,6 +156,11 @@ add_test(Test_Quaternion TestMatrix3)
 add_executable(TestMatrix4 tests/TestMatrix4.cpp)
 target_link_libraries(TestMatrix4 TooGoodEngineLib)
 add_test(Test_Quaternion TestMatrix4)
+
+# TestMatrix4
+add_executable(TestRigidBody tests/TestRigidBody.cpp)
+target_link_libraries(TestRigidBody TooGoodEngineLib)
+add_test(Test_Quaternion TestRigidBody)
 
 # Test 3D
 add_executable(Test3D tests/Test3D.cpp)

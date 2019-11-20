@@ -11,7 +11,7 @@ namespace TooGoodEngine
 
 			void Buoyancy::UpdateForce(RigidBody& rb, double time) const
 			{
-				double d = (liquidHeight + maxDepth - (rb.position).Dot(Vector3::up)) / (2 * maxDepth);
+				double d = (liquidHeight + maxDepth - (rb.GetPosition()).Dot(Vector3::up)) / (2 * maxDepth);
 				if (d <= 0)
 					return;
 				else if (d >= 1)

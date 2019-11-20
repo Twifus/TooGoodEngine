@@ -11,7 +11,7 @@ namespace TooGoodEngine
 
 			void BungeeSpring::UpdateForce(RigidBody& rb, double time) const
 			{
-				Vector3 direction = (rb.position - other.position);
+				Vector3 direction = (rb.GetPosition() - other.GetPosition());
 				double appliedLength = direction.Magnitude();
 				if (appliedLength > length)
 					rb.AddForce(-k * (appliedLength - length) * direction.Normalized());

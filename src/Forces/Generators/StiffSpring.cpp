@@ -11,7 +11,7 @@ namespace TooGoodEngine
 
 			void StiffSpring::UpdateForce(RigidBody& rb, double time) const
 			{
-				Vector3 position = (rb.position - anchor);
+				Vector3 position = (rb.GetPosition() - anchor);
 				Vector3 direction = position.Normalized();
 				Vector3 projectedVelocity = (rb.GetVelocity()).Dot(direction) * direction;
 				rb.AddForce(-k * position - damping * projectedVelocity);

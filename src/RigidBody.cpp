@@ -1,147 +1,139 @@
 #include "RigidBody.hpp"
 
-// -------------------------------------------------
-#include <iostream>
-
-void displayMatrix3(const TooGoodEngine::Matrix3 &m)
-{
-    for (int i=0; i < 9; i++)
-        std::cout << m[i] << " ";
-    std::cout << std::endl;
-}
-
-// -------------------------------------------------
+#include <cmath>
 
 namespace TooGoodEngine
 {
-    static constexpr double defaultDamping = 0.95;
+	static constexpr double defaultDamping = 0.95;
 
-    // Basic constructor
-    RigidBody::RigidBody(double m, const Vector3 &pos, const Quaternion &ori) :
-        mass(m), position(pos), orientation(ori),
-        linearDamping(defaultDamping), angularDamping(defaultDamping)
-    {
-        inverseMass = (m == 0) ? 99999 : 1/m;
-        UpdateDerivedData();
-    }
+	// Basic constructor
+	RigidBody::RigidBody(double m, const Vector3& pos, const Quaternion& ori) :
+		mass(m), inverseMass((m == 0) ? std::numeric_limits<double>::max() : 1 / m),
+		linearDamping(defaultDamping), angularDamping(defaultDamping),
+		position(pos), orientation(ori),
+		velocity(), angularVelocity(),
+		acceleration(), angularAccel(),
+		inertiaTensorLocal(Matrix3::identity), inverseInertiaTensor(Matrix3::identity) 
+	{ }
 
+	// Setter useful for inheritence
+	void RigidBody::SetInertiaTensorLocal(Matrix3& inertiaTensor)
+	{
+		inertiaTensorLocal = inertiaTensor;
+		UpdateDerivedData();
+	}
 
-    // Setter useful for inheritence
-    void RigidBody::SetInertiaTensorLocal(Matrix3 &inertiaTensor)
-    {
-        inertiaTensorLocal = inertiaTensor;
-    }
+	// Apply a force at center of mass
+	void RigidBody::AddForce(const Vector3& force)
+	{
+		AddForceAtPoint(force, position);
+	}
 
+	// Apply a force at a point in world space
+	void RigidBody::AddForceAtPoint(const Vector3& force, const Vector3& point)
+	{
+		forceAcum += force;
+		Vector3 relative_point = point - position;
+		torqueAcum += relative_point.Cross(force);
+	}
 
-    // Apply a force at center of mass
-    void RigidBody::AddForce(const Vector3 &force)
-    {
-        AddForceAtPoint(force, position);
-    }
+	// Apply a force at a point relative to center of mass
+	void RigidBody::AddForceAtBodyPoint(const Vector3& force, const Vector3& point)
+	{
+		Vector3 forceInWordCoordinates = orientation * force;
+		AddForceAtPoint(forceInWordCoordinates, BodyToWorld(point));
+	}
 
+	// Conversion for a point position in world<->body 
+	Vector3 RigidBody::WorldToBody(const Vector3& v) const
+	{
+		return orientation.Inverse() * v - position;
+	}
 
-    // Apply a force at a point in world space
-    void RigidBody::AddForceAtPoint(const Vector3 &force, const Vector3 &point)
-    {
-        forceAcum += force;
-        Vector3 relative_point = point - position;
-        torqueAcum += relative_point.Cross(force); 
-    }
+	Vector3 RigidBody::BodyToWorld(const Vector3& v) const
+	{
+		return orientation * v + position;
+	}
 
+	// Vide les accumulateur
+	void RigidBody::ClearAccumulation()
+	{
+		forceAcum = Vector3::zero;
+		torqueAcum = Vector3::zero;
+	}
 
-    // Apply a force at a point relative to center of mass
-    void RigidBody::AddForceAtBodyPoint(const Vector3 &force, const Vector3 &point)
-    {
-        AddForceAtPoint(force, BodyToWorld(point));
-    }
+	// Update 
+	void RigidBody::UpdateDerivedData()
+	{
+		orientation = orientation.Normalized();
 
-
-    // Conversion for a point position in world<->body 
-    Vector3 RigidBody::WorldToBody(const Vector3 &v) const
-    {
-        return transformMatrix.Inverse() * v;
-    }
-
-    Vector3 RigidBody::BodyToWorld(const Vector3 &v) const
-    {
-        return transformMatrix * v;
-    }
-
-
-    // Vide les accumulateur
-    void RigidBody::ClearAccumulation()
-    {
-        forceAcum = Vector3::zero;
-        torqueAcum = Vector3::zero;
-    }
-
-
-    // Update 
-    void RigidBody::UpdateDerivedData()
-    {
-        orientation = orientation.Normalized();
-
-        // Transform Martix
-        transformMatrix = Matrix4(orientation, position);
-
-        // World inertia tensor
-        Matrix3 orientationMatrix(orientation);
-        inverseInertiaTensor = orientationMatrix * inertiaTensorLocal.Inverse() * orientationMatrix.Inverse();
-
-        // -------------------------------------------------
-        // std::cout << "torqueAccum : " << torqueAcum << std::endl;
-        // std::cout << "orientation : " << orientation << std::endl;
-        // std::cout << "position : " << position << std::endl;
-        // std::cout << "inertiaTensorLocal :";
-        // displayMatrix3(inertiaTensorLocal);
-        // std::cout << "inverseIntertiaTensor  ";
-        // displayMatrix3(inverseInertiaTensor);
-        // std::cout << std::endl;
-        // -------------------------------------------------
-    }
+		// World inertia tensor
+		Matrix3 orientationMatrix(orientation);
+		inverseInertiaTensor = orientationMatrix * inertiaTensorLocal.Inverse() * orientationMatrix.Inverse();
+	}
 
 
-    // Called at every iteration of the engine
-    void RigidBody::Update(double time)
-    {
-        // Compute linear acceleration
-        acceleration = forceAcum * inverseMass;
+	// Called at every iteration of the engine
+	void RigidBody::Update(double time)
+	{
+		// Compute linear acceleration
+		acceleration = forceAcum * inverseMass;
 
-        // Compute angular acceleration
-        angularAccel = inverseInertiaTensor * torqueAcum;
+		// Compute angular acceleration
+		angularAccel = inverseInertiaTensor * torqueAcum;
 
-        // Update velocities
-        velocity += acceleration * time;
-        rotation += angularAccel * time;
-     
-        // Apply Dampings
-        velocity *= pow(linearDamping, time);
-        rotation *= pow(angularDamping, time);
+		// Update velocities
+		velocity += acceleration * time;
+		angularVelocity += angularAccel * time;
 
-        // Update positions
-        position += velocity * time;
-        orientation += Quaternion(rotation) * orientation * (time * 0.5);
+		// Apply Dampings
+		velocity *= pow(linearDamping, time);
+		angularVelocity *= pow(angularDamping, time);
 
-        UpdateDerivedData();
-        ClearAccumulation();
+		// Update positions
+		position += velocity * time;
+		orientation += Quaternion(angularVelocity) * orientation * (time * 0.5);
 
-    }
+		UpdateDerivedData();
+		ClearAccumulation();
 
+	}
 
-    double RigidBody::GetMass() const
-    {
-        return mass;
-    }
+	double RigidBody::GetMass() const
+	{
+		return mass;
+	}
 
+	const Vector3 RigidBody::GetPosition() const
+	{
+		return position;
+	}
 
-    const Vector3 RigidBody::GetVelocity() const
-    {
-        return velocity;
-    }
+	void RigidBody::SetPosition(const Vector3& value)
+	{
+		position = value;
+		UpdateDerivedData();
+	}
 
-    const Vector3 RigidBody::GetRotation() const
-    {
-        return rotation;
-    }
+	const Quaternion RigidBody::GetOrientation() const
+	{
+		return orientation;
+	}
+
+	void RigidBody::SetOrientation(const Quaternion& value)
+	{
+		orientation = value;
+		UpdateDerivedData();
+	}
+
+	const Vector3 RigidBody::GetVelocity() const
+	{
+		return velocity;
+	}
+
+	const Vector3 RigidBody::GetAngularVelocity() const
+	{
+		return angularVelocity;
+	}
 
 } // namespace TooGoodEngine

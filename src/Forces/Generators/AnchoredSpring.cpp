@@ -11,7 +11,7 @@ namespace TooGoodEngine
 
 			void AnchoredSpring::UpdateForce(RigidBody& rb, double time) const
 			{
-				Vector3 direction = (rb.position - anchor);
+				Vector3 direction = (rb.GetPosition() - anchor);
 				rb.AddForce(-k * (direction.Magnitude() - length) * direction.Normalized());
 			}
 		}

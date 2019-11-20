@@ -5,25 +5,24 @@
 #include "Matrix3.hpp"
 #include "Matrix4.hpp"
 
-#include <ostream>
-
 namespace TooGoodEngine
 {
 	class RigidBody
 	{
     private:
-        double mass;
-        double inverseMass;
-		double linearDamping;
-        double angularDamping;
+        double mass = 1;
+        double inverseMass = 1;
+		double linearDamping = 1;
+        double angularDamping = 1;
+
+		Vector3 position;
+		Quaternion orientation;
 
 		Vector3 velocity;
-        Vector3 rotation;
+        Vector3 angularVelocity;
 
 		Vector3 acceleration;
         Vector3 angularAccel;
-
-        Matrix4 transformMatrix;
 
         Matrix3 inertiaTensorLocal;
         Matrix3 inverseInertiaTensor;
@@ -32,15 +31,11 @@ namespace TooGoodEngine
         Vector3 torqueAcum;
 
         Vector3 massCenter;
-		// Vector3 resultantForce;
 
     protected:
        void SetInertiaTensorLocal(Matrix3 &inertiaTensor);
 
     public:
-        // public attributes
-        Vector3 position;
-        Quaternion orientation;
 
         // Constructor
         RigidBody(double m, const Vector3 &pos = Vector3::zero, const Quaternion &ori = Quaternion::identity);
@@ -59,8 +54,14 @@ namespace TooGoodEngine
 
         double GetMass() const;
 
+		const Vector3 GetPosition() const;
+		void SetPosition(const Vector3& value);
+
+		const Quaternion GetOrientation() const;
+		void SetOrientation(const Quaternion& value);
+
         const Vector3 GetVelocity() const;
-        const Vector3 GetRotation() const;
+        const Vector3 GetAngularVelocity() const;
 
         Vector3 BodyToWorld(const Vector3 &v) const;
         Vector3 WorldToBody(const Vector3 &v) const;
