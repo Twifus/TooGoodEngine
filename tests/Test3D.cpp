@@ -16,11 +16,13 @@ int main()
         return EXIT_FAILURE;
     }
 
-    BoxRigidBody rigidBody = BoxRigidBody(10, 2,2,2);
+    BoxRigidBody* rigidBody = new BoxRigidBody(10, 2,2,2);
     Element testElement = Element(rigidBody, 2);
     scene.addElement(testElement);
 
     scene.mainLoop();
+
+	free(rigidBody);
 
     return EXIT_SUCCESS;
 }

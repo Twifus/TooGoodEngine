@@ -12,7 +12,7 @@
 using namespace glm;
 using namespace TooGoodEngine;
 
-std::vector<BoxRigidBody> objects;
+std::vector<BoxRigidBody*> objects;
 bool impact = false;
 
 class CrashScene : public OpenGLScene {
@@ -42,14 +42,14 @@ public:
             AddForces(f.getDeltaFrame());
 
             // Maj de tous les objets
-            for (auto &i : objects)
+            for (auto i : objects)
             {
-                i.Update(f.getDeltaFrame());
-                i.ClearAccumulation();
+                i->Update(f.getDeltaFrame());
+                i->ClearAccumulation();
             }
 
             // Affichage toute les 1/2 seconde
-            display_time += f.getDeltaFrame();
+            /*display_time += f.getDeltaFrame();
             if (display_time >= 0.1)
             {
                 std::cout << "=====" << std::endl;
@@ -60,7 +60,7 @@ public:
                 Display(objects[2], "Flying cube");
                 std::cout << std::endl;
                 display_time = 0;
-            }
+            }*/
 
             // display
             loopStart = SDL_GetTicks();
@@ -73,8 +73,8 @@ public:
             if(events.window.event == SDL_WINDOWEVENT_CLOSE)
                 close = true;
 
-            modelView = lookAt(glm::vec3(0,10,1),
-                               glm::vec3(0,0,0),
+            modelView = lookAt(glm::vec3(2,10,4),
+                               glm::vec3(5,0,0),
                                glm::vec3(0,1,0));
 
             mat4 modelViewSave = modelView;
@@ -102,21 +102,21 @@ public:
     void AddForces(double time)
     {
         // Force vers l'avant (en coordonnées locales) appliquée au centre de masse
-        objects[0].AddForceAtBodyPoint(Vector3(5 * time, 0, 0), Vector3::zero);
+        objects[0]->AddForceAtBodyPoint(Vector3(15 * time, 0, 0), Vector3::zero);
 
         // Force vers l'avant (en coordonnées locales) appliquée au centre de masse
-        objects[1].AddForceAtBodyPoint(Vector3(5 * time, 0, 0), Vector3::zero);
+        objects[1]->AddForceAtBodyPoint(Vector3(15 * time, 0, 0), Vector3::zero);
 
-        if (!impact && std::abs(objects[0].GetPosition().x - objects[1].GetPosition().x) < 4)
+        if (!impact && std::abs(objects[0]->GetPosition().x - objects[1]->GetPosition().x) < 2)
         {
             std::cout << "==================\n===== IMPACT =====\n==================" << std::endl;
             impact = true;
-            objects[1].AddForceAtBodyPoint(Vector3(-10000 * time, 0, 0), Vector3(2, 1, 1));
+            objects[1]->AddForceAtBodyPoint(Vector3(-10000 * time, 0, 0), Vector3(2, 1, 1));
         }
 
         // Forces opposées en coordonnées locales pour faire tourner l'objet sur lui même sur place
-        objects[2].AddForceAtBodyPoint(Vector3(0, 1, 0), Vector3(1, 0, 0));
-        objects[2].AddForceAtBodyPoint(Vector3(0, -1, 0), Vector3(-1, 0, 0));
+		objects[2]->AddForceAtBodyPoint(Vector3(0, 10 * time, 0), Vector3(1, 0, 0));
+		objects[2]->AddForceAtBodyPoint(Vector3(0, -10 * time, 0), Vector3(-1, 0, 0));
     }
 
 // Affichage des objets
@@ -132,28 +132,28 @@ public:
 // Crée les boites de test
 void CreateBody(CrashScene& scene) {
     // Voiture 1 vers la droite (sur l'axe x)
-    BoxRigidBody car1(10, 2, 2, 2);
-    car1.SetPosition(Vector3::zero);
+    BoxRigidBody *car1 = new BoxRigidBody(10, 2, 2, 2);
+    car1->SetPosition(- Vector3::forward / 2);
     objects.push_back(car1);
 
     Element carElement1 = Element(objects[0], 2);
     scene.addElement(carElement1);
 
     // Voiture 2 vers la gauche (sur l'axe x)
-    BoxRigidBody car2(10, 2, 2, 2);
-    car2.SetPosition(Vector3::right * 10);
-    car2.SetOrientation(Quaternion::AxisAngle(Vector3::up, M_PI)); // 180 degree autour de y
+    BoxRigidBody* car2 = new BoxRigidBody(10, 2, 2, 2);
+    car2->SetPosition(Vector3::right * 10 + Vector3::forward / 2);
+    car2->SetOrientation(Quaternion::AxisAngle(Vector3::up, M_PI)); // 180 degree autour de y
     objects.push_back(car2);
 
     Element carElement2 = Element(objects[1], 2);
     scene.addElement(carElement2);
 
     // Cube en l'air (en haut à droite dans le plan xy)
-    BoxRigidBody fly(2, 2, 2, 2);
-    fly.SetPosition(10 * (Vector3::right + Vector3::up));
+    BoxRigidBody* fly = new BoxRigidBody(2, 1, 1, 1);
+    fly->SetPosition(5 * Vector3::right - 5 *  Vector3::forward);
     objects.push_back(fly);
 
-    Element flyingElement = Element(objects[2], 2);
+    Element flyingElement = Element(objects[2], 1);
     scene.addElement(flyingElement);
 }
 
@@ -173,6 +173,9 @@ int main ()
 
     // Boucle de jeu
     scene.mainLoop();
+
+	for (BoxRigidBody* rb : objects)
+		free(rb);
     
     return 0;
 }
