@@ -117,7 +117,7 @@ void OpenGLScene::mainLoop() {
         if(events.window.event == SDL_WINDOWEVENT_CLOSE)
             close = true;
 
-        modelView = lookAt(glm::vec3(-6,-6,-6),
+        modelView = lookAt(glm::vec3(3,3,2),
                            glm::vec3(0,0,0),
                            glm::vec3(0,1,0));
 

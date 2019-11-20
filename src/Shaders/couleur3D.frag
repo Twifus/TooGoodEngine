@@ -1,3 +1,7 @@
-#version 150 core
+#version 450 core
 
-void main() {}
+in vec4 color;
+
+void main() {
+    gl_FragColor = color;
+}
