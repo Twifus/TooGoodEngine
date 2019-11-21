@@ -6,6 +6,7 @@ namespace TooGoodEngine {
         vertices = new GLfloat[48];
         vertices_size = 48 * sizeof(GLfloat);
         indices = new GLuint[36];
+		indices_size = 36 * sizeof(GLuint);
         for (size_t i = 0; i < 36; ++i)
             indices[i] = m_indices[i];
     }
@@ -14,6 +15,7 @@ namespace TooGoodEngine {
         vertices = new GLfloat[48];
         vertices_size = 48 * sizeof(GLfloat);
         indices = new GLuint[36];
+		indices_size = 36 * sizeof(GLuint);
         for (size_t i = 0; i < 36; ++i)
             indices[i] = m_indices[i];
     }

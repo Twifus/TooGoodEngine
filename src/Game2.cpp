@@ -75,7 +75,7 @@ public:
                 close = true;
 
             modelView = lookAt(glm::vec3(2,10,4),
-                               glm::vec3(0,0,-0.5),
+                               glm::vec3(5,0,0),
                                glm::vec3(0,1,0));
 
             mat4 modelViewSave = modelView;
@@ -133,11 +133,11 @@ public:
 // Crée les boites de test
 void CreateBody(CrashScene& scene) {
     // Voiture 1 vers la droite (sur l'axe x)
-    auto *car1 = new BoxRigidBody(10, 2, 2, 2);
+    auto *car1 = new BoxRigidBody(10, 3, 2, 2);
     car1->SetPosition(- Vector3::forward / 2);
     objects.push_back(car1);
 
-    Vector3 dimensions = Vector3(2,2,2);
+    Vector3 dimensions = Vector3(3,2,2);
     Vector3 color = Vector3(1,0,0);
     auto *car1Model = new Box3DModel(dimensions, color);
 
@@ -145,7 +145,7 @@ void CreateBody(CrashScene& scene) {
     scene.addElement(carElement1);
 
     // Voiture 2 vers la gauche (sur l'axe x)
-    auto* car2 = new BoxRigidBody(10, 2, 2, 2);
+    auto* car2 = new BoxRigidBody(10, 3, 2, 2);
     car2->SetPosition(Vector3::right * 10 + Vector3::forward / 2);
     car2->SetOrientation(Quaternion::AxisAngle(Vector3::up, M_PI)); // 180 degree autour de y
     objects.push_back(car2);
@@ -160,6 +160,7 @@ void CreateBody(CrashScene& scene) {
     fly->SetPosition(5 * Vector3::right - 5 *  Vector3::forward);
     objects.push_back(fly);
 
+    dimensions = Vector3(2,2,2);
     color = Vector3(1,1,1);
     auto *flyingModel = new Box3DModel(dimensions, color);
     Element flyingElement = Element(objects[2], *flyingModel);
