@@ -102,7 +102,7 @@ add_library(TooGoodEngineLib
 			   src/OpenGLScene.cpp include/OpenGLScene.hpp
 			   src/Shader.cpp   include/Shader.hpp 
 			   src/Element.cpp include/Element.hpp
-			   )
+		src/Graph3DModel.cpp include/Graph3DModel.hpp include/Box3DModel.hpp src/Box3DModel.cpp)
 
 target_link_libraries(TooGoodEngineLib PUBLIC ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${GLEW_LIBRARIES} ${OPENGL_LIBRARIES})
 
@@ -162,6 +162,6 @@ add_executable(TestRigidBody tests/TestRigidBody.cpp)
 target_link_libraries(TestRigidBody TooGoodEngineLib)
 add_test(Test_Quaternion TestRigidBody)
 
-## Test 3D
-#add_executable(Test3D tests/Test3D.cpp)
-#target_link_libraries(Test3D TooGoodEngineLib)
+# Test 3D
+add_executable(Test3D tests/Test3D.cpp)
+target_link_libraries(Test3D TooGoodEngineLib)

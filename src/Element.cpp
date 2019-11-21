@@ -1,10 +1,10 @@
 #include <Element.hpp>
 
-Element::Element(BoxRigidBody* boxRigidBody, float size) : cube(size, "Shaders/couleur3D.vert", "Shaders/couleur3D.frag"), rigidBody(boxRigidBody) {
+namespace TooGoodEngine {
+    Element::Element(RigidBody *rigidBody, Graph3DModel &model) : rigidBody(rigidBody), model(model) {}
 
-}
-
-void Element::display(glm::mat4& projection, glm::mat4& modelview) {
-    cube.prepare(rigidBody->GetPosition(), rigidBody->GetOrientation());
-    cube.display(projection, modelview);
+    void Element::display(glm::mat4 &projection, glm::mat4 &modelview) {
+        model.prepare(rigidBody->GetPosition(), rigidBody->GetOrientation());
+        model.display(projection, modelview);
+    }
 }

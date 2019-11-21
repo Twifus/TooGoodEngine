@@ -2,6 +2,7 @@
 #include <cmath>
 #include <vector>
 #include <iostream>
+#include <Box3DModel.hpp>
 
 #include "OpenGLScene.hpp"
 #include "glm/glm.hpp"
@@ -132,28 +133,37 @@ public:
 // Crée les boites de test
 void CreateBody(CrashScene& scene) {
     // Voiture 1 vers la droite (sur l'axe x)
-    BoxRigidBody *car1 = new BoxRigidBody(10, 2, 2, 2);
+    auto *car1 = new BoxRigidBody(10, 3, 2, 2);
     car1->SetPosition(- Vector3::forward / 2);
     objects.push_back(car1);
 
-    Element carElement1 = Element(objects[0], 2);
+    Vector3 dimensions = Vector3(3,2,2);
+    Vector3 color = Vector3(1,0,0);
+    auto *car1Model = new Box3DModel(dimensions, color);
+
+    Element carElement1 = Element(objects[0], *car1Model);
     scene.addElement(carElement1);
 
     // Voiture 2 vers la gauche (sur l'axe x)
-    BoxRigidBody* car2 = new BoxRigidBody(10, 2, 2, 2);
+    auto* car2 = new BoxRigidBody(10, 3, 2, 2);
     car2->SetPosition(Vector3::right * 10 + Vector3::forward / 2);
     car2->SetOrientation(Quaternion::AxisAngle(Vector3::up, M_PI)); // 180 degree autour de y
     objects.push_back(car2);
 
-    Element carElement2 = Element(objects[1], 2);
+    color = Vector3(0,1,0);
+    auto *car2Model = new Box3DModel(dimensions, color);
+    Element carElement2 = Element(objects[1], *car2Model);
     scene.addElement(carElement2);
 
     // Cube en l'air (en haut à droite dans le plan xy)
-    BoxRigidBody* fly = new BoxRigidBody(2, 1, 1, 1);
+    auto* fly = new BoxRigidBody(2, 1, 1, 1);
     fly->SetPosition(5 * Vector3::right - 5 *  Vector3::forward);
     objects.push_back(fly);
 
-    Element flyingElement = Element(objects[2], 1);
+    dimensions = Vector3(2,2,2);
+    color = Vector3(1,1,1);
+    auto *flyingModel = new Box3DModel(dimensions, color);
+    Element flyingElement = Element(objects[2], *flyingModel);
     scene.addElement(flyingElement);
 }
 
