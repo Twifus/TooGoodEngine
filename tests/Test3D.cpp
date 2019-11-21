@@ -1,4 +1,7 @@
 #include <OpenGLScene.hpp>
+#include <Box3DModel.hpp>
+
+using namespace TooGoodEngine;
 
 int main()
 {
@@ -17,7 +20,9 @@ int main()
     }
 
     BoxRigidBody* rigidBody = new BoxRigidBody(10, 2,2,2);
-    Element testElement = Element(rigidBody, 2);
+    Vector3 dim = Vector3(2,3,5);
+    Graph3DModel *boxModel = new Box3DModel(dim);
+    Element testElement = Element(rigidBody, *boxModel);
     scene.addElement(testElement);
 
     scene.mainLoop();

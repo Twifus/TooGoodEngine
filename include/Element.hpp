@@ -1,17 +1,17 @@
 #ifndef TOOGOODENGINE_ELEMENT_HPP
 #define TOOGOODENGINE_ELEMENT_HPP
 
-#include <BoxRigidBody.hpp>
-#include <Cube.hpp>
+#include "BoxRigidBody.hpp"
+#include "Graph3DModel.hpp"
 
 namespace TooGoodEngine {
 
     class Element {
     public:
-        Element(BoxRigidBody* boxRigidBody, float size);
+        Element(RigidBody* rigidBody, Graph3DModel& model);
 
-        BoxRigidBody* rigidBody;
-        Cube cube;
+        RigidBody* rigidBody;
+        Graph3DModel& model;
 
         void display(glm::mat4& projection, glm::mat4& modelview);
     };

@@ -1,5 +1,4 @@
-#ifndef SDL_OPENGL_OPENGLSCENE_HPP
-#define SDL_OPENGL_OPENGLSCENE_HPP
+#pragma once
 
 #include <string>
 
@@ -28,27 +27,30 @@
 #include <vector>
 #include "Element.hpp"
 
-class OpenGLScene {
-public:
-    OpenGLScene(std::string title, int width, int height);
-    ~OpenGLScene();
+namespace TooGoodEngine {
+    class OpenGLScene {
+    public:
+        OpenGLScene(std::string title, int width, int height);
 
-    bool windowInit();
-    bool initGL();
-    virtual void mainLoop();
+        ~OpenGLScene();
 
-    void addElement(Element& cube);
+        bool windowInit();
 
-protected:
-    std::vector<Element> elements;
+        bool initGL();
 
-    std::string windowTitle;
-    int windowWidth;
-    int windowHeight;
+        virtual void mainLoop();
 
-    SDL_Window* window;
-    SDL_GLContext glContext;
-    SDL_Event events;
-};
+        void addElement(Element &cube);
 
-#endif //SDL_OPENGL_OPENGLSCENE_HPP
+    protected:
+        std::vector<Element> elements;
+
+        std::string windowTitle;
+        int windowWidth;
+        int windowHeight;
+
+        SDL_Window *window;
+        SDL_GLContext glContext;
+        SDL_Event events;
+    };
+}
