@@ -4,11 +4,12 @@
 #include <glm/gtx/transform.hpp>
 
 #include <Shader.hpp>
+#include <utility>
 
 namespace TooGoodEngine {
 
     OpenGLScene::OpenGLScene(std::string title, int width, int height) :
-            windowTitle(title),
+            windowTitle(std::move(title)),
             windowWidth(width),
             windowHeight(height),
             events(),
@@ -49,7 +50,7 @@ namespace TooGoodEngine {
                                   windowHeight,
                                   SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
 
-        if (window == 0) {
+        if (window == nullptr) {
             std::cout << "Window creation Error : " << SDL_GetError() << std::endl;
             SDL_Quit();
 
@@ -119,7 +120,7 @@ namespace TooGoodEngine {
             if (events.window.event == SDL_WINDOWEVENT_CLOSE)
                 close = true;
 
-            modelView = lookAt(glm::vec3(6, 6, 6),
+            modelView = lookAt(glm::vec3(10, 10, 10),
                                glm::vec3(0, 0, 0),
                                glm::vec3(0, 1, 0));
 

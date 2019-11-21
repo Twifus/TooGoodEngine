@@ -19,8 +19,8 @@ int main()
         return EXIT_FAILURE;
     }
 
-    BoxRigidBody* rigidBody = new BoxRigidBody(10, 2,2,2);
-    Vector3 dim = Vector3(2,3,5);
+    auto* rigidBody = new BoxRigidBody(10, 2,2,2);
+    Vector3 dim = Vector3(2.,3.,5.);
     Graph3DModel *boxModel = new Box3DModel(dim);
     Element testElement = Element(rigidBody, *boxModel);
     scene.addElement(testElement);

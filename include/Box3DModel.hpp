@@ -8,7 +8,7 @@ namespace TooGoodEngine {
 
     private:
         Vector3 dimensions;
-        Vector3 color = Vector3();
+        Vector3 color = Vector3(1.,1.,1.);
 
         const GLuint m_indices[36] = {
                 0, 1, 2, 1, 2, 3,
