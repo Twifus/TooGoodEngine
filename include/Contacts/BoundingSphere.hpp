@@ -8,9 +8,9 @@ namespace TooGoodEngine
 		{
 		public:
 			Vector3 center;
-			float radius;
+			double radius;
 
-			public BoundingSphere(Vector3 center, float radius) : center(center), radius(radius) {}
+			BoundingSphere(Vector3 center, double radius) : center(center), radius(radius) {}
 		};
 	}
 }

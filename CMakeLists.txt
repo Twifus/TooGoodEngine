@@ -104,7 +104,8 @@ add_library(TooGoodEngineLib
 			   src/Shader.cpp   include/Shader.hpp 
 			   src/Element.cpp include/Element.hpp
 		src/Graph3DModel.cpp include/Graph3DModel.hpp include/Box3DModel.hpp src/Box3DModel.cpp
-		src/Primitive.cpp include/Primitive.hpp)
+		src/Primitive.cpp include/Primitive.hpp include/Contacts/BoundingSphere.hpp
+		src/CollisionData.cpp include/CollisionData.hpp)
 
 target_link_libraries(TooGoodEngineLib PUBLIC ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${GLEW_LIBRARIES} ${OPENGL_LIBRARIES})
 
