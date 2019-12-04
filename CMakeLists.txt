@@ -102,7 +102,8 @@ add_library(TooGoodEngineLib
 			   src/OpenGLScene.cpp include/OpenGLScene.hpp
 			   src/Shader.cpp   include/Shader.hpp 
 			   src/Element.cpp include/Element.hpp
-		src/Graph3DModel.cpp include/Graph3DModel.hpp include/Box3DModel.hpp src/Box3DModel.cpp)
+		src/Graph3DModel.cpp include/Graph3DModel.hpp include/Box3DModel.hpp src/Box3DModel.cpp
+		src/Primitive.cpp include/Primitive.hpp)
 
 target_link_libraries(TooGoodEngineLib PUBLIC ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${GLEW_LIBRARIES} ${OPENGL_LIBRARIES})
 
