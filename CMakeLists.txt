@@ -89,6 +89,7 @@ add_library(TooGoodEngineLib
 			   include/Contacts/IContactGenerator.hpp
 			   src/Contacts/Generators/Link.cpp include/Contacts/Generators/Link.hpp
 			   src/Contacts/Generators/Cable.cpp include/Contacts/Generators/Cable.hpp
+			   include/Contacts/BoundingSphere.hpp
 			   include/CommonSDL.hpp
 			   src/GameSDL.cpp  include/GameSDL.hpp
 			   src/Frame.cpp    include/Frame.hpp
