@@ -1,21 +1,45 @@
 #pragma once
 
 #include "Vector3.hpp"
+#include <list>
 
-struct BSPNode;
-struct Object;
+struct GameObject {};
 
-class BSP {
-private:
-    list<BSPNode> root;
-    std::default_random_engine generator;
-    std::uniform_real_distribution<double> distribution;
+namespace TooGoodEngine
+{
+	class BSPTree
+	{
+	private:
+		struct Plane {
+			Vector3 position;
+			Vector3 normal;
 
-    void SplitNode(BSPNode &node);
-    void EvaluateNode(BSPNode &node);
+			Plane();
+			Plane(const Vector3& position, const Vector3& normal);
+			inline double DistanceToPlan(const Vector3& point) const;
+		};
 
-public:
-    BSP(Vector3 pos_start);
-    void AddObject(const Object &object);
-    void Evaluate();
-};
+		struct BSPNode {
+			BSPNode* back;
+			BSPNode* front;
+			Plane plan;
+			std::list<GameObject> data;
+
+			BSPNode();
+			BSPNode(BSPNode* back, BSPNode* front, const Plane& plan, const std::list<GameObject>& data);
+			inline bool isLeaf() const;
+		};
+
+		std::list<BSPNode> root;
+		std::default_random_engine generator;
+		std::uniform_real_distribution<double> distribution;
+
+		void SplitNode(BSPNode& node);
+		void EvaluateNode(BSPNode& node);
+
+	public:
+		BSPTree(Vector3 pos_start);
+		void AddObject(const GameObject& object);
+		void Evaluate();
+	};
+}

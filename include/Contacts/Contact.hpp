@@ -13,10 +13,10 @@ namespace TooGoodEngine
 			double interpenetration;
 			Vector3 contactNormal;
 			Vector3 contactPoint;
-			
+
 
 		public:
 			Contact(Vector3 contactPoint, Vector3 normal, double penetration);
-			
+		};
 	}
 }

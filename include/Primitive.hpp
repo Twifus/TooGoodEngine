@@ -1,5 +1,5 @@
 #pragma once
-#include "Matrix4.hpp"
+#include "Transform.hpp"
 #include "RigidBody.hpp"
 #include "Contacts/BoundingSphere.hpp"
 
@@ -7,10 +7,10 @@ namespace TooGoodEngine {
 	class Primitive {
 	public:
 		RigidBody& rigidBody;
-		Contacts::BoundingSphere& boundingSphere;
-		Matrix4& transformation;
+		Contacts::BoundingSphere boundingSphere;
+		Transform transformation;
 
-		Primitive(RigidBody& RigidBody, Matrix4& matrix, Contacts::BoundingSphere& sphere);
+		Primitive(RigidBody& RigidBody, Transform& transform, Contacts::BoundingSphere& sphere);
 		~Primitive();
 	};
 }

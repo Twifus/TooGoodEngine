@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 ## SDL2
-if(WIN32) # On Windows systems, search for SDL2 in `external` directory
+if(WIN32) # On Windows systems, search for libs in `external` directory
 	set(SDL2_PATH "${CMAKE_SOURCE_DIR}/external/SDL2-2.0.10")
 	set(SDL2_IMAGE_PATH "${CMAKE_SOURCE_DIR}/external/SDL2_image-2.0.5")
 	set(GLEW_PATH "${CMAKE_SOURCE_DIR}/external/glew-2.1.0")
@@ -30,11 +30,6 @@ set(OpenGL_GL_PREFERENCE LEGACY)
 find_package(OPENGL REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIR})
 
-#set(CMAKE_LIBRARY_PATH "${GLEW_PATH}/lib/Release")
-#find_library(GLEW_LIBRARY NAMES GLEW glew32 glew glew32s PATH_SUFFIXES lib64)
-#include_directories("${GLEW_PATH}/include")
-##
-
 include(CTest)
 include_directories("include")
 
@@ -44,7 +39,7 @@ include_directories("include")
 #                         #
 ###########################
 
-set(FORCES_GENERATORS_INCLUDE
+set(FORCES_GENERATORS_INCLUDES
 	include/Forces/Generators.hpp
 	include/Forces/IForceGenerator.hpp
 	include/Forces/Generators/ForceGenerator.hpp
@@ -77,35 +72,63 @@ set(FORCES_SOURCES
 	${FORCES_GENERATORS_SOURCES}
 )
 
+###########################
+#                         #
+#        CONTACTS         #
+#                         #
+###########################
+
+set(CONTACTS_GENERATORS_INCLUDES
+	include/Contacts/IContactGenerator.hpp
+	include/Contacts/Generators/Link.hpp
+	include/Contacts/Generators/Cable.hpp
+)
+
+set(CONTACTS_GENERATORS_SOURCES
+	src/Contacts/Generators/Link.cpp
+	src/Contacts/Generators/Cable.cpp
+)
+
+set(CONTACTS_INCLUDES
+	include/Contacts/Contact.hpp
+	#include/Contacts/Resolver.hpp
+)
+
+set(CONTACTS_SOURCES
+	src/Contacts/Contact.cpp
+	#src/Contacts/Resolver.cpp
+)
+
 # TooGoodEngine Library
 add_library(TooGoodEngineLib
-			   src/Vector3.cpp  include/Vector3.hpp
-			   src/Quaternion.cpp include/Quaternion.hpp
-			   src/Particle.cpp include/Particle.hpp
-			   ${FORCES_INCLUDES}
-			   ${FORCES_SOURCES}
-			   src/Contacts/Contact.cpp include/Contacts/Contact.hpp
-			   src/Contacts/Resolver.cpp include/Contacts/Resolver.hpp
-			   include/Contacts/IContactGenerator.hpp
-			   src/Contacts/Generators/Link.cpp include/Contacts/Generators/Link.hpp
-			   src/Contacts/Generators/Cable.cpp include/Contacts/Generators/Cable.hpp
-			   include/Contacts/BoundingSphere.hpp
-			   include/CommonSDL.hpp
-			   src/GameSDL.cpp  include/GameSDL.hpp
-			   src/Frame.cpp    include/Frame.hpp
-			   src/Sprite.cpp   include/Sprite.hpp
-		       #src/Blob.cpp 	include/Blob.hpp
-			   src/Matrix3.cpp	include/Matrix3.hpp
-			   src/Matrix4.cpp	include/Matrix4.hpp
-			   src/RigidBody.cpp include/RigidBody.hpp
-			   src/BoxRigidBody.cpp include/BoxRigidBody.hpp
-			   src/Cube.cpp include/Cube.hpp
-			   src/OpenGLScene.cpp include/OpenGLScene.hpp
-			   src/Shader.cpp   include/Shader.hpp 
-			   src/Element.cpp include/Element.hpp
-		src/Graph3DModel.cpp include/Graph3DModel.hpp include/Box3DModel.hpp src/Box3DModel.cpp
-		src/Primitive.cpp include/Primitive.hpp include/Contacts/BoundingSphere.hpp
-		src/CollisionData.cpp include/CollisionData.hpp)
+	#COMMON
+	src/Vector3.cpp			include/Vector3.hpp
+	src/Quaternion.cpp		include/Quaternion.hpp
+	src/Matrix3.cpp			include/Matrix3.hpp
+	src/Transform.cpp		include/Transform.hpp
+	src/Particle.cpp		include/Particle.hpp
+	src/RigidBody.cpp		include/RigidBody.hpp
+	src/Primitive.cpp		include/Primitive.hpp
+	#FORCES
+	${FORCES_SOURCES}		${FORCES_INCLUDES}
+	#CONTACTS
+	${CONTACTS_SOURCES}		${CONTACTS_INCLUDES}
+	include/Contacts/BoundingSphere.hpp
+	src/CollisionData.cpp	include/CollisionData.hpp
+	src/BSPTree.cpp			include/BSPTree.hpp
+	#SDL
+	include/CommonSDL.hpp
+	src/GameSDL.cpp			include/GameSDL.hpp
+	src/Frame.cpp			include/Frame.hpp
+	src/Sprite.cpp			include/Sprite.hpp
+	src/BoxRigidBody.cpp	include/BoxRigidBody.hpp
+	src/Cube.cpp			include/Cube.hpp
+	#OPENGL
+	src/OpenGLScene.cpp		include/OpenGLScene.hpp
+	src/Shader.cpp			include/Shader.hpp 
+	src/Element.cpp			include/Element.hpp
+	src/Graph3DModel.cpp	include/Graph3DModel.hpp
+	src/Box3DModel.cpp		include/Box3DModel.hpp)
 
 target_link_libraries(TooGoodEngineLib PUBLIC ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${GLEW_LIBRARIES} ${OPENGL_LIBRARIES})
 
@@ -128,17 +151,9 @@ endif()
 add_custom_command(TARGET TooGoodEngineLib POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/sprites $<TARGET_FILE_DIR:TooGoodEngineLib>/sprites)
 add_custom_command(TARGET TooGoodEngineLib POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/src/Shaders $<TARGET_FILE_DIR:TooGoodEngineLib>/Shaders)
 
-## Game demo executable
-#add_executable(Game src/Game.cpp)
-#target_link_libraries(Game TooGoodEngineLib)
-
 # Game2 demo executable
 add_executable(Game2 src/Game2.cpp)
 target_link_libraries(Game2 TooGoodEngineLib)
-
-## Blob demo executable
-#add_executable(BlobScene src/BlobScene.cpp)
-#target_link_libraries(BlobScene TooGoodEngineLib)
 
 # TestVector3
 add_executable(TestVector3 tests/TestVector3.cpp)
@@ -155,12 +170,12 @@ add_executable(TestMatrix3 tests/TestMatrix3.cpp)
 target_link_libraries(TestMatrix3 TooGoodEngineLib)
 add_test(Test_Quaternion TestMatrix3)
 
-# TestMatrix4
-add_executable(TestMatrix4 tests/TestMatrix4.cpp)
-target_link_libraries(TestMatrix4 TooGoodEngineLib)
-add_test(Test_Quaternion TestMatrix4)
+# TestTransform
+add_executable(TestTransform tests/TestTransform.cpp)
+target_link_libraries(TestTransform TooGoodEngineLib)
+add_test(Test_Quaternion TestTransform)
 
-# TestMatrix4
+# TestRigidBody
 add_executable(TestRigidBody tests/TestRigidBody.cpp)
 target_link_libraries(TestRigidBody TooGoodEngineLib)
 add_test(Test_Quaternion TestRigidBody)
