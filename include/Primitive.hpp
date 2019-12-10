@@ -6,11 +6,11 @@
 namespace TooGoodEngine {
 	class Primitive {
 	public:
-		RigidBody& rigidBody;
-		Contacts::BoundingSphere boundingSphere;
-		Transform transformation;
+		RigidBody& rigidBody;																			//RigidBody which the primitive is associated to
+		Contacts::BoundingSphere boundingSphere;														//BoundingSphere of the primitive
+		Transform transformation;																		//Deformation due to a collision
 
-		Primitive(RigidBody& RigidBody, Transform& transform, Contacts::BoundingSphere& sphere);
-		~Primitive();
+		Primitive(RigidBody& RigidBody, Transform& transform, Contacts::BoundingSphere& sphere);		//Primitive constructor
+		~Primitive();																					//Primitive destructor
 	};
 }
