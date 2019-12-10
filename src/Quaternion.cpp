@@ -16,7 +16,7 @@ namespace TooGoodEngine
 	{
 		Vector3 n = axis.Normalized();
 		double theta = angle / 2;
-		return Quaternion(std::cos(theta), std::sin(theta) * n.x, std::sin(theta) * n.y, std::sin(theta) * n.z);
+		return Quaternion(std::cos(theta), std::sin(theta) * n.x, std::sin(theta) * n.y, std::sin(theta) * n.z).Normalized();
 	}
 
 	bool Quaternion::operator==(const Quaternion& other) const

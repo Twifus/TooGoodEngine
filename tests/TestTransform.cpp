@@ -7,162 +7,100 @@
 
 namespace TooGoodEngine
 {
+	bool near(const Transform& t1, const Transform& t2)
+	{
+		Quaternion q1 = t1.GetRotation(), q2 = t2.GetRotation();
+		return
+			t1.GetPosition() == t2.GetPosition() &&
+			std::abs(q1.w - q2.w) < 1e-9 &&
+			std::abs(q1.x - q2.x) < 1e-9 &&
+			std::abs(q1.y - q2.y) < 1e-9 &&
+			std::abs(q1.z - q2.z) < 1e-9;
+	}
+
 	class TestTransform
 	{
 	public:
 		static void TestConstructor()
 		{
-			const std::array<double, Transform::data_length> a
-			{
-				1,  2,  3,  4,
-				5,  6,  7,  8,
-				9, 10, 11, 12
-			};
 			const Vector3 v(1, 2, 3);
 			const Quaternion q(1, 2, 3, 4);
 			const Matrix3 m({ 1, 2, 3, 4, 5, 6, 7, 8, 9 });
-			
+
 			const Transform
-				m0,
-				m1(a.data()),
-				m2(a),
-				m3(v),
-				m4(m, v),
-				m5(q, v);
+				t0,
+				t1(v),
+				t2(v, q);
 
-			std::array<double, Transform::data_length> a0 
-			{ 
-				0, 0, 0, 0,
-				0, 0, 0, 0,
-				0, 0, 0, 0
-			};
-			assert(m0.data() == a0);
+			assert(t0.GetPosition() == Vector3::zero && t0.GetRotation() == Quaternion::identity);
 
-			assert(m1.data() == a);
+			assert(t1.GetPosition() == v && t1.GetRotation() == Quaternion::identity);
 
-			assert(m2.data() == a);
-
-			std::array<double, Transform::data_length> a3
-			{
-				0, 0, 0, 1,
-				0, 0, 0, 2,
-				0, 0, 0, 3
-			};
-			assert(m3.data() == a3);
-
-			std::array<double, Transform::data_length> a4
-			{
-				1, 2, 3, 1,
-				4, 5, 6, 2,
-				7, 8, 9, 3
-			};
-			assert(m4.data() == a4);
-
-			std::array<double, Transform::data_length> a5
-			{
-				-49,  20,  10, 1,
-				  4, -39,  28, 2,
-				 22,  20, -25, 3
-			};
-			assert(m5.data() == a5);
+			assert(t2.GetPosition() == v && t2.GetRotation() == q.Normalized());
 		}
 
 		static void TestComparison()
 		{
-			const std::array<double, Transform::data_length> a0
-			{
-				1,  2,  3,  4,
-				5,  6,  7,  8,
-				9, 10, 11, 12
-			};
-			const std::array<double, Transform::data_length> a1
-			{
-				1,  2,  3,  4,
-				5,  6,  7,  8,
-				9, 10, 11, 12
-			};
+			const Vector3 v0(2, 3, 4);
+			const Vector3 v1(2, 3, 4);
+			const Quaternion q0 = Quaternion::AxisAngle(Vector3(1, 1, 1), M_PI_2);
+			const Quaternion q1 = Quaternion::AxisAngle(Vector3(1, 1, 1), M_PI_2);
 
 			const Transform
-				m0(a0),
-				m1(a1);
+				t0(v0, q0),
+				t1(v1, q1);
 
-			assert(m0 == m0);
-			assert(!(m0 != m0));
+			assert(t0 == t0);
+			assert(!(t0 != t0));
 
-			assert(m1 == m0);
-			assert(!(m1 != m0));
-
-			for (int i = 0; i < Transform::data_length; ++i)
-			{
-				std::array<double, Transform::data_length> a(a0);
-				a[i] = 0;
-				Transform m(a);
-				assert(m != m0);
-				assert(!(m == m0));
-			}
+			assert(t1 == t0);
+			assert(!(t1 != t0));
 		}
 
-		static void TestAccessors()
-		{
-			const Transform m0({ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 });
-			Transform m1;
-
-			for (int i = 0; i < Transform::data_length; ++i)
-			{
-				assert(m0[i] == i);
-				m1[i] = i;
-				assert(m1[i] == i);
-			}
-		}
-
-		static void TestMatrixToMatrixOperators()
+		static void TestTransformToTransformOperators()
 		{
 			const Transform
-				m0({ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 }),
-				m1({ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 });
+				t0(Vector3(1, 2, 3), Quaternion::AxisAngle(Vector3(0, 1, 0), M_PI_2)),
+				t1(Vector3(1, 2, 3), Quaternion::AxisAngle(Vector3(0, 1, 0), M_PI_2));
 
-			assert(m1 * m0 == Transform({ 20, 23, 26, 6, 68, 83, 98, 8, 116, 143, 170, 22 }));
+			assert(near(t1 * t0, Transform(Vector3(2, 4, 6), Quaternion::AxisAngle(Vector3(0, 1, 0), M_PI))));
 		}
 
-		static void TestMatrixToVectorOperators()
+		static void TestTransformToVectorOperators()
 		{
-			const Transform
-				m0;
-			const Vector3
-				v0;
+			const Transform t0(Vector3(1, 2, 3), Quaternion::AxisAngle(Vector3(0, 1, 0), M_PI_2));
+			const Vector3 v0(1, 0, 0);
+
+			assert(t0 * v0 == Vector3(1, 2, 2));
 		}
 
 		static void TestAffectationOperators()
 		{
-			const Transform m({ 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24 });
-			Transform
-				m0({ 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24 }),
-				m1({ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 });
+			const Transform t0(Vector3(1, 2, 3), Quaternion::AxisAngle(Vector3(0, 1, 0), M_PI_2));
+			Transform t1(Vector3(1, 2, 3), Quaternion::AxisAngle(Vector3(0, 1, 0), M_PI_2));
 
-			assert((m1 *= m1) == Transform({ 20, 23, 26, 32, 68, 83, 98, 120, 116, 143, 170, 208 }));
+			assert(near((t1 *= t0), Transform(Vector3(2, 4, 6), Quaternion::AxisAngle(Vector3(0, 1, 0), M_PI))));
 		}
 
 		static void TestInverse()
 		{
 			const Transform
-				m0 = Transform::identity,
-				m1({ 1, 2, 3, 0, 0, 1, 4, 0, 5, 6, 0, 0 }),
-				m2;
+				t0,
+				t1(Vector3(1, 2, 3), Quaternion::AxisAngle(Vector3(1, 1, 1), M_PI_2));
 
-			assert(m0.IsInvertible() && m0.Inverse() == m0);
-			assert(m1.IsInvertible() && m1.Inverse() == Transform({ -24, 18, 5, 0, 20, -15, -4, 0, -5, 4, 1, 0 }) && m1.Inverse() * m1 == Transform::identity);
-			assert(!m2.IsInvertible());
+			assert(t0.Inverse() == t0);
+			assert(near(t1.Inverse(), Transform(Vector3(-1, -2, -3), Quaternion::AxisAngle(Vector3(1, 1, 1), -M_PI_2))) && t1.Inverse() * t1 == Transform::identity);
 		}
 	};
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
 	using namespace TooGoodEngine;
 	TestTransform::TestConstructor();
 	TestTransform::TestComparison();
-	TestTransform::TestAccessors();
-	TestTransform::TestMatrixToMatrixOperators();
+	TestTransform::TestTransformToTransformOperators();
+	TestTransform::TestTransformToVectorOperators();
 	TestTransform::TestAffectationOperators();
 	TestTransform::TestInverse();
 	return EXIT_SUCCESS;
