@@ -10,8 +10,9 @@ namespace TooGoodEngine {
     public:
         std::list<Primitive> prime;
         Contacts::BoundingSphere sphere;
-
-        GameObject(std::list<Primitive> primeList, Contacts::BoundingSphere sphere) : prime(primeList), sphere(sphere) {}
+        GameObject() : sphere(Vector3::zero, 0) {} 
+        GameObject(std::list<Primitive> primeList, Contacts::BoundingSphere sphere) :
+            prime(primeList), sphere(sphere) {}
     };
 
 }
