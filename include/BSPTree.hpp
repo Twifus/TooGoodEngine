@@ -1,12 +1,16 @@
 #pragma once
 
+#include "GameObject.hpp"
 #include "Vector3.hpp"
+
 #include <list>
 
-struct GameObject {};
+
+//typedef TooGoodEngine::Contacts::BoundingSphere Object;
 
 namespace TooGoodEngine
 {
+	
 	class BSPTree
 	{
 	private:
@@ -35,11 +39,11 @@ namespace TooGoodEngine
 		std::uniform_real_distribution<double> distribution;
 
 		void SplitNode(BSPNode& node);
-		void EvaluateNode(BSPNode& node);
+		void EvaluateNode(BSPNode& node, std::list<GameObject> &stack);
 
 	public:
 		BSPTree(Vector3 pos_start);
-		void AddObject(const GameObject& object);
+		void AddGameObject(const GameObject& object);
 		void Evaluate();
 	};
 }

@@ -1,5 +1,6 @@
 #include <list>
 #include <random>
+#include <iostream>
 
 #include "BSPTree.hpp"
 
@@ -33,13 +34,13 @@ namespace TooGoodEngine
 		return (back == nullptr && front == nullptr);
 	}
 
-	// Return position of the object in 3D space /!\ TODO : changer en fonction de comment est l'objet
+	// Return position of the object in 3D space (valable pour GameObject)
 	inline Vector3 objectPosition(const GameObject& o) {
-		return Vector3::zero;
+		return o.sphere.center;
 	}
-	// Return the size of the object  /!\ TODO : changer en fonction de comment est l'objet
+	// Return the size of the object  (valable pour GameObject)
 	inline double objectRadius(const GameObject& o) {
-		return 1;
+		return o.sphere.radius;
 	}
 
 	// ------------------------------------------------------------------------ //
@@ -80,7 +81,7 @@ namespace TooGoodEngine
 	}
 
 	// Add an object to the tree
-	void BSPTree::AddObject(const GameObject& object) { // pointer func compare +1 -1 0 (front back middle ?)
+	void BSPTree::AddGameObject(const GameObject& object) { // pointer func compare +1 -1 0 (front back middle ?)
 		// Iteration on nodes (plan back / front)
 		BSPNode* node = &root.front();
 		bool stop = false;
@@ -100,31 +101,45 @@ namespace TooGoodEngine
 	}
 
 
-	void checkFonc(GameObject& a, GameObject& b)
+	inline void checkFonc(GameObject& a, GameObject& b)
 	{
-		// do stuffs (could be in parameter of Evaluate as well for maximum gasm)
+		if (a.sphere.Intersection(b.sphere)) {
+			std::cout << "bim sphere collision de 2 GameObjects" << std::endl;
+		}
 	}
 
 	// Iterate on a node
-	void BSPTree::EvaluateNode(BSPNode& node) { // ((void*) func(void)) pointer ?
-		// Calling checkFonc on data
-		if (node.data.size() > 1) {
-			for (auto it1 = node.data.begin(); it1 != node.data.end(); ++it1) {
-				for (auto it2 = it1; it2 != node.data.end(); ++it2) {
+	void BSPTree::EvaluateNode(BSPNode& node, std::list<GameObject> &stack) { // ((void) checkFunc(GameObject&, GameObject&)) : pointer ?
+        // Add his element to the stack
+        int count = 0;
+        for(auto v : node.data) {
+            stack.push_front(v);
+            count++;
+        }
+		// Calling checkFonc on stack data
+		if (node.isLeaf() && stack.size() > 1) {
+			for (auto it1 = stack.begin(); it1 != stack.end(); ++it1) {
+				for (auto it2 = it1; it2 != stack.end(); ++it2) {
 					checkFonc(*it1, *it2);
 				}
 			}
 		}
 		// recursion on children
 		if (!node.isLeaf()) {
-			EvaluateNode(*(node.back));
-			EvaluateNode(*(node.front));
+			EvaluateNode(*(node.back), stack);
+			EvaluateNode(*(node.front), stack);
 		}
+        // Clear stack
+        while(count--) {
+            stack.pop_front();
+        }
 	}
 
 	// Parse BSP data and call func on every objects in the same area
 	void BSPTree::Evaluate() {
-		EvaluateNode(root.front());
+        std::list<GameObject> stack = std::list<GameObject>();
+		EvaluateNode(root.front(), stack);
+        stack.clear();
 	}
 
 }
