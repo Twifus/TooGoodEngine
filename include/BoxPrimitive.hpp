@@ -10,10 +10,10 @@ namespace TooGoodEngine
 
 	private:
 		RigidBody* rigidBody;
-		Vector3 size;
+		Vector3 halfSize;
 
 	public:
-		BoxPrimitive(RigidBody* rigidbody, Vector3& size);
+		BoxPrimitive(RigidBody* rigidbody, Vector3& halfSize);
 
 		virtual std::vector<Contacts::Contact> ResolveCollision(const Primitive& other) const override;
 	};
