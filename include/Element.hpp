@@ -6,15 +6,15 @@
 
 namespace TooGoodEngine {
 
-    class Element {
-    public:
-        Element(RigidBody* rigidBody, Graph3DModel& model);
+	class Element {
+	public:
+		Element(RigidBody* rigidBody, Graph3DModel& model);
 
-        RigidBody* rigidBody;
-        Graph3DModel& model;
+		RigidBody* rigidBody;
+		Graph3DModel& model;
 
-        void display(glm::mat4& projection, glm::mat4& modelview);
-    };
+		void display(glm::mat4& projection, glm::mat4& modelview);
+	};
 }
 
 #endif //TOOGOODENGINE_ELEMENT_HPP
