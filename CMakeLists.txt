@@ -108,7 +108,9 @@ add_library(TooGoodEngineLib
 	src/Transform.cpp		include/Transform.hpp
 	src/Particle.cpp		include/Particle.hpp
 	src/RigidBody.cpp		include/RigidBody.hpp
-	src/Primitive.cpp		include/Primitive.hpp
+	include/Primitive.hpp
+	src/BoxPrimitive.cpp	include/BoxPrimitive.hpp
+	src/PlanPrimitive.cpp	include/PlanPrimitive.hpp
 	#FORCES
 	${FORCES_SOURCES}		${FORCES_INCLUDES}
 	#CONTACTS

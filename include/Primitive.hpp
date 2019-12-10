@@ -1,16 +1,22 @@
 #pragma once
-#include "Transform.hpp"
+#include "Contacts/Contact.hpp"
 #include "RigidBody.hpp"
-#include "Contacts/BoundingSphere.hpp"
+#include <vector>
+
+#define PRIMITIVE(_UID)											\
+	static const uint32_t primitiveUID = _UID;					\
+	virtual uint32_t GetUID() const { return primitiveUID; }
 
 namespace TooGoodEngine {
-	class Primitive {
+	class Primitive
+	{
 	public:
-		RigidBody& rigidBody;																			//RigidBody which the primitive is associated to
-		Contacts::BoundingSphere boundingSphere;														//BoundingSphere of the primitive
-		Transform transformation;																		//Deformation due to a collision
+		PRIMITIVE('NONE')
 
-		Primitive(RigidBody& RigidBody, Transform& transform, Contacts::BoundingSphere& sphere);		//Primitive constructor
-		~Primitive();																					//Primitive destructor
+	protected:
+		Primitive() = default;
+	
+	public:
+		virtual std::vector<Contacts::Contact> ResolveCollision(const Primitive& other) const = 0;
 	};
 }
