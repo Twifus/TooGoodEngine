@@ -9,11 +9,11 @@ namespace TooGoodEngine
 		PRIMITIVE('BOX')
 
 	private:
-		RigidBody* rigidBody;
+		RigidBody& rigidBody;
 		Vector3 halfSize;
 
 	public:
-		BoxPrimitive(RigidBody* rigidbody, Vector3& halfSize);
+		BoxPrimitive(RigidBody& rigidbody, Vector3& halfSize);
 
 		virtual std::vector<Contacts::Contact> ResolveCollision(const Primitive& other) const override;
 	};

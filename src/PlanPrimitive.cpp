@@ -25,7 +25,7 @@ namespace TooGoodEngine
 		}
 		else
 		{
-			std::cerr << "WARNING - Contact resolution between primitives '" << GetUID() << "' and '" << other.GetUID() << "' is not implemented" << std::endl;
+			//std::cerr << "WARNING - Contact resolution between primitives '" << GetUID() << "' and '" << other.GetUID() << "' is not implemented" << std::endl;
 		}
 
 		return std::vector<Contacts::Contact>();

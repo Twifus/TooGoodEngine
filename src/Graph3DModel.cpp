@@ -14,17 +14,6 @@ namespace TooGoodEngine {
     void Graph3DModel::display(glm::mat4 &projection, glm::mat4 &modelview) {
         glUseProgram(shader.getProgramID());
 
-        std::cout << __FUNCTION__ << std::endl;
-        std::cout << "VERTICES" << std::endl;
-        for (int i = 0; i < 8; ++i) {
-            std::cout << "[x: " << vertices[6*i + 0] << ", y: " << vertices[6*i + 1] << ",z: " << vertices[6*i + 2] << "]" << "(" << vertices[6*i + 3] << ", " << vertices[6*i + 4] << ", " << vertices[6*i + 5] << ")" << std::endl;
-        }
-
-        std::cout << "INDICES" << std::endl;
-        for (int i = 0; i < 12; ++i) {
-            std::cout << "[" << indices[3*i + 0] << ", " << indices[3*i + 1] << ", " << indices[3*i + 2] << "]" << std::endl;
-        }
-
         glBindVertexArray(vaoID);
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
         glBufferData(GL_ARRAY_BUFFER, vertices_size, vertices, GL_STATIC_DRAW);

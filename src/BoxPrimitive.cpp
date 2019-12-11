@@ -7,7 +7,7 @@
 
 namespace TooGoodEngine
 {
-	BoxPrimitive::BoxPrimitive(RigidBody* rigidbody,  Vector3& halfSize) : rigidBody(rigidbody), halfSize(halfSize) {}
+	BoxPrimitive::BoxPrimitive(RigidBody& rigidbody,  Vector3& halfSize) : rigidBody(rigidbody), halfSize(halfSize) {}
 
 	std::vector<Contacts::Contact> BoxPrimitive::ResolveCollision(const Primitive& other) const
 	{
@@ -28,7 +28,7 @@ namespace TooGoodEngine
 			};
 			for (Vector3 dir : directions)
 			{
-				Vector3 vertex = rigidBody->GetOrientation() * (dir * halfSize) + rigidBody->GetPosition();
+				Vector3 vertex = rigidBody.GetOrientation() * (dir * halfSize) + rigidBody.GetPosition();
 				double dist = plan.DistanceToPlan(vertex);
 				if (dist <= 0)
 				{
@@ -39,7 +39,7 @@ namespace TooGoodEngine
 		}
 		else
 		{
-			std::cerr << "WARNING - Contact resolution between primitives '" << GetUID() << "' and '" << other.GetUID() << "' is not implemented" << std::endl;
+			//std::cerr << "WARNING - Contact resolution between primitives '" << GetUID() << "' and '" << other.GetUID() << "' is not implemented" << std::endl;
 		}
 
 		return std::vector<Contacts::Contact>();

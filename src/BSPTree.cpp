@@ -130,9 +130,8 @@ namespace TooGoodEngine
 		// Testing parent data with own data
 		if (node.data.size() > 0 && stack.size() > 0) {
 			for (auto it1 = stack.begin(); it1 != stack.end(); ++it1) {
-				for (auto it2 = node.data.begin(); it2 != node.data.end(); ++it2) {
-					if (it1 != it2)
-						checkFonc(*it1, *it2, collision);
+				for (auto it2 = node.data.begin(); it2 != node.data.end(); ++it2) {	
+					checkFonc(*it1, *it2, collision);
 				}
 			}
 		}

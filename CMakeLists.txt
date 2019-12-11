@@ -189,3 +189,7 @@ target_link_libraries(Test3D TooGoodEngineLib)
 # Test 3D
 add_executable(TestBSPTree tests/TestBSPTree.cpp)
 target_link_libraries(TestBSPTree TooGoodEngineLib)
+
+# ContactScene
+add_executable(ContactScene tests/ContactScene.cpp)
+target_link_libraries(ContactScene TooGoodEngineLib)
