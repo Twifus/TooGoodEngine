@@ -48,8 +48,8 @@ namespace TooGoodEngine
 	// ------------------------------------------------------------------------ //
 
 	// Constructor
-	BSPTree::BSPTree(CollisionData &collision) :
-	collision(collision), distribution(-10, 10) {
+	BSPTree::BSPTree() :
+	collision(10), distribution(-10, 10) {
 		// create node and insert in root
 		root.emplace_back();
 	}

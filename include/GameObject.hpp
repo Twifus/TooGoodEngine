@@ -18,6 +18,9 @@ namespace TooGoodEngine {
             prime(primeList), rigidBody(rigidBody), sphere(Vector3::zero, 0) {
             sphere = Contacts::BoundingSphere(rigidBody->GetPosition(), boundingRadius);
         }
+        void updateSphere() {
+            if (rigidBody != nullptr) sphere = Contacts::BoundingSphere(rigidBody->GetPosition(), sphere.radius);
+        }
     };
 
 }

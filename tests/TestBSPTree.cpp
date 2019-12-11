@@ -20,7 +20,7 @@ int main() {
     liste[3] = GameObject(emptyPrime, sph4);
 
     CollisionData collision = CollisionData(5);
-    BSPTree testTree(collision);
+    BSPTree testTree();
 
     for(auto go : liste) {
         testTree.AddGameObject(go);

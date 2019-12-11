@@ -26,6 +26,7 @@ std::vector<BoxRigidBody*> objects;
 class ContactScene : public OpenGLScene {
 private:
     std::vector<GameObject*> gameObjects;
+	std::vector<Contacts::Contact> contacts;
 
 public:
     ContactScene() : OpenGLScene("Contact Example", 1366, 768) {}
@@ -35,13 +36,14 @@ public:
     }
 
     void AddForces(double time) {
-		objects[0]->AddForceAtBodyPoint(Vector3(10, 0, 0), Vector3(0, 0.5, 0));
+		objects[0]->AddForceAtBodyPoint(Vector3(2, 0.5, 0), Vector3(0, 0.5, 0));
     }
+
 
     void mainLoop() override {
         bool close(false);
-		CollisionData collisionData = CollisionData(10);
-        BSPTree contactTree(collisionData);
+		bool pause(false);
+        BSPTree contactTree;
 
         unsigned int framerate(10);
         Uint32 loopStart(0), loopEnd(0), elapsed(0);
@@ -59,47 +61,63 @@ public:
         modelView = mat4(1.0);
 
         while (!close) {
-            loopStart = SDL_GetTicks();
+			if (!pause) {
+				contacts = std::vector<Contacts::Contact>();
 
-            f.computeDeltaFrame();
+				loopStart = SDL_GetTicks();
 
-            for (GameObject* gameObject : gameObjects) {
-                contactTree.AddGameObject(*gameObject);
-            }
+				contactTree = BSPTree();
 
-            contactTree.Evaluate();
+				f.computeDeltaFrame();
 
-			for (auto i : objects)
-			{
-				i->Update(0.5);
-				i->ClearAccumulation();
+				for (GameObject* gameObject : gameObjects) {
+					gameObject->updateSphere();
+					contactTree.AddGameObject(*gameObject);
+				}
+
+				contactTree.Evaluate();
+
+				contacts = contactTree.collision.GetContacts();
+
+				if (contacts.size() != 0) {
+					for (auto& contact : contacts) {
+						contact.print();
+					}
+					
+					pause = true;
+				}
+
+				for (auto i : objects)
+				{
+					i->Update(0.5);
+					i->ClearAccumulation();
+				}
+
+				glClear(GL_DEPTH_BUFFER_BIT);
+				glClear(GL_COLOR_BUFFER_BIT);
+
+				modelView = lookAt(glm::vec3(9, 9, 9),
+					glm::vec3(10, 0, 0),
+					glm::vec3(0, 1, 0));
+
+				mat4 modelViewSave = modelView;
+
+				for (Element element : elements) {
+					element.display(projection, modelView);
+				}
+
+				SDL_GL_SwapWindow(window);
+
+				loopEnd = SDL_GetTicks();
+				elapsed = loopEnd - loopStart;
+
+				if (elapsed < framerate)
+					SDL_Delay(framerate - elapsed);
 			}
+			SDL_PollEvent(&events);
 
-            glClear(GL_DEPTH_BUFFER_BIT);
-            glClear(GL_COLOR_BUFFER_BIT);
-
-            SDL_PollEvent(&events);
-
-            if (events.window.event == SDL_WINDOWEVENT_CLOSE)
-                close = true;
-
-            modelView = lookAt(glm::vec3(9, 9, 9),
-                               glm::vec3(10, 0, 0),
-                               glm::vec3(0, 1, 0));
-
-            mat4 modelViewSave = modelView;
-
-            for (Element element : elements) {
-                element.display(projection, modelView);
-            }
-
-            SDL_GL_SwapWindow(window);
-
-            loopEnd = SDL_GetTicks();
-            elapsed = loopEnd - loopStart;
-
-            if (elapsed < framerate)
-                SDL_Delay(framerate - elapsed);
+			if (events.window.event == SDL_WINDOWEVENT_CLOSE)
+				close = true;
         }
     }
 };
@@ -140,7 +158,7 @@ int main()
     PlanPrimitive nXPlanPrimitive = PlanPrimitive(Vector3(1, 0, 0), 10);
     auto nXPlanPrimitives = std::list<Primitive*>();
     nXPlanPrimitives.push_back(&nXPlanPrimitive);
-    GameObject nXPlanGO = GameObject(nXPlanPrimitives);
+    GameObject nXPlanGO = GameObject(nXPlanPrimitives, 1, &nXPlanRB);
     scene.addGameObject(&nXPlanGO);
 
     // Plane x = 10
@@ -152,7 +170,7 @@ int main()
     PlanPrimitive XPlanPrimitive = PlanPrimitive(Vector3(-1, 0, 0), 10);
     auto XPlanPrimitives = std::list<Primitive*>();
     XPlanPrimitives.push_back(&XPlanPrimitive);
-    GameObject XPlanGO = GameObject(XPlanPrimitives);
+    GameObject XPlanGO = GameObject(XPlanPrimitives, 1, &XPlanRB);
     scene.addGameObject(&XPlanGO);
 
     // Plane y = -10
@@ -166,7 +184,7 @@ int main()
     PlanPrimitive nYPlanPrimitive = PlanPrimitive(Vector3(0, 1, 0), 10);
     auto nYPlanPrimitives = std::list<Primitive*>();
     nYPlanPrimitives.push_back(&nYPlanPrimitive);
-    GameObject nYPlanGO = GameObject(nYPlanPrimitives);
+    GameObject nYPlanGO = GameObject(nYPlanPrimitives, 1, &nYPlanRB);
     scene.addGameObject(&nYPlanGO);
 
     Box3DModel YPlaneModel = Box3DModel(size, color);
@@ -177,7 +195,7 @@ int main()
     PlanPrimitive YPlanPrimitive = PlanPrimitive(Vector3(0, -1, 0), 10);
     auto YPlanPrimitives = std::list<Primitive*>();
     YPlanPrimitives.push_back(&YPlanPrimitive);
-    GameObject YPlanGO = GameObject(YPlanPrimitives);
+    GameObject YPlanGO = GameObject(YPlanPrimitives, 1, &YPlanRB);
     scene.addGameObject(&YPlanGO);
 
     size = Vector3(100,100,0.1);
@@ -190,7 +208,7 @@ int main()
     PlanPrimitive nZPlanPrimitive = PlanPrimitive(Vector3(0, 0, 1), 10);
     auto nZPlanPrimitives = std::list<Primitive*>();
     nZPlanPrimitives.push_back(&nZPlanPrimitive);
-    GameObject nZPlanGO = GameObject(nZPlanPrimitives);
+    GameObject nZPlanGO = GameObject(nZPlanPrimitives, 1, &nZPlanRB);
     scene.addGameObject(&nZPlanGO);
 
     Box3DModel ZPlaneModel = Box3DModel(size, color);
@@ -201,7 +219,7 @@ int main()
     PlanPrimitive ZPlanPrimitive = PlanPrimitive(Vector3(1, 0, -1), 10);
     auto ZPlanPrimitives = std::list<Primitive*>();
     ZPlanPrimitives.push_back(&ZPlanPrimitive);
-    GameObject ZPlanGO = GameObject(ZPlanPrimitives);
+    GameObject ZPlanGO = GameObject(ZPlanPrimitives, 1, &ZPlanRB);
     scene.addGameObject(&nXPlanGO);
 
     scene.mainLoop();

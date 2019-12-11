@@ -17,6 +17,7 @@ namespace TooGoodEngine
 
 		public:
 			Contact(Vector3 contactPoint, Vector3 normal, double penetration);		//Contact constructor
+			void print();
 		};
 	}
 }

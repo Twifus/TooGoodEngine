@@ -10,4 +10,9 @@ namespace TooGoodEngine {
 		auto res = prim1.ResolveCollision(prim2);
 		contacts.insert(contacts.end(), res.begin(), res.end());
 	}
+
+	std::vector<Contacts::Contact>& CollisionData::GetContacts()
+	{
+		return contacts;
+	}
 }

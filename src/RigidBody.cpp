@@ -4,7 +4,7 @@
 
 namespace TooGoodEngine
 {
-	static constexpr double defaultDamping = 0.95;
+	static constexpr double defaultDamping = 1;
 
 	// Basic constructor
 	RigidBody::RigidBody(double m, const Vector3& pos, const Quaternion& ori) :

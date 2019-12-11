@@ -15,5 +15,6 @@ namespace TooGoodEngine {
 		~CollisionData();															//CollisionData destructor
 
 		void GenerateContacts(const Primitive& prim1, const Primitive& prim2);		//Method which add a Contact in the contacts Vector in the case of a collision
+		std::vector<Contacts::Contact>& GetContacts();
 	};
 }

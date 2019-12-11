@@ -38,8 +38,6 @@ namespace TooGoodEngine
 			inline bool isLeaf() const;
 		};
 
-		CollisionData collision;
-
 		std::list<BSPNode> root;
 		std::default_random_engine generator;
 		std::uniform_real_distribution<double> distribution;
@@ -48,7 +46,9 @@ namespace TooGoodEngine
 		void EvaluateNode(BSPNode& node, std::list<GameObject> &stack);
 
 	public:
-		BSPTree(CollisionData &collision);
+		CollisionData collision;
+
+		BSPTree();
 		void AddGameObject(const GameObject& object);
 		void Evaluate();
 	};
