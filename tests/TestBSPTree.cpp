@@ -6,7 +6,7 @@ using namespace TooGoodEngine;
 
 
 int main() {
-    std::list<Primitive> emptyPrime;
+    std::list<Primitive*> emptyPrime;
     Contacts::BoundingSphere sph1(Vector3(0,0,0), 5),
         sph2(Vector3(10,10,10), 5),
         sph3(Vector3(-5,-5, 0), 3),
