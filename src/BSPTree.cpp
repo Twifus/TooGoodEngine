@@ -6,7 +6,7 @@
 
 namespace TooGoodEngine
 {
-	static const int MAX_LEAF_DATASIZE = 6;
+	static const int MAX_LEAF_DATASIZE = 2;
 
 	// ------------------------------------------------------------------------ //
 	// ------------------------------ PLANE ----------------------------------- //
@@ -55,6 +55,7 @@ namespace TooGoodEngine
 
 	// Split a node in two and create his children (then reallocate data)
 	void BSPTree::SplitNode(BSPNode& node) {
+		std::cout << "Splitting node" << std::endl;
 		// select plan (and so set up the plan for splitting data)
 		node.plan.position = objectPosition(node.data.front());
 		node.plan.normal = Vector3(distribution(generator), distribution(generator), distribution(generator)).Normalized();
@@ -104,26 +105,37 @@ namespace TooGoodEngine
 	inline void checkFonc(GameObject& a, GameObject& b)
 	{
 		if (a.sphere.Intersection(b.sphere)) {
-			std::cout << "bim sphere collision de 2 GameObjects" << std::endl;
+			std::cout << "bim sphere collision de 2 GameObjects : "
+			<< a.sphere.center << "," << b.sphere.center << std::endl;
 		}
 	}
 
 	// Iterate on a node
 	void BSPTree::EvaluateNode(BSPNode& node, std::list<GameObject> &stack) { // ((void) checkFunc(GameObject&, GameObject&)) : pointer ?
-        // Add his element to the stack
+		// Testing own data
+		if (node.data.size() > 1) {
+			for (auto it1 = node.data.begin(); it1 != node.data.end(); ++it1) {
+				for (auto it2 = it1; it2 != node.data.end(); ++it2) {
+					if (it1 != it2)
+						checkFonc(*it1, *it2);
+				}
+			}
+		}
+		// Testing parent data with own data
+		if (node.data.size() > 0 && stack.size() > 0) {
+			for (auto it1 = stack.begin(); it1 != stack.end(); ++it1) {
+				for (auto it2 = node.data.begin(); it2 != node.data.end(); ++it2) {
+					if (it1 != it2)
+						checkFonc(*it1, *it2);
+				}
+			}
+		}
+		// Add his tested elements to the stack
         int count = 0;
         for(auto v : node.data) {
             stack.push_front(v);
             count++;
         }
-		// Calling checkFonc on stack data
-		if (node.isLeaf() && stack.size() > 1) {
-			for (auto it1 = stack.begin(); it1 != stack.end(); ++it1) {
-				for (auto it2 = it1; it2 != stack.end(); ++it2) {
-					checkFonc(*it1, *it2);
-				}
-			}
-		}
 		// recursion on children
 		if (!node.isLeaf()) {
 			EvaluateNode(*(node.back), stack);

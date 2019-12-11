@@ -185,3 +185,7 @@ add_test(Test_Quaternion TestRigidBody)
 # Test 3D
 add_executable(Test3D tests/Test3D.cpp)
 target_link_libraries(Test3D TooGoodEngineLib)
+
+# Test 3D
+add_executable(TestBSPTree tests/TestBSPTree.cpp)
+target_link_libraries(TestBSPTree TooGoodEngineLib)
