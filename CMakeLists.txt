@@ -33,8 +33,6 @@ include_directories(${OPENGL_INCLUDE_DIR})
 include(CTest)
 include_directories("include")
 
-add_compile_options($<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>: -Wno-multichar -Wno-suggest-override>)
-
 ###########################
 #                         #
 #         FORCES          #
@@ -135,6 +133,7 @@ add_library(TooGoodEngineLib
 	src/Box3DModel.cpp		include/Box3DModel.hpp)
 
 target_link_libraries(TooGoodEngineLib PUBLIC ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${GLEW_LIBRARIES} ${OPENGL_LIBRARIES})
+target_compile_options(TooGoodEngineLib PRIVATE $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>: -Wno-multichar -Wno-suggest-override>)
 
 if(WIN32) # On Windows systems, copy .dll to build directory
 	if(CMAKE_SIZEOF_VOID_P EQUAL 8)
