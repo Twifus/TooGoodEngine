@@ -1,5 +1,6 @@
 #include "../include/BSPTree.hpp"
 #include "../include/GameObject.hpp"
+#include "../include/CollisionData.hpp"
 
 
 using namespace TooGoodEngine;
@@ -18,7 +19,8 @@ int main() {
     liste[2] = GameObject(emptyPrime, sph3);
     liste[3] = GameObject(emptyPrime, sph4);
 
-    BSPTree testTree(sph1.center);
+    CollisionData collision = CollisionData(5);
+    BSPTree testTree(collision);
 
     for(auto go : liste) {
         testTree.AddGameObject(go);

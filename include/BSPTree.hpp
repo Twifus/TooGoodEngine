@@ -1,13 +1,16 @@
 #pragma once
 
 #include "GameObject.hpp"
+#include "CollisionData.hpp"
 #include "Vector3.hpp"
 
 #include <list>
 #include <random>
 
 
-//typedef TooGoodEngine::Contacts::BoundingSphere Object;
+// Création : BSPTree(CollisionData)
+// collision data récupère les primitives pour
+// la narrow phase
 
 namespace TooGoodEngine
 {
@@ -35,6 +38,8 @@ namespace TooGoodEngine
 			inline bool isLeaf() const;
 		};
 
+		CollisionData collision;
+
 		std::list<BSPNode> root;
 		std::default_random_engine generator;
 		std::uniform_real_distribution<double> distribution;
@@ -43,7 +48,7 @@ namespace TooGoodEngine
 		void EvaluateNode(BSPNode& node, std::list<GameObject> &stack);
 
 	public:
-		BSPTree(Vector3 pos_start);
+		BSPTree(CollisionData &collision);
 		void AddGameObject(const GameObject& object);
 		void Evaluate();
 	};

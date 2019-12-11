@@ -48,14 +48,15 @@ namespace TooGoodEngine
 	// ------------------------------------------------------------------------ //
 
 	// Constructor
-	BSPTree::BSPTree(Vector3 pos_start) : distribution(-10, 10) {
+	BSPTree::BSPTree(CollisionData &collision) :
+	collision(collision), distribution(-10, 10) {
 		// create node and insert in root
-		root.emplace_back(nullptr, nullptr, Plane(pos_start, Vector3::zero), std::list<GameObject>());
+		root.emplace_back();
 	}
 
 	// Split a node in two and create his children (then reallocate data)
 	void BSPTree::SplitNode(BSPNode& node) {
-		std::cout << "Splitting node" << std::endl;
+		// std::cout << "Splitting node" << std::endl;
 		// select plan (and so set up the plan for splitting data)
 		node.plan.position = objectPosition(node.data.front());
 		node.plan.normal = Vector3(distribution(generator), distribution(generator), distribution(generator)).Normalized();
@@ -102,11 +103,16 @@ namespace TooGoodEngine
 	}
 
 
-	inline void checkFonc(GameObject& a, GameObject& b)
+	inline void checkFonc(GameObject& a, GameObject& b, CollisionData &collision)
 	{
 		if (a.sphere.Intersection(b.sphere)) {
-			std::cout << "bim sphere collision de 2 GameObjects : "
-			<< a.sphere.center << "," << b.sphere.center << std::endl;
+			// std::cout << "bim sphere collision de 2 GameObjects : "
+			// << a.sphere.center << "," << b.sphere.center << std::endl;
+			for (auto pA : a.prime) {
+				for (auto pB : b.prime) {
+					collision.GenerateContacts(*pA, *pB);
+				}
+			}
 		}
 	}
 
@@ -117,7 +123,7 @@ namespace TooGoodEngine
 			for (auto it1 = node.data.begin(); it1 != node.data.end(); ++it1) {
 				for (auto it2 = it1; it2 != node.data.end(); ++it2) {
 					if (it1 != it2)
-						checkFonc(*it1, *it2);
+						checkFonc(*it1, *it2, collision);
 				}
 			}
 		}
@@ -126,7 +132,7 @@ namespace TooGoodEngine
 			for (auto it1 = stack.begin(); it1 != stack.end(); ++it1) {
 				for (auto it2 = node.data.begin(); it2 != node.data.end(); ++it2) {
 					if (it1 != it2)
-						checkFonc(*it1, *it2);
+						checkFonc(*it1, *it2, collision);
 				}
 			}
 		}
