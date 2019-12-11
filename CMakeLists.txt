@@ -33,7 +33,7 @@ include_directories(${OPENGL_INCLUDE_DIR})
 include(CTest)
 include_directories("include")
 
-add_compile_options($<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>: --Wno-multichar -Wno-suggest-override>)
+add_compile_options($<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>: -Wno-multichar -Wno-suggest-override>)
 
 ###########################
 #                         #
