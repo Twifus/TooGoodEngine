@@ -21,4 +21,4 @@ Il peut être lancé sur les systèmes Unix avec la commande
 ou en double-cliquant sur l'executable (Windows)
 
 On peut y observer un cube lancé contre un mur avec des vitesses linéaire et angulaire non nulles.
-La simulation s'arrête une fois le cube rentré en contact avec le mur, et affiche les points de contact.
+La simulation s'arrête une fois le cube rentré en contact avec le mur, et affiche les points de contact. 
