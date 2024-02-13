@@ -1,5 +1,5 @@
 # TooGoodEngine
-Projet de moteur physique pour le cours 8INF935 de l'UQAC par BABU Baptiste, CESARO Louis, FARINES Jean et ROYANT Yann.
+Projet de moteur physique pour le cours 8INF935 de l'UQAC par BABU Léa, CESARO Louis, FARINES Jean et ROYANT Yann.
 
 # Dépendances
 Le projet nécessite les bibliothèque SDL2, SDL2_image, GLEW et OpenGL. Les binaires pour Windows (format .dll) sont déjà fournis dans `external`.
